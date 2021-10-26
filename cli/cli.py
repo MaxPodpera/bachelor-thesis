@@ -59,6 +59,8 @@ if __name__ == '__main__':
         for event in i.event_gen(yield_nones=False):
             _, type_names, path, filename = event
             print(event)
+            print(path)
+            print(filename)
 
     except getopt.GetoptError as e:
         print("\033[91mError: " + str(e) + '\033[0m')
