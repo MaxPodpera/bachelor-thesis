@@ -67,12 +67,12 @@ if __name__ == '__main__':
         i.add_watch(SYNC_FOLDER_PATH)
         print(os.getpid())
         for event in i.event_gen(yield_nones=False):
-            _, type_names, path, filename = event
+            _, type_names, _, filename = event
+            print(type_names)
             if str(os.getpid()) in filename and 'IN_MODIFY' in type_names or 'IN_CREATE' in type_names:
                 data = read_to_cl(filename)
                 output(data)
                 exit(0)
-            print(type_names)
 
     except getopt.GetoptError as e:
         print("\033[91mError: " + str(e) + '\033[0m')
