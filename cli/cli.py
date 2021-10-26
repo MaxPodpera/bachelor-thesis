@@ -58,7 +58,7 @@ if __name__ == '__main__':
         print(os.getpid())
         for event in i.event_gen(yield_nones=False):
             _, type_names, path, filename = event
-            if os.getpid() in filename and 'IN_CLOSE_WRITE' in  type_names:
+            if str(os.getpid()) in filename and 'IN_CLOSE_WRITE' in  type_names:
                 print("file updated")
             print(event)
             print(path)
