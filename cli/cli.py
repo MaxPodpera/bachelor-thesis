@@ -4,6 +4,7 @@ import time
 import sys
 import json
 import inotify.adapters
+import re
 
 NAME = "mesh"
 SYNC_FOLDER_PATH = "."  # "./tmp/" + NAME + "/"
@@ -13,6 +14,9 @@ def remove_own_files(pid):
     content = os.listdir(SYNC_FOLDER_PATH)
     print(content)
     for c in content:
+        if re.search("out_" + pid + "_.*", c):
+            print("Found culprit")
+            os.remove(c)
         print(c)
 
 
