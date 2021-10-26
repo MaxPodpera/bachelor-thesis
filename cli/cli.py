@@ -9,6 +9,13 @@ NAME = "mesh"
 SYNC_FOLDER_PATH = "."  # "./tmp/" + NAME + "/"
 
 
+def remove_own_files(pid):
+    content = os.listdir
+    print(content)
+    for c in content:
+        print(c)
+
+
 def usage():
     """
     Returns the usage for the cli
@@ -77,5 +84,6 @@ if __name__ == '__main__':
         print("\033[91mError: " + str(e) + '\033[0m')
         print(usage())
     except KeyboardInterrupt as e:
+        remove_own_files(1203)
         # TODO delete files: watch out!!! pids could be in timestamp
         print("keyboard interrupt")
