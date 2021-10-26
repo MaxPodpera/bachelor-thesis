@@ -47,6 +47,16 @@ def send_to_transciever(data):
     return file_name
 
 
+def read_to_cl(file):
+    with open(SYNC_FOLDER_PATH + file, "r") as in_file:
+        data = in_file.read()
+        return json.loads(data)
+
+
+def output(data):
+    print("Received: " + data["data"])
+
+
 if __name__ == '__main__':
     try:
         information = parse(sys.argv)  # create json for sending process
@@ -58,13 +68,13 @@ if __name__ == '__main__':
         print(os.getpid())
         for event in i.event_gen(yield_nones=False):
             _, type_names, path, filename = event
-            if str(os.getpid()) in filename and 'IN_CLOSE_WRITE' in  type_names:
-                print("file updated")
-            print(event)
-            print(path)
-            print(filename)
-            print(type_names)
+            if str(os.getpid()) in filename and 'IN_CLOSE_WRITE' in type_names:
+                data = read_to_cl(filename)
+                output(data)
+                exit(0)
 
     except getopt.GetoptError as e:
         print("\033[91mError: " + str(e) + '\033[0m')
         print(usage())
+    except KeyboardInterrupt as e:
+        print("keyboard interrupt")
