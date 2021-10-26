@@ -6,21 +6,7 @@ import json
 import inotify.adapters
 
 NAME = "mesh"
-SYNC_FOLDER_PATH = ""  # "./tmp/" + NAME + "/"
-
-
-def unpack():
-    """
-    Unpack the cli options. Does not check for any exceptions.
-    :return: [(type,type)], [type] where the first array contains tuples. The first element
-    is the name of the option the second one is the argument given to it. The second array
-    contains the positional argument.
-    """
-    return getopt.getopt(
-        sys.argv[1:],
-        "hf:d:",
-        ["destination=", "file=", "help"]
-    )
+SYNC_FOLDER_PATH = "."  # "./tmp/" + NAME + "/"
 
 
 def usage():
