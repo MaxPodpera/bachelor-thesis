@@ -68,7 +68,6 @@ if __name__ == '__main__':
         print(os.getpid())
         for event in i.event_gen(yield_nones=False):
             _, type_names, _, filename = event
-            print(type_names)
             if str(os.getpid()) in filename and 'IN_CLOSE_WRITE' in type_names:
                 data = read_to_cl(filename)
                 output(data)
