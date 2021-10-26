@@ -89,6 +89,6 @@ if __name__ == '__main__':
         print("\033[91mError: " + str(e) + '\033[0m')
         print(usage())
     except KeyboardInterrupt as e:
-        remove_own_files(1203)
+        remove_own_files(os.getpid())
         # TODO delete files: watch out!!! pids could be in timestamp
         print("keyboard interrupt")
