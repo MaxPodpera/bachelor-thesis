@@ -48,7 +48,7 @@ def send_to_transciever(data):
 
 
 def read_to_cl(file):
-    with open(SYNC_FOLDER_PATH + file, "r") as in_file:
+    with open(SYNC_FOLDER_PATH + "/" + file, "r") as in_file:
         data = in_file.read()
         return json.loads(data)
 
