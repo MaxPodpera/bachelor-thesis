@@ -14,7 +14,7 @@ def remove_own_files(pid):
     content = os.listdir(SYNC_FOLDER_PATH)
     for c in content:
         print(c[3:9])
-        if pid in c[3:9]:
+        if str(pid) in c[3:9]:
             os.remove(c)
             print("found a bitch")
 
