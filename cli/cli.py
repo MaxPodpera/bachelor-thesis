@@ -55,12 +55,15 @@ if __name__ == '__main__':
 
         i = inotify.adapters.Inotify()
         i.add_watch(SYNC_FOLDER_PATH)
-
+        print(os.getpid())
         for event in i.event_gen(yield_nones=False):
             _, type_names, path, filename = event
+            if os.getpid() in filename and 'IN_CLOSE_WRITE' in  type_names:
+                print("file updated")
             print(event)
             print(path)
             print(filename)
+            print(type_names)
 
     except getopt.GetoptError as e:
         print("\033[91mError: " + str(e) + '\033[0m')
