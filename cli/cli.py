@@ -4,7 +4,6 @@ import time
 import sys
 import json
 import inotify.adapters
-import re
 
 NAME = "mesh"
 SYNC_FOLDER_PATH = "."  # "./tmp/" + NAME + "/"
@@ -15,7 +14,6 @@ def remove_own_files(pid):
     for c in content:
         if str(pid) == c[4:9]:
             os.remove(c)
-            print("found a bitch")
 
 
 def usage():
@@ -75,17 +73,16 @@ if __name__ == '__main__':
         i = inotify.adapters.Inotify()
         i.add_watch(SYNC_FOLDER_PATH)
         print(os.getpid())
+
         for event in i.event_gen(yield_nones=False):
             _, type_names, _, filename = event
             if str(os.getpid()) in filename and 'IN_CLOSE_WRITE' in type_names:
                 data = read_to_cl(filename)
                 output(data)
-                # exit(0)
+                exit(0)
 
     except getopt.GetoptError as e:
         print("\033[91mError: " + str(e) + '\033[0m')
         print(usage())
     except KeyboardInterrupt as e:
         remove_own_files(os.getpid())
-        # TODO delete files: watch out!!! pids could be in timestamp
-        print("keyboard interrupt")
