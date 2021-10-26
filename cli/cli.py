@@ -82,7 +82,7 @@ if __name__ == '__main__':
             if str(os.getpid()) in filename and 'IN_CLOSE_WRITE' in type_names:
                 data = read_to_cl(filename)
                 output(data)
-                exit(0)
+                # exit(0)
 
     except getopt.GetoptError as e:
         print("\033[91mError: " + str(e) + '\033[0m')
