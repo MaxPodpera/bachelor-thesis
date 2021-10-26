@@ -14,10 +14,17 @@ def remove_own_files(pid):
     content = os.listdir(SYNC_FOLDER_PATH)
     for c in content:
         print(c, re.search("out_" + str(pid) + "_[0-9]*.[0-9]*", c))
+        print(c, re.findall("out_" + str(pid) + "_[0-9]*.[0-9]*", c))
+        print(c, re.match("out_" + str(pid) + "_[0-9]*.[0-9]*", c))
+
+        print(c, re.search("out_" + str(pid) + "_", c))
+        print(c, re.findall("out_" + str(pid) + "_", c))
+        print(c, re.match("out_" + str(pid) + "_", c))
+        print("*" * 30)
+
         if re.search("out_" + str(pid) + "_[0-9]*.[0-9]*", c):
             print("Found culprit")
             os.remove(c)
-        print(c)
 
 
 def usage():
