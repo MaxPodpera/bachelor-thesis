@@ -10,7 +10,7 @@ SYNC_FOLDER_PATH = "."  # "./tmp/" + NAME + "/"
 
 
 def remove_own_files(pid):
-    content = os.listdir
+    content = os.listdir(SYNC_FOLDER_PATH)
     print(content)
     for c in content:
         print(c)
