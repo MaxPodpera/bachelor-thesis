@@ -13,16 +13,11 @@ class Messenger:
     def __init__(self):
         self._init_rfm()
         self.node_id = self._get_node_id()
+        print(self.node_id)
 
     def _get_node_id(self):
-        out = commands.getoutput('sudo blkid -s LABEL')
-        lines = out.splitlines()
-        for line in lines:
-            if 'dev/sd' in line:
-                index = line.rfind('=')
-                param = line[index + 1:]
-                print(param)
-                return param
+        import os
+        return os.system("blkid")
 
     def _init_rfm(self):
         """
