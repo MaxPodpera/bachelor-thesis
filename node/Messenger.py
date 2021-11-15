@@ -42,7 +42,7 @@ class Messenger:
         pass
 
     def send(self, data):
-
+        pass
 
     def _forward(self, package):
         pass
