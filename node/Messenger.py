@@ -16,7 +16,8 @@ class Messenger:
 
     def _get_node_id(self):
         import os
-        tmp = os.system("blkid")
+        os.system("blkid")
+        tmp = " ,"
         print(tmp)
         tmp_array = tmp.split()
         print(tmp_array)
