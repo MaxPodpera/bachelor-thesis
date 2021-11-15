@@ -12,7 +12,7 @@ class Messenger:
 
     def __init__(self):
         self._init_rfm()
-        self.node_id =
+        self.node_id = self._get_node_id()
 
     def _get_node_id(self):
         out = commands.getoutput('sudo blkid -s LABEL')
@@ -22,6 +22,7 @@ class Messenger:
                 index = line.rfind('=')
                 param = line[index + 1:]
                 print(param)
+                return param
 
     def _init_rfm(self):
         """
