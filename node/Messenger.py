@@ -16,8 +16,10 @@ class Messenger:
 
     def _get_node_id(self):
         import os
-        for line in os.system("blkid"):
-            print(line)
+        tmp = os.system("blkid")
+        tmp_array = tmp.slit()
+        print(tmp)
+        print(tmp_array)
         return ""
 
     def _init_rfm(self):
