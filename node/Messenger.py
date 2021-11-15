@@ -1,7 +1,6 @@
 import board
 import busio
 import adafruit_rfm9x
-import commands
 from digitalio import DigitalInOut
 
 
