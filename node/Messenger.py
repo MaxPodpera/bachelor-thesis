@@ -1,15 +1,27 @@
 import board
 import busio
 import adafruit_rfm9x
+import commands
 from digitalio import DigitalInOut
 
 
 class Messenger:
 
     rfm95 = None
+    node_id = None
 
     def __init__(self):
         self._init_rfm()
+        self.node_id =
+
+    def _get_node_id(self):
+        out = commands.getoutput('sudo blkid -s LABEL')
+        lines = out.splitlines()
+        for line in lines:
+            if 'dev/sd' in line:
+                index = line.rfind('=')
+                param = line[index + 1:]
+                print(param)
 
     def _init_rfm(self):
         """
@@ -25,6 +37,14 @@ class Messenger:
         self.rfm95.tx_power = 23
         self.enable_crc = True
 
+    def start(self):
+        pass
+
+    def send(self, data):
+
+
+    def _forward(self, package):
+        pass
 
 if __name__ == '__main__':
     m = Messenger()
