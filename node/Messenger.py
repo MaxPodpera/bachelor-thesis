@@ -24,3 +24,7 @@ class Messenger:
         self.rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self.rfm95.tx_power = 23
         self.enable_crc = True
+
+
+if __name__ == '__main__':
+    m = Messenger()

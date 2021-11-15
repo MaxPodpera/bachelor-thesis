@@ -1,4 +1,5 @@
-
+from node.RFM95 import RFM95
+from node.Messenger import Messenger
 
 if __name__ == '__main__':
 
@@ -8,8 +9,7 @@ if __name__ == '__main__':
     pass
 
 
-from node.RFM95 import RFM95
-from node.Messenger import Messenger
+
 
 rfm95 = RFM95()
 messenger = Messenger()
