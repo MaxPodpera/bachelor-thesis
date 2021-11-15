@@ -8,8 +8,8 @@ if __name__ == '__main__':
     pass
 
 
-from .RFM95 import RFM95
-from .Messenger import Messenger
+from node.RFM95 import RFM95
+from node.Messenger import Messenger
 
 rfm95 = RFM95()
 messenger = Messenger()

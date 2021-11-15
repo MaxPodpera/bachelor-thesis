@@ -12,6 +12,10 @@ class Messenger:
         self._init_rfm()
 
     def _init_rfm(self):
+        """
+        Iitialize the rfm device for communication
+        :return: void
+        """
         pin_cs = DigitalInOut(board.CE1)
         pin_rst= DigitalInOut(board.D25)
         pin_spi= busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
