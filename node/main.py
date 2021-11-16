@@ -1,5 +1,5 @@
 import time
-from .Messenger import *
+from node.Messenger import Messenger
 
 if __name__ == '__main__':
     # TODO register file interface
