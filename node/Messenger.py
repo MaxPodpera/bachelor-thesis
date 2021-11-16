@@ -6,8 +6,8 @@ import adafruit_rfm9x
 import time
 from digitalio import DigitalInOut
 
-from .Independent import Independent
-from .MessageStorage import MessageStorage
+from node.Independent import Independent
+from node.MessageStorage import MessageStorage
 
 
 class Messenger(Independent):
