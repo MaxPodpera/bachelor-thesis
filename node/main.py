@@ -1,5 +1,5 @@
 import time
-import node
+import .node
 from node.Messenger import Messenger
 
 if __name__ == '__main__':
