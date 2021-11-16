@@ -6,8 +6,8 @@ import adafruit_rfm9x
 import time
 from digitalio import DigitalInOut
 
-from .node.Independent import Independent
-from .node.MessageStorage import MessageStorage
+from .Independent import Independent
+from .MessageStorage import MessageStorage
 
 
 class Messenger(Independent):
@@ -76,10 +76,3 @@ class Messenger(Independent):
 
     def _forward(self, package):
         pass
-
-
-if __name__ == '__main__':
-    m = Messenger()
-    time.sleep(2)
-    m.start()
-    m.send({"data": "hello there", "recipient": {"pid": "asdsd", "at": "45:32:21:ae:bc"}})
