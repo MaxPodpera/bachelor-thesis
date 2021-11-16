@@ -1,5 +1,5 @@
 import time
-from bachelor-thesis.node.Messenger import Messenger
+from bachelor_thesis.node.Messenger import Messenger
 
 if __name__ == '__main__':
     # TODO register file interface
