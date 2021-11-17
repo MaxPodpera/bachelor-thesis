@@ -17,12 +17,13 @@ class RFMWrapper:
         frequency = 868.0
         self.rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self.rfm95.tx_power = 23
+        self.rfm95.destination = 255
         self.rfm95.enable_crc = True
         self.rfm95.identifier = 255
         self.rfm95.node = 255
 
     def send(self, data):
-        a = self.rfm95.send(data)
+        a = self.rfm95.send()
         print("send: ", a)
 
     def receive(self) -> Message:
