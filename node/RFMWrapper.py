@@ -41,7 +41,7 @@ class RFMWrapper:
         print("pre", messages)
         while messages is not []:
             a = self.rfm95.send(messages[0])
-            messages = messages[0:]
+            messages = messages[1:]
             print("in", messages)
 
     def receive(self) -> Message:
