@@ -10,14 +10,16 @@ if __name__ == '__main__':
     # on file or network action take file or network action respectively
     m = Messenger()
     m.start()
-    i = 20
+
     message = Message()
     message.data = "Hello there"
     message.recipient = "bbcdef123456789d"
     message.pid = 11111
+
+    i = 20
     while i > 0:
+        logging.info("loop")
         m.send(message)
         time.sleep(1)
         i = i - 1
-
     m.stop()
