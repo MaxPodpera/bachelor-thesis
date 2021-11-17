@@ -11,6 +11,7 @@ class Independent:
         self.thread = threading.Thread(target=self.run())
 
     def start(self):
+        print("about to start")
         self.active = True
         self.thread.start()
         print("started")
