@@ -23,7 +23,7 @@ class Messenger(Independent):
         """
         while self.active:
             received = self.rfm95.receive()  # Receive new message
-
+            print(received)
             if received:
                 if received.recipient == self.rfm95.node_id:
                     self.rfm95.send(received)
