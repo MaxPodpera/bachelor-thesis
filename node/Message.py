@@ -26,7 +26,7 @@ def to_bytes(message: Message) -> [bytearray]:
         return []
 
     result = []
-    b = bytearray(message.recipient, message.pid)
+    b = bytearray(message.recipient) + bytearray(message.pid)
     data_bytes = bytearray(message.data)
 
     while len(data_bytes) > 0:
