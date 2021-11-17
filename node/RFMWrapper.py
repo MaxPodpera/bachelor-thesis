@@ -14,7 +14,7 @@ adafruit_rfm9x.RFM9x._RH_RF95_REG_0F_FIFO_RX_BASE_ADDR = const(0x0F)
 class RFMWrapper:
 
     rfm95: adafruit_rfm9x.RFM9x = None
-    node_id: int = 255
+    node_id: str = 255
 
     def __init__(self):
         pin_cs = DigitalInOut(board.CE1)
@@ -28,6 +28,7 @@ class RFMWrapper:
         self.rfm95.enable_crc = True
         self.rfm95.identifier = 255
         self.rfm95.node = 255
+        self.node_id = self._get_node_id()
 
     def send(self, data: Message):
         """
@@ -60,4 +61,4 @@ class RFMWrapper:
                     print("ids: ", a)
                     print(a[2])
                     return a
-            return None
+            return ""
