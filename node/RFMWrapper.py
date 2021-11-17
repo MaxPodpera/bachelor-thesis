@@ -38,8 +38,8 @@ class RFMWrapper:
         :return: void
         """
         messages = to_bytes(data)
-        print("pre", messages)
-        while messages is not []:
+        while len(messages) > 0:
+            print("pre", messages)
             a = self.rfm95.send(messages[0])
             messages = messages[1:]
             print("in", messages)
