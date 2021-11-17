@@ -13,18 +13,18 @@ from MessageStorage import MessageStorage
 class Messenger(Independent):
 
     rfm95: adafruit_rfm9x.RFM9x = None
-    storage = MessageStorage()  # Access storage
+    storage: MessageStorage  # Access storage
 
     node_id = None  # Own id to check how to handle messages
-    send_queue = None  # list of next messages to send
+    send_queue: [] = None  # list of next messages to send
 
     def __init__(self):
-        super().__init__()
         print("init")
         self._init_rfm()
         self.node_id = self._get_node_id()
         self.rfm95.identifier = 255
         self.rfm95.node = 255
+        super().__init__()
 
     def _get_node_id(self):
         import os

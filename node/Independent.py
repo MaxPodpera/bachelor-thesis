@@ -7,6 +7,7 @@ class Independent:
     thread = None
 
     def __init__(self):
+        print("andres")
         self.active = True
         self.thread = threading.Thread(target=self.run())
 
