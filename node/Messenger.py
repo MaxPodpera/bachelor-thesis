@@ -9,7 +9,7 @@ class Messenger(Independent):
     storage: MessageStorage = None  # Access storage
 
     node_id = None  # Own id to check how to handle messages
-    send_queue: [] = None  # list of next messages to send
+    send_queue: [] = []  # list of next messages to send
 
     def __init__(self):
         self.storage = MessageStorage()
