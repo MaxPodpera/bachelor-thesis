@@ -6,13 +6,13 @@ import adafruit_rfm9x
 import time
 from digitalio import DigitalInOut
 
-from node.Independent import Independent
-from node.MessageStorage import MessageStorage
+from Independent import Independent
+from MessageStorage import MessageStorage
 
 
 class Messenger(Independent):
 
-    rfm95 = None  # rfm95
+    rfm95: adafruit_rfm9x.RFM9x = None
     storage = MessageStorage()  # Access storage
 
     node_id = None  # Own id to check how to handle messages
@@ -20,7 +20,7 @@ class Messenger(Independent):
 
     def __init__(self):
         super().__init__()
-
+        print("init")
         self._init_rfm()
         self.node_id = self._get_node_id()
         self.rfm95.identifier = 255
@@ -41,11 +41,12 @@ class Messenger(Independent):
         :return: void
         """
         pin_cs = DigitalInOut(board.CE1)
-        pin_rst= DigitalInOut(board.D25)
-        pin_spi= busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
-        baudrate = 1_000_000
-        frequency= 868.0
+        pin_rst = DigitalInOut(board.D25)
+        pin_spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
+        baudrate = 1000000
+        frequency = 868.0
         self.rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
+        print("init_rfm: ", self.rfm95)
         self.rfm95.tx_power = 23
         self.enable_crc = True
 
@@ -54,6 +55,7 @@ class Messenger(Independent):
         Check transmitter for incoming messages and send outgoing messages
         :return: void
         """
+        print("send: ", self.rfm95)
         while self.active:
             received = self.rfm95.receive()
 
