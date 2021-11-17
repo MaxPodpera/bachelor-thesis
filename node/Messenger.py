@@ -1,6 +1,7 @@
 from RFMWrapper import RFMWrapper
 from Independent import Independent
 from MessageStorage import MessageStorage
+from Message import Message
 
 
 class Messenger(Independent):
@@ -39,7 +40,7 @@ class Messenger(Independent):
             self.rfm95.send(self.send_queue[0])
             self.send_queue = self.send_queue[1:]
 
-    def send(self, data):
+    def send(self, data: Message):
         self.send_queue.append(data)
 
     def _forward(self, package):

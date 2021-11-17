@@ -2,7 +2,8 @@ import board
 import busio
 import adafruit_rfm9x
 from digitalio import DigitalInOut
-from Message import Message, from_bytes
+from Message import Message, from_bytes, to_bytes
+
 
 class RFMWrapper:
 
@@ -22,9 +23,12 @@ class RFMWrapper:
         self.rfm95.identifier = 255
         self.rfm95.node = 255
 
-    def send(self, data):
-        a = self.rfm95.send(data, destination=255)
-        print("send: ", a)
+    def send(self, data: Message):
+        messages = to_bytes(data)
+        while messages is not []:
+            a = self.rfm95.send(messages[0])
+            messages = messages[0:]
+            print("send: ", a)
 
     def receive(self) -> Message:
         d = self.rfm95.receive()

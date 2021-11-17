@@ -7,7 +7,6 @@ if __name__ == '__main__':
     # on file or network action take file or network action respectively
     m = Messenger()
     m.start()
-    print("seas")
     i = 20
     while i > 0:
         m.send({"data": "hello there", "recipient": {"pid": "asdsd", "at": "45:32:21:ae:bc"}})
