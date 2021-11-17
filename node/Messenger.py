@@ -1,8 +1,7 @@
-import threading
-
 import board
 import busio
 import adafruit_rfm9x
+import threading
 import time
 from digitalio import DigitalInOut
 
