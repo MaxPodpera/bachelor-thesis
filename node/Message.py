@@ -26,8 +26,8 @@ def to_bytes(message: Message) -> [bytearray]:
         return []
 
     result = []
-    b = bytearray(message.recipient) + bytearray(message.pid)
-    data_bytes = bytearray(message.data)
+    b = bytearray(message.recipient.encode()) + bytearray(message.pid)
+    data_bytes = bytearray(message.data.encode())
 
     while len(data_bytes) > 0:
         result.append(b + bytearray(data_bytes[:max_data_length]))
