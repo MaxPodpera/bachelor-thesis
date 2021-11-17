@@ -43,7 +43,6 @@ def to_bytes(message: Message) -> [bytearray]:
     # split message
     while len(data_bytes) > 0:
         result.append(b + data_bytes[:(max_data_length - len(b))])
-        print(result)
         data_bytes = data_bytes[max_data_length:]
 
     return result

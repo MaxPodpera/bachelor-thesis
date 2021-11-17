@@ -50,7 +50,7 @@ class RFMWrapper:
             import os
             os.system("blkid")
             tmp = " ,"
-            print(tmp)
+
             tmp_array = tmp.split()
-            print(tmp_array)
+
             return ""
