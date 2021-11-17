@@ -32,7 +32,7 @@ def to_bytes(message: Message) -> [bytearray]:
     data_bytes = bytearray(message.data.encode())
 
     while len(data_bytes) > 0:
-        result.append(b + bytearray(data_bytes[:max_data_length]))
+        result.append(b + bytearray(data_bytes[:(max_data_length - len(b))]))
         data_bytes = data_bytes[max_data_length:]
 
     return result
