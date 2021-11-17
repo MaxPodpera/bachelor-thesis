@@ -38,9 +38,11 @@ class RFMWrapper:
         :return: void
         """
         messages = to_bytes(data)
+        print(messages)
         while messages is not []:
             a = self.rfm95.send(messages[0])
             messages = messages[0:]
+            print(messages)
 
     def receive(self) -> Message:
         """
