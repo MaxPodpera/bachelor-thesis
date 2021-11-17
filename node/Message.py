@@ -12,8 +12,8 @@ def from_bytes(bytes):
         return None
     print(bytes)
     m = Message()
-    m.recipient = bytes[:16]
-    m.pid = bytes[16:21]
-    m.data = bytes[21:]
+    m.recipient = str(bytes[:16])
+    m.pid = str(bytes[16:21])
+    m.data = str(bytes[21:])
     return m
 
