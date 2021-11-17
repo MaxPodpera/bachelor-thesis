@@ -1,3 +1,4 @@
+import logging
 from RFMWrapper import RFMWrapper
 from Independent import Independent
 from MessageStorage import MessageStorage
@@ -23,24 +24,26 @@ class Messenger(Independent):
         :return: void
         """
         while self.active:
-            received = self.rfm95.receive()  # Receive new message
+            received: Message = self.rfm95.receive()  # Receive new message
             if received:
-                if received.recipient == self.rfm95.node_id:
+                if received.recipient != self.rfm95.node_id:
+                    logging.info("Received message to be forwarded: ")
                     self.rfm95.send(received)
                 else:
+                    # TODO handle receiving multiple messages because of split
+                    logging.info("Received message for self: ")
                     self.storage.store(received)
+                logging.info(received)
                 continue  # attempt receiving more messages before sending
 
             # Nothing to send
             if self.send_queue == [] or self.send_queue is None:
+                logging.info("Nothing received, nothing to send")
                 continue
-
+            logging.info("Nothing received, sending")
             # something to send
             self.rfm95.send(self.send_queue[0])
             self.send_queue = self.send_queue[1:]
 
     def send(self, data: Message):
         self.send_queue.append(data)
-
-    def _forward(self, package):
-        pass

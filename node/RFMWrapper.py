@@ -24,17 +24,25 @@ class RFMWrapper:
         self.rfm95.node = 255
 
     def send(self, data: Message):
+        """
+        Takes a message object to be send. If the message is too large to be sent
+        as one, multiple messages will be send.
+        :param data: to be sent
+        :return: void
+        """
         messages = to_bytes(data)
         while messages is not []:
-            print("sending: " + messages[0].decode("utf-8"))
             a = self.rfm95.send(messages[0])
             messages = messages[0:]
 
     def receive(self) -> Message:
+        """
+        Receive data from the module. Data will be converted to message object.
+        :return: Message object containing the message or None if nothing was received
+        """
+        # TODO handle split messages
         d = self.rfm95.receive()
         m = from_bytes(d)
-        if m is not None:
-            print("receiving: " + m)
         return m
 
     def _get_node_id(self):
