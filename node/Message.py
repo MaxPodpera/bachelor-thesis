@@ -30,8 +30,9 @@ def to_bytes(message: Message) -> [bytearray]:
     result = []
     b = bytearray(message.recipient.encode()) + bytearray(str(message.pid).encode())
     data_bytes = bytearray(message.data.encode())
-    print(data_bytes)
-    print(len(data_bytes))
+    print("b: ", b)
+    print("data_bytes: ", data_bytes)
+
     while len(data_bytes) > 0:
         result.append(b + bytearray(data_bytes[(max_data_length - len(b)):]))
         print(b + bytearray(data_bytes[(max_data_length - len(b)):]))  #
