@@ -6,8 +6,8 @@ class Message:
     data: str = None
     recipient: str = None
     pid: int = None
-    sender: str = None
-    sender_pid: int = None
+    sender: str = "0000000000000000"
+    sender_pid: int = 00000
     time: time = None
 
     def __str__(self):
