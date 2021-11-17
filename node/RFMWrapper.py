@@ -25,8 +25,8 @@ class RFMWrapper:
 
     def send(self, data: Message):
         messages = to_bytes(data)
-        print("sending: " + messages)
         while messages is not []:
+            print("sending: " + messages[0])
             a = self.rfm95.send(messages[0])
             messages = messages[0:]
 

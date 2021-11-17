@@ -7,8 +7,10 @@ class Message:
     def __str__(self):
         return "Message{to:" + self.pid + ",at:" + self.recipient + ",data:"+ self.data + "}"
 
+
 # TODO: real value and setter oder so
 max_data_length = 2048
+
 
 def from_bytes(bytes: bytearray) -> Message:
     if not bytes:
