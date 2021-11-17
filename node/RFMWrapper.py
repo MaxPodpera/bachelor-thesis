@@ -4,6 +4,12 @@ import adafruit_rfm9x
 from digitalio import DigitalInOut
 from Message import Message, from_bytes, to_bytes
 
+# Overwrite a
+from micropython import const
+
+adafruit_rfm9x.RFM9x._RH_RF95_REG_0E_FIFO_TX_BASE_ADDR = const(0x0E)
+adafruit_rfm9x.RFM9x._RH_RF95_REG_0F_FIFO_RX_BASE_ADDR = const(0x0F)
+
 
 class RFMWrapper:
 
@@ -43,6 +49,7 @@ class RFMWrapper:
         # TODO handle split messages
         d = self.rfm95.receive()
         m = from_bytes(d)
+        print(m)
         return m
 
     def _get_node_id(self):
