@@ -19,7 +19,7 @@ class Message:
 
 
 # TODO: real value and setter oder so
-max_data_length = 251
+max_data_length = 51
 
 
 def from_bytes(bytes_to_convert: bytearray) -> Message:
