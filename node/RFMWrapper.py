@@ -33,7 +33,8 @@ class RFMWrapper:
     def receive(self) -> Message:
         d = self.rfm95.receive()
         m = from_bytes(d)
-        print("receiving: " + m)
+        if m is not None:
+            print("receiving: " + m)
         return m
 
     def _get_node_id(self):
