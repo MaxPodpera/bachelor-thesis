@@ -1,8 +1,10 @@
+import logging
 import time
 from Messenger import Messenger
 from Message import Message
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO)
     # TODO register file interface
     # init lora device
     # on file or network action take file or network action respectively
