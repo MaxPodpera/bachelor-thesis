@@ -11,7 +11,7 @@ class Independent:
 
     def start(self):
         self.active = True
-        self.thread = threading.Thread(target=self.run(), args=())
+        self.thread = threading.Thread(target=self.run, args=())
         self.thread.start()
 
     def stop(self):
