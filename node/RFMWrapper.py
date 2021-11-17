@@ -60,5 +60,5 @@ class RFMWrapper:
                     a = line.split(" ")
                     if len(a) < 2:
                         break
-                    return a[1]
+                    return a[1][:-1]
         return ""
