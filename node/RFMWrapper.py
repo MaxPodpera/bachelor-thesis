@@ -25,14 +25,16 @@ class RFMWrapper:
 
     def send(self, data: Message):
         messages = to_bytes(data)
+        print("sending: " + messages)
         while messages is not []:
             a = self.rfm95.send(messages[0])
             messages = messages[0:]
-            print("send: ", a)
 
     def receive(self) -> Message:
         d = self.rfm95.receive()
-        return from_bytes(d)
+        m = from_bytes(d)
+        print("receiving: " + m)
+        return m
 
     def _get_node_id(self):
             # TODO get id
