@@ -1,4 +1,4 @@
-import thread
+import threading
 
 
 class Independent:
@@ -8,7 +8,7 @@ class Independent:
 
     def __init__(self):
         self.active = True
-        self.thread = thread.start_new_thread(self.run())
+        self.thread = threading.Thread(target=self.run(), args=())
 
     def start(self):
         self.active = True
