@@ -7,20 +7,21 @@ class Independent:
     thread = None
 
     def __init__(self):
-        print("andres")
         self.active = True
         self.thread = threading.Thread(target=self.run())
 
     def start(self):
         self.active = True
         self.thread.start()
+        print("started")
 
     def stop(self):
         self.active = False
+        self.thread.join()
 
     def run(self):
         """
-        To be run in thread
+        To be run in thread. Has to be implemented by child class
         :return:
         """
         pass
