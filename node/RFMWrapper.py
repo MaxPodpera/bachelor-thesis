@@ -23,7 +23,7 @@ class RFMWrapper:
         self.rfm95.node = 255
 
     def send(self, data):
-        a = self.rfm95.send()
+        a = self.rfm95.send(data, destination=255)
         print("send: ", a)
 
     def receive(self) -> Message:
