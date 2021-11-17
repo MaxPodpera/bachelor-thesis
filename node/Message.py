@@ -44,17 +44,12 @@ def to_bytes(message: Message) -> [bytearray]:
     b  = bytearray(message.recipient.encode()) + bytearray(str(message.pid).encode())
     b += bytearray(message.sender.encode()) + bytearray(str(message.sender_pid).encode())
     data_bytes = bytearray(message.data.encode())
-    print("pre", data_bytes)
-    print("len", len(data_bytes))
 
     # split message
     while len(data_bytes) > 0:
         print(result)
         result.append(b + data_bytes[:(max_data_length - len(b))])
+        print(data_bytes[max_data_length:])
         data_bytes = data_bytes[max_data_length:]
-        print("inl", data_bytes)
-        print("inll", len(data_bytes))
 
-    print("out", data_bytes)
-    print("outl", len(data_bytes))
     return result
