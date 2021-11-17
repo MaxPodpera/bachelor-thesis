@@ -15,6 +15,7 @@ if __name__ == '__main__':
     message.data = "Hello there"
     message.recipient = "bbcdef123456789d"
     message.pid = 11111
+    message.sender_pid = 22222
 
     i = 20
     while i > 0:
