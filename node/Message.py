@@ -6,7 +6,7 @@ class Message:
     data: str = None
     recipient: str = None
     pid: int = None
-    time: time.time = None
+    time: time = None
 
     def __str__(self):
         """
