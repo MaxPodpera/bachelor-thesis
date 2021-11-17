@@ -7,7 +7,7 @@ from Message import Message, from_bytes
 class RFMWrapper:
 
     rfm95: adafruit_rfm9x.RFM9x = None
-    node_id: str = None
+    node_id: int = 255
 
     def __init__(self):
         pin_cs = DigitalInOut(board.CE1)
