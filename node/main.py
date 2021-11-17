@@ -9,6 +9,7 @@ if __name__ == '__main__':
     m = Messenger()
     time.sleep(2)
     m.start()
+    print("seas")
     while True:
         m.send({"data": "hello there", "recipient": {"pid": "asdsd", "at": "45:32:21:ae:bc"}})
         time.sleep(1)
