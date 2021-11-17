@@ -53,11 +53,11 @@ class RFMWrapper:
         return m
 
     def _get_node_id(self):
-            # TODO get id
-            import os
-            os.system("blkid")
-            tmp = " ,"
-
-            tmp_array = tmp.split()
-
-            return ""
+        with open("/proc/cpuinfo", "r") as file:
+            for line in file:
+                if "Serial" in line:
+                    a = line.split(" ")
+                    print(a)
+                    print(a[2])
+                    return a
+            return None
