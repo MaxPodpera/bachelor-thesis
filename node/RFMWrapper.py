@@ -57,7 +57,7 @@ class RFMWrapper:
             for line in file:
                 if "Serial" in line:
                     a = line.split(" ")
-                    print(a)
+                    print("ids: ", a)
                     print(a[2])
                     return a
             return None
