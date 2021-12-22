@@ -26,6 +26,6 @@ if __name__ == '__main__':
     while i > 0:
         logging.info("loop")
         m.send(message)
-        time.sleep(0.5)
+        time.sleep(3)
         i = i - 1
     m.stop()
