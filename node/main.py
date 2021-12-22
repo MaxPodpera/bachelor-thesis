@@ -1,9 +1,14 @@
 import logging
 import time
+import sys
+import os
 from node.Messenger import Messenger
 from node.Message import Message
 
 if __name__ == '__main__':
+    print(sys.path)
+    sys.path.append(os.getcwd())
+    print(sys.path)
     logging.basicConfig(level=logging.INFO)
     # TODO register file interface
     # init lora device

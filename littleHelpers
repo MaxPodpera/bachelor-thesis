@@ -1,0 +1,5 @@
+# Generate UUID (MAC)
+python -c 'import sys,uuid; sys.stdout.write(uuid.uuid4().hex)' | pbcopy && pbpaste && echo
+
+# Max pid length
+/proc/sys/kernel/pid_max
