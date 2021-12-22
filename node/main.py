@@ -8,9 +8,6 @@ from node.Messenger import Messenger
 from node.Message import Message
 
 if __name__ == '__main__':
-    print(sys.path)
-
-    print(sys.path)
     logging.basicConfig(level=logging.INFO)
     # TODO register file interface
     # init lora device
@@ -29,6 +26,6 @@ if __name__ == '__main__':
     while i > 0:
         logging.info("loop")
         m.send(message)
-        time.sleep(1)
+        time.sleep(0.5)
         i = i - 1
     m.stop()
