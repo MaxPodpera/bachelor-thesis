@@ -5,17 +5,17 @@ class MessageStorage:
     def __init__(self):
         pass
 
-    def store(self, message, incoming=True):
+    def store(self, message, incoming=True) -> bool:
         """
         Store a given message returns the identifier to retrieve the message again
         :param message: to be stored
         :return: identifier to retrieve it again
         """
         print(message)
-        return ""
-        if incoming:
-            return "IN_" + message.pid + "_" + ""
-        return ""
+        #return ""
+        #if incoming:
+        #    return "IN_" + message.pid + "_" + ""
+        #return ""
 
     def get(self, identifier):
         pass

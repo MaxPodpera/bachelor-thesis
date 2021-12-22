@@ -1,8 +1,9 @@
 import logging
-from RFMWrapper import RFMWrapper
-from Independent import Independent
-from MessageStorage import MessageStorage
-from Message import Message
+from node.RFMWrapper import RFMWrapper
+from node.Independent import Independent
+from node.MessageStorage import MessageStorage
+from node.Message import Message
+from util.Utilities import *
 
 
 class Messenger(Independent):
@@ -12,9 +13,12 @@ class Messenger(Independent):
 
     send_queue: [] = []  # list of next messages to send
 
+    node_id: str = None
+
     def __init__(self):
         self.storage = MessageStorage()
         self.rfm95 = RFMWrapper()
+        self.node_id = read_uuid_file(read_config_file("uuid_file"))
         super().__init__()
 
     def run(self):
@@ -25,7 +29,7 @@ class Messenger(Independent):
         while self.active:
             received: Message = self.rfm95.receive()  # Receive new message
             if received:
-                if received.recipient != self.rfm95.node_id:
+                if received.recipient != self.node_id:
                     logging.info("Received message to be forwarded: ")
                     self.rfm95.send(received)
                 else:
@@ -33,17 +37,18 @@ class Messenger(Independent):
                     logging.info("Received message for self: ")
                     self.storage.store(received)
                 logging.info(received)
-                continue  # attempt receiving more messages before sending
+                continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
             # Nothing to send
             if self.send_queue == [] or self.send_queue is None:
                 logging.info("Nothing received, nothing to send")
                 continue
-            logging.info("Nothing received, sending")
+
             # something to send
+            logging.info("Nothing received, sending")
             self.rfm95.send(self.send_queue[0])
             self.send_queue = self.send_queue[1:]
 
     def send(self, data: Message):
-        data.sender = self.rfm95.node_id
+        data.sender = self.node_id
         self.send_queue.append(data)

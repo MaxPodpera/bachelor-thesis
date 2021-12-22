@@ -1,7 +1,7 @@
 import logging
 import time
-from Messenger import Messenger
-from Message import Message
+from node.Messenger import Messenger
+from node.Message import Message
 
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO)
@@ -11,9 +11,10 @@ if __name__ == '__main__':
     m = Messenger()
     m.start()
 
+    # Hard coded message TODO interaction with FS to load messages.
     message = Message()
     message.data = "Hello there"
-    message.recipient = "bbcdef123456789d"
+    message.recipient = "42376f7500df44e985e8f7255bcfa0f7"
     message.pid = 11111
     message.sender_pid = 22222
 
