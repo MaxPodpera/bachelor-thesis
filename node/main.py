@@ -26,6 +26,7 @@ if __name__ == '__main__':
     message.message_id = 5
     print(to_bytes(message))
     i = 1
+    time.sleep(2)
     while i > 0:
         logging.info("loop")
         m.send(message)
