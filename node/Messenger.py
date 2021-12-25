@@ -39,7 +39,7 @@ class Messenger(Independent):
                     self.rfm95.send(received)
                 else:
                     logging.info("Received message for self: ")
-                    self.storage.store(received)
+                    self.handle_received_message(received)
                 logging.info(received)
                 continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
