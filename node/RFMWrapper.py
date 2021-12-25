@@ -37,7 +37,6 @@ class RFMWrapper:
         """
         messages = to_bytes(data)
         while len(messages) > 0:
-            print(messages)
             self._rfm95.send(messages[0])
             messages = messages[1:]
 
@@ -46,7 +45,7 @@ class RFMWrapper:
         Receive data from the module. Data will be converted to message object.
         :return: Message object containing the message or None if nothing was received
         """
-        # TODO handle split messages
         d = self._rfm95.receive()
         m = from_bytes(d)
+        print(d, m)
         return m
