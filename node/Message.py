@@ -40,11 +40,8 @@ class Message:
         if message.pid != self.pid: return False
         if message.sender != self.sender: return False
         if message.sender_pid != self.sender_pid: return False
-        print(1)
         if message.sequence_number > self.related_packages: return False
-        print(1)
         if message.related_packages < self.sequence_number: return False
-        print(1)
 
         self.data += message.data
         return True

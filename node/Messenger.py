@@ -57,6 +57,13 @@ class Messenger(Independent):
         self.send_queue.append(data)
 
     def handle_received_message(self, message: Message) -> None:
+        """
+        Handling of received messages. If its a message that was sent as one package it is stored.
+        Otherwise it is added to the incomplete messages list. If all packets for a message
+        are received the complete message is stored.
+        :param message: to be handled
+        :return: None
+        """
         if message.related_packages == 0: # only a single message
             self.storage.store(message)
             return
@@ -69,5 +76,19 @@ class Messenger(Independent):
         self.incomplete_messages[str(message.message_id)].append(message)
 
         # all messages received.
+        current_sequence_number: int = 0
+        full_message: Message
         if len(self.incomplete_messages[str(message.message_id)]) == message.related_packages:
-            pass
+            for i in range(message.related_packages):
+                for m in self.incomplete_messages[str(message.message_id)]:
+                    if m.sequence_number == 0:
+                        full_message = m
+                        current_sequence_number += 1
+                        break
+                    elif m.sequence_number == current_sequence_number:
+                        full_message.combine(m)
+                        current_sequence_number += 1
+                        break
+            self.storage.store(full_message)
+            del self.incomplete_messages[str(message.message_id)]
+            return
