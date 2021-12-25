@@ -36,18 +36,14 @@ class Message:
 
     def combine(self, message) -> bool:
         if message.message_id != self.message_id: return False
-        print(1)
         if message.recipient != self.recipient: return False
-        print(1)
         if message.pid != self.pid: return False
-        print(1)
         if message.sender != self.sender: return False
-        print(1)
         if message.sender_pid != self.sender_pid: return False
         print(1)
-        if message.message_id != self.message_id: return False
+        if message.sequence_number != self.message_id: return False
         print(1)
-        if message.related_packages < self.message_id: return False
+        if message.related_packages < self.sequence_number: return False
         print(1)
         if message.message_id > self.related_packages: return False
         print(1)
@@ -175,6 +171,7 @@ m.pid = 22222
 m.sender_pid = 44444
 m.time = time.time()
 m.message_id = 1
+m.related_packages = 20
 m.data = (("A" * 254) + "|") * 9999
 a = to_bytes(m)
 m = from_bytes(a[0])
