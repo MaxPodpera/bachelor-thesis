@@ -133,7 +133,7 @@ def to_bytes(message: Message) -> [bytearray]:
     # max id.
     num_packages -= 1
 
-    str_num_packages: str = '0' * (math.floor(length_sequence_number / 2) - len(str(num_packages)) - 1) + str(num_packages)
+    str_num_packages: str = '0' * (math.floor(length_sequence_number / 2) - len(str(num_packages))) + str(num_packages)
 
     if len(str_num_packages) > math.floor(length_sequence_number / 2):
         raise Exception("Invalid amount of packages: " + str(str_num_packages) + " > " + str(math.floor(length_sequence_number / 2)))
