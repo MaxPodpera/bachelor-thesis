@@ -61,7 +61,6 @@ def from_bytes(bytes_to_convert: bytearray) -> Message:
     if len(bytes_to_convert) <= length_meta:
         return None
 
-    # TODO handle pids like 00001 str(00001) = 1
     next_part_index: int = length_node_id
     m: Message = Message()
     # From
@@ -80,7 +79,7 @@ def from_bytes(bytes_to_convert: bytearray) -> Message:
     next_part_index += length_message_id
 
     # Sequence Number
-    m.sequence_number = int(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)])
+    m.related_packages = int(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)])
     next_part_index += math.floor(length_sequence_number / 2)
     m.sequence_number = int(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)])
     next_part_index += math.floor(length_sequence_number / 2)
@@ -177,3 +176,6 @@ a = to_bytes(m)
 m = from_bytes(a[0])
 m1 = from_bytes(a[1])
 m2 = from_bytes(a[2])
+
+m.combine(m1)
+m.combine(m2)
