@@ -5,7 +5,7 @@ import os
 
 sys.path.append(os.getcwd())
 from node.Messenger import Messenger
-from node.Message import Message
+from node.Message import *
 
 if __name__ == '__main__':
     print("Am abgehen")
