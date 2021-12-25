@@ -70,3 +70,4 @@ class Messenger(Independent):
 
         # all messages received.
         if len(self.incomplete_messages[str(message.message_id)]) == message.related_packages:
+            pass

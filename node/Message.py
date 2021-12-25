@@ -36,13 +36,21 @@ class Message:
 
     def combine(self, message) -> bool:
         if message.message_id != self.message_id: return False
+        print(1)
         if message.recipient != self.recipient: return False
+        print(1)
         if message.pid != self.pid: return False
+        print(1)
         if message.sender != self.sender: return False
+        print(1)
         if message.sender_pid != self.sender_pid: return False
+        print(1)
         if message.message_id != self.message_id: return False
+        print(1)
         if message.related_packages < self.message_id: return False
+        print(1)
         if message.message_id > self.related_packages: return False
+        print(1)
 
         self.data += message.data
         return True
