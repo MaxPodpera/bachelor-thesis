@@ -2,7 +2,7 @@ import logging
 from node.RFMWrapper import RFMWrapper
 from node.Independent import Independent
 from node.MessageStorage import MessageStorage
-from node.Message import Message, to_bytes
+from node.Message import Message
 from util.Utilities import *
 
 
@@ -43,6 +43,7 @@ class Messenger(Independent):
                 logging.info(received)
                 continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
+            print("\n\nSend queue: " + str(self.send_queue))
             # Nothing to send
             if self.send_queue == [] or self.send_queue is None:
                 logging.info("Nothing received, nothing to send")
@@ -54,10 +55,8 @@ class Messenger(Independent):
             self.send_queue = self.send_queue[1:]
 
     def send(self, data: Message) -> None:
-        print(self.send_queue)
         data.sender = self.node_id
         self.send_queue.append(data)
-        print(self.send_queue)
 
     def handle_received_message(self, message: Message) -> None:
         """
