@@ -68,6 +68,10 @@ class Messenger(Independent):
         # append message to list
         self.incomplete_messages[str(message.message_id)].append(message)
 
+        # all messages received.
+        if len(self.incomplete_messages[str(message.message_id)]) == message.related_packages:
+
+
     def test(self, message):
         self.handle_received_message(message)
         print(self.incomplete_messages)

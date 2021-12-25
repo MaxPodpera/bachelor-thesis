@@ -34,6 +34,19 @@ class Message:
         """
         return "Message{to:" + str(self.pid) + ",at:" + self.recipient + ",data:" + self.data + "}"
 
+    def combine(self, message) -> bool:
+        if message.message_id != self.message_id: return False
+        if message.recipient != self.recipient: return False
+        if message.pid != self.pid: return False
+        if message.sender != self.sender: return False
+        if message.sender_pid != self.sender_pid: return False
+        if message.message_id != self.message_id: return False
+        if message.related_packages < self.message_id: return False
+        if message.message_id > self.related_packages: return False
+
+        self.data += message.data
+        return True
+
 
 def from_bytes(bytes_to_convert: bytearray) -> Message:
     """
