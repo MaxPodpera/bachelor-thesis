@@ -81,7 +81,7 @@ class Messenger(Independent):
         # all messages received.
         current_sequence_number: int = 0
         full_message: Message
-        if len(self.incomplete_messages[str(message.message_id)]) == message._related_packages:
+        if len(self.incomplete_messages[str(message.message_id)]) + 1 == message._related_packages:
             logging.debug("All of many")
             for i in range(message._related_packages):
                 for m in self.incomplete_messages[str(message.message_id)]:
