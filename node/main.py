@@ -23,7 +23,6 @@ if __name__ == '__main__':
     message.pid = 11111
     message.sender_pid = 22222
     message.message_id = 0
-    message.
 
     i = 20
     while i > 0:
