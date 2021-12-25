@@ -2,7 +2,7 @@ import logging
 from node.RFMWrapper import RFMWrapper
 from node.Independent import Independent
 from node.MessageStorage import MessageStorage
-from node.Message import Message
+from node.Message import Message, to_bytes
 from util.Utilities import *
 
 
@@ -56,7 +56,7 @@ class Messenger(Independent):
     def send(self, data: Message) -> None:
         print(self.send_queue)
         data.sender = self.node_id
-        self.send_queue.append(data)
+        self.send_queue.append(to_bytes(data))
         print(self.send_queue)
 
     def handle_received_message(self, message: Message) -> None:
