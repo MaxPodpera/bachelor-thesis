@@ -41,11 +41,9 @@ class Message:
         if message.sender != self.sender: return False
         if message.sender_pid != self.sender_pid: return False
         print(1)
-        if message.sequence_number != self.message_id: return False
+        if message.sequence_number < self.message_id: return False
         print(1)
         if message.related_packages < self.sequence_number: return False
-        print(1)
-        if message.message_id > self.related_packages: return False
         print(1)
 
         self.data += message.data
