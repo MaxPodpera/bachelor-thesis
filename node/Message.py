@@ -155,3 +155,7 @@ m.sender_pid = 44444
 m.time = time.time()
 m.message_id = 1
 m.data = (("A" * 254) + "|") * 9999
+a = to_bytes(m)
+m = from_bytes(a[0])
+m1 = from_bytes(a[1])
+m2 = from_bytes(a[2])
