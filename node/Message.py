@@ -24,8 +24,8 @@ class Message:
     sender: str = "00000000000000000000000000000000"
     sender_pid: int = -1
     time: time = None
-    sequence_number: int = 0
-    related_packages: int = -1
+    sequence_number: int = 0  # Number of this package for the message
+    _related_packages: int = -1  # How many other packages for this message
 
     def __str__(self) -> str:
         """
@@ -40,8 +40,8 @@ class Message:
         if message.pid != self.pid: return False
         if message.sender != self.sender: return False
         if message.sender_pid != self.sender_pid: return False
-        if message.sequence_number > self.related_packages: return False
-        if message.related_packages < self.sequence_number: return False
+        if message.sequence_number > self._related_packages: return False
+        if message._related_packages < self.sequence_number: return False
 
         self.data += message.data
         return True
@@ -76,7 +76,7 @@ def from_bytes(bytes_to_convert: bytearray) -> Message:
     next_part_index += length_message_id
 
     # Sequence Number
-    m.related_packages = int(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)])
+    m._related_packages = int(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)])
     next_part_index += math.floor(length_sequence_number / 2)
     m.sequence_number = int(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)])
     next_part_index += math.floor(length_sequence_number / 2)

@@ -64,7 +64,7 @@ class Messenger(Independent):
         :param message: to be handled
         :return: None
         """
-        if message.related_packages == 0: # only a single message
+        if message._related_packages == 0: # only a single message
             self.storage.store(message)
             return
 
@@ -78,8 +78,8 @@ class Messenger(Independent):
         # all messages received.
         current_sequence_number: int = 0
         full_message: Message
-        if len(self.incomplete_messages[str(message.message_id)]) == message.related_packages:
-            for i in range(message.related_packages):
+        if len(self.incomplete_messages[str(message.message_id)]) == message._related_packages:
+            for i in range(message._related_packages):
                 for m in self.incomplete_messages[str(message.message_id)]:
                     if m.sequence_number == 0:
                         full_message = m
