@@ -80,8 +80,10 @@ def from_bytes(bytes_to_convert: bytearray) -> Message:
     next_part_index += length_message_id
 
     # Sequence Number
-    m.sequence_number = int(bytes_to_convert[next_part_index: next_part_index + length_sequence_number])
-    next_part_index += length_sequence_number
+    m.sequence_number = int(bytes_to_convert[next_part_index: next_part_index + length_sequence_number / 2])
+    next_part_index += length_sequence_number / 2
+    m.sequence_number = int(bytes_to_convert[next_part_index: next_part_index + length_sequence_number / 2])
+    next_part_index += length_sequence_number / 2
 
     # Data
     m.data = bytes_to_convert[next_part_index:].decode("utf-8")
