@@ -23,7 +23,7 @@ if __name__ == '__main__':
     message.pid = 11111
     message.sender_pid = 22222
     message.message_id = 1
-
+    print(to_bytes(message))
     i = 20
     while i > 0:
         logging.info("loop")
