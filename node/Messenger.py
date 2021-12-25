@@ -23,6 +23,7 @@ class Messenger(Independent):
         self.storage = MessageStorage()
         self.rfm95 = RFMWrapper()
         self.node_id = read_uuid_file(read_config_file("uuid_file"))
+        print("Node id: " + str(self.node_id))
         super().__init__()
 
     def run(self):
