@@ -37,6 +37,7 @@ class RFMWrapper:
         """
         messages = to_bytes(data)
         while len(messages) > 0:
+            print(messages)
             self._rfm95.send(messages[0])
             messages = messages[1:]
 

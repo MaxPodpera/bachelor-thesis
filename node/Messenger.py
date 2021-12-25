@@ -43,7 +43,6 @@ class Messenger(Independent):
                 logging.info(received)
                 continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
-            print("\n\nSend queue: " + str(self.send_queue))
             # Nothing to send
             if self.send_queue == [] or self.send_queue is None:
                 logging.info("Nothing received, nothing to send")
