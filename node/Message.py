@@ -57,7 +57,8 @@ def from_bytes(bytes_to_convert: bytearray) -> Message:
         return None
     if len(bytes_to_convert) <= length_meta:
         return None
-    print("Received: " + bytes_to_convert)
+    print("Received: ")
+    print(bytes_to_convert)
     next_part_index: int = length_node_id
     m: Message = Message()
     # From
