@@ -8,6 +8,7 @@ from node.Messenger import Messenger
 from node.Message import Message
 
 if __name__ == '__main__':
+    print("Am abgehen")
     logging.basicConfig(level=logging.INFO)
     # TODO register file interface
     # init lora device
