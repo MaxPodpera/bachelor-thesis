@@ -160,19 +160,19 @@ def to_bytes(message: Message) -> [bytearray]:
     return result
 
 
-m: Message() = Message()
-m.recipient = "11111111111111111111111111111111"
-m.sender = "00000000000000000000000000000000"
-m.pid = 22222
-m.sender_pid = 44444
-m.time = time.time()
-m.message_id = 1
-m.related_packages = 20
-m.data = (("A" * 254) + "|") * 9999
-a = to_bytes(m)
-m = from_bytes(a[0])
-m1 = from_bytes(a[1])
-m2 = from_bytes(a[2])
+# m: Message() = Message()
+# m.recipient = "11111111111111111111111111111111"
+# m.sender = "00000000000000000000000000000000"
+# m.pid = 22222
+# m.sender_pid = 44444
+# m.time = time.time()
+# m.message_id = 1
+# m.related_packages = 20
+# m.data = (("A" * 254) + "|") * 9999
+# a = to_bytes(m)
+# m = from_bytes(a[0])
+# m1 = from_bytes(a[1])
+# m2 = from_bytes(a[2])
 
-m.combine(m1)
-m.combine(m2)
+# m.combine(m1)
+# m.combine(m2)
