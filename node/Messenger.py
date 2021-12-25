@@ -14,7 +14,7 @@ class Messenger(Independent):
     rfm95: RFMWrapper = None  # Access transponder
     storage: MessageStorage = None  # Access storage
 
-    send_queue: [] = []  # list of next messages to send
+    send_queue: [Message] = []  # list of next messages to send
     known_messages: [] = []
     incomplete_messages: {} = {}
     node_id: str = None
@@ -56,7 +56,7 @@ class Messenger(Independent):
     def send(self, data: Message) -> None:
         print(self.send_queue)
         data.sender = self.node_id
-        self.send_queue.append(to_bytes(data))
+        self.send_queue.append(data)
         print(self.send_queue)
 
     def handle_received_message(self, message: Message) -> None:
