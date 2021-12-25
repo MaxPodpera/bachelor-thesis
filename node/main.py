@@ -23,7 +23,7 @@ if __name__ == '__main__':
     message.recipient = "42376f7500df44e985e8f7255bcfa0f7"
     message.pid = 11111
     message.sender_pid = 22222
-    message.message_id = 1
+    message.message_id = 5
     print(to_bytes(message))
     i = 5
     while i > 0:
@@ -31,5 +31,6 @@ if __name__ == '__main__':
         m.send(message)
         time.sleep(3)
         i = i - 1
+        message.message_id = i
     time.sleep(4)
     m.stop()
