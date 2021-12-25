@@ -28,4 +28,5 @@ if __name__ == '__main__':
         m.send(message)
         time.sleep(3)
         i = i - 1
+    time.sleep(4)
     m.stop()
