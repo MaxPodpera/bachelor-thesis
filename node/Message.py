@@ -6,7 +6,7 @@ Message class. Contains definition of the Messages and functionality to convert 
 
 length_node_id: int = 32
 length_pid: int = 5
-length_frame: int = 255
+length_frame: int = 252
 length_message_id: int = 3
 length_sequence_number: int = 8  # length is expected to be of even length
 length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number + length_message_id
