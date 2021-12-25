@@ -54,8 +54,10 @@ class Messenger(Independent):
             self.send_queue = self.send_queue[1:]
 
     def send(self, data: Message) -> None:
+        print(self.send_queue)
         data.sender = self.node_id
         self.send_queue.append(data)
+        print(self.send_queue)
 
     def handle_received_message(self, message: Message) -> None:
         """
@@ -65,7 +67,7 @@ class Messenger(Independent):
         :param message: to be handled
         :return: None
         """
-        if message._related_packages == 0:  # only a single message
+        if message.related_packages == 0:  # only a single message
             logging.debug("single message")
             self.storage.store(message)
             return
@@ -83,7 +85,7 @@ class Messenger(Independent):
         full_message: Message
         if len(self.incomplete_messages[str(message.message_id)]) + 1 == message._related_packages:
             logging.debug("All of many")
-            for i in range(message._related_packages):
+            for i in range(message.related_packages):
                 for m in self.incomplete_messages[str(message.message_id)]:
                     if m.sequence_number == 0:
                         full_message = m
