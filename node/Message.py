@@ -145,13 +145,11 @@ def to_bytes(message: Message) -> [bytearray]:
         raise Exception("Invalid meta data")
 
     seq_num = 0
-
+    print(str_num_packages)
     # split message
     while len(data_bytes) > 0:
         seq_str = '0' * (math.floor(length_sequence_number / 2) - len(str(seq_num))) + str(seq_num)  # always same length
-        print(seq_str)
-        print(math.floor(length_sequence_number / 2))
-        print('0' * (math.floor(length_sequence_number / 2) - len(str(seq_num))))
+
         if len(seq_str) > math.floor(length_sequence_number):  # return everything that could receive a sequence number
             raise Exception("Attempting to use too high sequence number")
 
