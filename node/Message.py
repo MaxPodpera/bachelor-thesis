@@ -46,6 +46,10 @@ class Message:
         self.data += message.data
         return True
 
+    @property
+    def related_packages(self):
+        return self._related_packages
+
 
 def from_bytes(bytes_to_convert: bytearray) -> Message:
     """
@@ -58,8 +62,7 @@ def from_bytes(bytes_to_convert: bytearray) -> Message:
         return None
     if len(bytes_to_convert) <= length_meta:
         return None
-    print("Received: ")
-    print(bytes_to_convert)
+
     next_part_index: int = length_node_id
     m: Message = Message()
     # From
@@ -145,7 +148,7 @@ def to_bytes(message: Message) -> [bytearray]:
         raise Exception("Invalid meta data")
 
     seq_num = 0
-    print(str_num_packages)
+
     # split message
     while len(data_bytes) > 0:
         seq_str = '0' * (math.floor(length_sequence_number / 2) - len(str(seq_num))) + str(seq_num)  # always same length

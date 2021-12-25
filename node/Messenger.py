@@ -64,21 +64,24 @@ class Messenger(Independent):
         :param message: to be handled
         :return: None
         """
-        if message._related_packages == 0: # only a single message
+        if message._related_packages == 0:  # only a single message
+            logging.debug("single message")
             self.storage.store(message)
             return
 
         if str(message.message_id) not in self.incomplete_messages:  # first message
+            logging.debug("First of many")
             self.incomplete_messages[str(message.message_id)] = [message]
             return
 
         # append message to list
         self.incomplete_messages[str(message.message_id)].append(message)
-
+        logging.debug("One of many")
         # all messages received.
         current_sequence_number: int = 0
         full_message: Message
         if len(self.incomplete_messages[str(message.message_id)]) == message._related_packages:
+            logging.debug("All of many")
             for i in range(message._related_packages):
                 for m in self.incomplete_messages[str(message.message_id)]:
                     if m.sequence_number == 0:
