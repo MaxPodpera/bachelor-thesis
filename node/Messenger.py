@@ -66,7 +66,7 @@ class Messenger(Independent):
             return
 
         # append message to list
-        self.incomplete_messages[str(message.message_id)][message.sequence_number] = message
+        self.incomplete_messages[str(message.message_id)].append(message)
 
     def test(self, message):
         self.handle_received_message(message)
