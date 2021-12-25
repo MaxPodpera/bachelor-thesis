@@ -61,7 +61,7 @@ class Messenger(Independent):
             self.storage.store(message)
             return
 
-        if not self.incomplete_messages[str(message.message_id)]:  # first message
+        if str(message.message_id) in self.incomplete_messages:  # first message
             self.incomplete_messages[str(message.message_id)] = [message]
             return
 
