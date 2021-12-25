@@ -21,7 +21,7 @@ class Message:
     data: str = None
     recipient: str = address_broadcast     # Broadcast address
     pid: int = -1
-    sender: str = "00000000000000000000000000000000"
+    sender: str = "00000000000000000000000000000000" # todo maybe private
     sender_pid: int = -1
     time: time = None
     sequence_number: int = 0  # Number of this package for the message
@@ -50,7 +50,8 @@ class Message:
 def from_bytes(bytes_to_convert: bytearray) -> Message:
     """
     Convert a bytearray to a Message object. If the bytearray is invalid (length or None) None is returned.
-    :param bytes_to_convert: bytearray to be converted
+    :param bytes_to_convert: bytearray to be converted. The array is expected to be of the form:
+    |sender|sender_pid|recipient|recipient_pid|id|related_packages|seq_num|data
     :return: Message object on success None on failure
     """
     if not bytes_to_convert:
