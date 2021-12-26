@@ -48,5 +48,7 @@ class RFMWrapper:
         :return: Message object containing the message or None if nothing was received
         """
         d = self._rfm95.receive()
+        print("RECEIVED")
+        print(d)
         m = from_bytes(d)
         return m
