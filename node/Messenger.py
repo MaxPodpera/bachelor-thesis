@@ -51,6 +51,7 @@ class Messenger(Independent):
 
             # something to send
             logging.info("Nothing received, sending")
+            print(str(self.send_queue))
             if self.rfm95.send(self.send_queue[0]):
                 self.send_queue = self.send_queue[1:]
             else:
