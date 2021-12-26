@@ -31,7 +31,7 @@ if __name__ == '__main__':
     while i > 0:
         logging.info("loop")
         time.sleep(3)
-        m.send(message)
+        #m.send(message)
         i = i - 1
         message.message_id = i
     time.sleep(4)
