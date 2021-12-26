@@ -39,7 +39,7 @@ class RFMWrapper:
         while len(packages) > 0:
             print("SENDING")
             print(packages[0])
-            self._rfm95.send(packages[0])
+            self._rfm95.send(packages[0], keep_listening=True)
             packages = packages[1:]
 
     def receive(self) -> Message:
