@@ -52,9 +52,7 @@ class Messenger(Independent):
             # something to send
             logging.info("Nothing received, sending")
             if self.rfm95.send(self.send_queue[0]):
-                print("Sent packet: " + str(self.send_queue[0]))
                 self.send_queue = self.send_queue[1:]
-                print("New queue: " + str(self.send_queue))
             else:
                 print("Failed to send")
 
