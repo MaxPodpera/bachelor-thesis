@@ -36,7 +36,8 @@ class Messenger(Independent):
             if received:
                 if received.recipient != self.node_id:
                     logging.info("Received message to be forwarded: ")
-                    self.rfm95.send(received)
+                    if received.sender != self.node_id:
+                        self.rfm95.send(received)
                 else:
                     logging.info("Received message for self: ")
                     self.handle_received_message(received)
