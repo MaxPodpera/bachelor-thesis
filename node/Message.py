@@ -32,7 +32,7 @@ class Message:
         For printing only
         :return:
         """
-        return "Message{\nto:" + str(self.recipient) + ",\nfrom:" + self.recipient + ",\ndata:" + self.data \
+        return "Message{\nto:" + str(self.recipient) + ",\nfrom:" + self.sender + ",\ndata:" + self.data \
                + ",\nsequence_number:" + str(self.sequence_number) + ",\nrelated_packages:" \
                + str(self._related_packages) + "\n}"
 
