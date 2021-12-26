@@ -90,7 +90,8 @@ class Messenger(Independent):
                         current_sequence_number += 1
                         break
                     elif m.sequence_number == current_sequence_number:
-                        full_message.combine(m)
+                        if not full_message.combine(m):
+                            logging.info("Failed to combine message")
                         current_sequence_number += 1
                         break
             self.storage.store(full_message)
