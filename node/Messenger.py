@@ -57,6 +57,8 @@ class Messenger(Independent):
                 print("Failed to send")
 
     def send(self, data: Message) -> None:
+        if data.recipient == self.node_id:
+            return
         data.sender = self.node_id
         self.send_queue.append(data)
 
