@@ -32,6 +32,9 @@ class Messenger(Independent):
         :return: void
         """
         while self.active:
+            print("\n")
+            print(str(self.send_queue))
+            print("\n")
             received: Message = self.rfm95.receive()  # Receive new message
             if received:
                 if received.recipient != self.node_id:
