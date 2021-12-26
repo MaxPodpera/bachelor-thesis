@@ -1,6 +1,7 @@
 import board
 import busio
 import adafruit_rfm9x
+import time
 from digitalio import DigitalInOut
 from node.Message import *
 
@@ -42,6 +43,7 @@ class RFMWrapper:
             print(packages[0])
             success &= self._rfm95.send(packages[0], keep_listening=True)
             packages = packages[1:]
+            time.sleep(1)
         return success
 
     def receive(self) -> Message:
