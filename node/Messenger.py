@@ -35,21 +35,21 @@ class Messenger(Independent):
             received: Message = self.rfm95.receive()  # Receive new message
             if received:
                 if received.recipient != self.node_id:
-                    logging.info("Received message to be forwarded: ")
+                    #logging.info("Received message to be forwarded: ")
                     self.rfm95.send(received)
                 else:
-                    logging.info("Received message for self: ")
+                    #logging.info("Received message for self: ")
                     self.handle_received_message(received)
                 logging.info(received)
                 continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
             # Nothing to send
             if self.send_queue == [] or self.send_queue is None:
-                logging.info("Nothing received, nothing to send")
+                #logging.info("Nothing received, nothing to send")
                 continue
 
             # something to send
-            logging.info("Nothing received, sending")
+            #logging.info("Nothing received, sending")
             self.rfm95.send(self.send_queue[0])
             self.send_queue = self.send_queue[1:]
 
