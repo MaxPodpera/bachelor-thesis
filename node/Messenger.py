@@ -53,8 +53,10 @@ class Messenger(Independent):
 
             # something to send
             #logging.info("Nothing received, sending")
-            self.rfm95.send(self.send_queue[0])
-            self.send_queue = self.send_queue[1:]
+            if self.rfm95.send(self.send_queue[0]):
+                self.send_queue = self.send_queue[1:]
+            else:
+                print("Failed to send")
 
     def send(self, data: Message) -> None:
         data.sender = self.node_id
