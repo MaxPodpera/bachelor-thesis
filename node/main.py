@@ -29,8 +29,8 @@ if __name__ == '__main__':
     time.sleep(2)
     while i > 0:
         logging.info("loop")
-        m.send(message)
         time.sleep(3)
+        m.send(message)
         i = i - 1
         message.message_id = i
     time.sleep(4)

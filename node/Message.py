@@ -32,7 +32,9 @@ class Message:
         For printing only
         :return:
         """
-        return "Message{to:" + str(self.pid) + ",from:" + self.recipient + ",data:" + self.data + ",sequence_number:" + str(self.sequence_number) + "}"
+        return "Message{\nto:" + str(self.pid) + ",\nfrom:" + self.recipient + ",\ndata:" + self.data \
+               + ",\nsequence_number:" + str(self.sequence_number) + ",\nrelated_packages:" \
+               + str(self._related_packages) + "\n}"
 
     def combine(self, message) -> bool:
         if message.message_id != self.message_id: return False
