@@ -34,5 +34,5 @@ if __name__ == '__main__':
         m.send(message)
         i = i - 1
         message.message_id = i
-    time.sleep(10)
+    time.sleep(30)
     m.stop()
