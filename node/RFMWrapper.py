@@ -38,6 +38,9 @@ class RFMWrapper:
         """
         packages: [bytearray] = to_bytes(data)
         success: bool = True
+        print("This will be sent")
+        print(data)
+        print(packages)
         data.related_packages = len(packages) - 1
         while len(packages) > 0 and success:
             success &= self._rfm95.send(packages[0], keep_listening=True)
