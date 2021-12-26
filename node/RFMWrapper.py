@@ -31,16 +31,16 @@ class RFMWrapper:
     def send(self, data: Message):
         """
         Takes a message object to be send. If the message is too large to be sent
-        as one, multiple messages will be send.
+        as one, multiple packages will be send.
         :param data: to be sent
         :return: void
         """
-        messages = to_bytes(data)
-        while len(messages) > 0:
+        packages = to_bytes(data)
+        while len(packages) > 0:
             print("SENDING")
-            print(data[0])
-            self._rfm95.send(messages[0])
-            messages = messages[1:]
+            print(packages[0])
+            self._rfm95.send(packages[0])
+            packages = packages[1:]
 
     def receive(self) -> Message:
         """
