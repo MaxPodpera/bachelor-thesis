@@ -37,6 +37,8 @@ class RFMWrapper:
         """
         messages = to_bytes(data)
         while len(messages) > 0:
+            print("SENDING")
+            print(data[0])
             self._rfm95.send(messages[0])
             messages = messages[1:]
 
@@ -47,5 +49,4 @@ class RFMWrapper:
         """
         d = self._rfm95.receive()
         m = from_bytes(d)
-        print(d, m)
         return m
