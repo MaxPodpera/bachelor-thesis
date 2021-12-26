@@ -43,7 +43,7 @@ class Message:
         if message.sender != self.sender: return False
         if message.sender_pid != self.sender_pid: return False
         if message.sequence_number > self._related_packages: return False
-        if message._related_packages < self.sequence_number: return False
+        if message.related_packages < self.sequence_number: return False
 
         print("Combining: " + self.data)
         print("And: " + message.data)
@@ -74,6 +74,7 @@ def from_bytes(bytes_to_convert: bytearray) -> Message:
 
     next_part_index: int = length_node_id
     m: Message = Message()
+
     # From
     m.recipient = bytes_to_convert[:next_part_index].decode("utf-8")
     m.pid = int(bytes_to_convert[next_part_index: next_part_index + length_pid].decode("utf-8"))

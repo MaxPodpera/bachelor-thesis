@@ -43,7 +43,7 @@ class RFMWrapper:
         while len(packages) > 0 and success:
             print("SENDING")
             print(packages[0])
-            success &= self._rfm95.send(packages[0], keep_listening=True)
+            success &= self._rfm95.send(packages[1], keep_listening=True)
             packages = packages[1:]
             time.sleep(1)
         return success
