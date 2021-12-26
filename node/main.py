@@ -29,9 +29,9 @@ if __name__ == '__main__':
     i = 1
     time.sleep(2)
     while i > 0:
-        logging.info("Adding to queue")
         m.send(message)
+        time.sleep(2)
         i = i - 1
         message.message_id = i
-    time.sleep(30)
+    time.sleep(10)
     m.stop()
