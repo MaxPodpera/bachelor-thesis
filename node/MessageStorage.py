@@ -11,7 +11,7 @@ class MessageStorage:
         :param message: to be stored
         :return: identifier to retrieve it again
         """
-        print("\n\n\n\n\n\n" + str(message))
+        print("\n\n\n\n\nTO STORAGE:\n" + str(message))
         #return ""
         #if incoming:
         #    return "IN_" + message.pid + "_" + ""
