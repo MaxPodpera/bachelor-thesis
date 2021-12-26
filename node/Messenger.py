@@ -32,35 +32,36 @@ class Messenger(Independent):
         :return: void
         """
         while self.active:
-            print("\n")
-            print(str(self.send_queue))
-            print("\n")
             received: Message = self.rfm95.receive()  # Receive new message
             if received:
                 if received.recipient != self.node_id:
-                    #logging.info("Received message to be forwarded: ")
+                    logging.info("Received message to be forwarded: ")
                     self.rfm95.send(received)
                 else:
-                    #logging.info("Received message for self: ")
+                    logging.info("Received message for self: ")
                     self.handle_received_message(received)
                 logging.info(received)
                 continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
             # Nothing to send
             if self.send_queue == [] or self.send_queue is None:
-                #logging.info("Nothing received, nothing to send")
+                logging.info("Nothing received, nothing to send")
                 continue
 
             # something to send
-            #logging.info("Nothing received, sending")
+            logging.info("Nothing received, sending")
             if self.rfm95.send(self.send_queue[0]):
+                print("Sent packet: " + str(self.send_queue[0]))
                 self.send_queue = self.send_queue[1:]
+                print("New queue: " + str(self.send_queue))
             else:
                 print("Failed to send")
 
     def send(self, data: Message) -> None:
         data.sender = self.node_id
+        print("Add sender" + str(data.sender))
         self.send_queue.append(data)
+        print("New sendqueue" + str(self.send_queue))
 
     def handle_received_message(self, message: Message) -> None:
         """

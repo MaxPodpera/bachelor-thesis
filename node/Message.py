@@ -21,7 +21,7 @@ class Message:
     data: str = None
     recipient: str = address_broadcast     # Broadcast address
     pid: int = -1
-    sender: str = "00000000000000000000000000000000" # todo maybe private
+    sender: str = "00000000000000000000000000000000"  # todo maybe private
     sender_pid: int = -1
     time: time = None
     sequence_number: int = 0  # Number of this package for the message
@@ -44,6 +44,7 @@ class Message:
         if message.sender_pid != self.sender_pid: return False
         if message.sequence_number > self._related_packages: return False
         if message._related_packages < self.sequence_number: return False
+
         print("Combining: " + self.data)
         print("And: " + message.data)
         self.data += message.data

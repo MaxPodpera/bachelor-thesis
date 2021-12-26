@@ -36,8 +36,9 @@ class RFMWrapper:
         :param data: to be sent
         :return: void
         """
-        packages = to_bytes(data)
-        success = True
+        packages: [bytearray] = to_bytes(data)
+        success: bool = True
+        print("Message split to be: " + str(packages))
         while len(packages) > 0 and success:
             print("SENDING")
             print(packages[0])
