@@ -32,7 +32,7 @@ class Message:
         For printing only
         :return:
         """
-        return "Message{\nto:" + str(self.pid) + ",\nfrom:" + self.recipient + ",\ndata:" + self.data \
+        return "Message{\nto:" + str(self.recipient) + ",\nfrom:" + self.recipient + ",\ndata:" + self.data \
                + ",\nsequence_number:" + str(self.sequence_number) + ",\nrelated_packages:" \
                + str(self._related_packages) + "\n}"
 
@@ -53,6 +53,11 @@ class Message:
     @property
     def related_packages(self):
         return self._related_packages
+
+    # TODO is this needed
+    @related_packages.setter
+    def related_packages(self, value):
+        self._related_packages = value
 
 
 def from_bytes(bytes_to_convert: bytearray) -> Message:

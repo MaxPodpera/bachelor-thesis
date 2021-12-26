@@ -72,7 +72,7 @@ class Messenger(Independent):
         :return: None
         """
         if message.related_packages == 0:  # only a single message
-            logging.debug("single message")
+            logging.debug("Single message")
             self.storage.store(message)
             return
 

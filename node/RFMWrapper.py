@@ -39,6 +39,7 @@ class RFMWrapper:
         packages: [bytearray] = to_bytes(data)
         success: bool = True
         print("Message split to be: " + str(packages))
+        data.related_packages = len(packages)
         while len(packages) > 0 and success:
             print("SENDING")
             print(packages[0])
