@@ -20,7 +20,7 @@ if __name__ == '__main__':
     message.data = "Hello there this is an amazing message that is very long so it needs more than one package" \
                    "to be sent over completely. It will be printed once everything was received. This requires some" \
                    "more characters though."
-    message.recipient = "1078946dcbc548129b23bb2014a9ef53"  # "42376f7500df44e985e8f7255bcfa0f7"
+    message.recipient = "42376f7500df44e985e8f7255bcfa0f7"
     message.pid = 11111
     message.sender_pid = 22222
     message.message_id = 5
