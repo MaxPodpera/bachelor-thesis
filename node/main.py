@@ -24,8 +24,6 @@ if __name__ == '__main__':
     message.pid = 11111
     message.sender_pid = 22222
     message.message_id = 5
-    print("1")
-    print(to_bytes(message))
     i = 1
     time.sleep(2)
     while i > 0:

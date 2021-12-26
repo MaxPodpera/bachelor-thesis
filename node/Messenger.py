@@ -59,9 +59,8 @@ class Messenger(Independent):
 
     def send(self, data: Message) -> None:
         data.sender = self.node_id
-        print("Add sender" + str(data.sender))
+        print(str(data))
         self.send_queue.append(data)
-        print("New sendqueue" + str(self.send_queue))
 
     def handle_received_message(self, message: Message) -> None:
         """
