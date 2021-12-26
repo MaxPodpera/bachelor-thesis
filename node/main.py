@@ -33,5 +33,5 @@ if __name__ == '__main__':
         time.sleep(2)
         i = i - 1
         message.message_id = i
-    time.sleep(10)
-    m.stop()
+    #time.sleep(100000)
+    #m.stop()
