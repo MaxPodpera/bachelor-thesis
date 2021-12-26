@@ -24,10 +24,10 @@ class RFMWrapper:
         frequency = 868.0
         self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self._rfm95.tx_power = 23
-        self._rfm95.destination = 2
+        self._rfm95.destination = 255
         self._rfm95.enable_crc = True
-        self._rfm95.identifier = 2
-        self._rfm95.node = 2
+        self._rfm95.identifier = 255
+        self._rfm95.node = 255
 
     def send(self, data: Message) -> bool:
         """
@@ -38,9 +38,6 @@ class RFMWrapper:
         """
         packages: [bytearray] = to_bytes(data)
         success: bool = True
-        print("This will be sent")
-        print(data)
-        print(packages)
         data.related_packages = len(packages) - 1
         while len(packages) > 0 and success:
             success &= self._rfm95.send(packages[0], keep_listening=True)
@@ -53,8 +50,5 @@ class RFMWrapper:
         :return: Message object containing the message or None if nothing was received
         """
         d = self._rfm95.receive()
-        if d:
-            print("RECEIVED")
-            print(d)
         m = from_bytes(d)
         return m

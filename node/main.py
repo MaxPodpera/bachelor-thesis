@@ -29,8 +29,7 @@ if __name__ == '__main__':
     i = 1
 
     while i > 0:
-        logging.info("loop")
-        time.sleep(3)
+        logging.info("Adding to queue")
         m.send(message)
         i = i - 1
         message.message_id = i
