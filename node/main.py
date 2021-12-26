@@ -26,6 +26,7 @@ if __name__ == '__main__':
     message.message_id = 5
     i = 1
     time.sleep(2)
+    print("TO begin with" + str(message))
     while i > 0:
         logging.info("loop")
         time.sleep(3)
