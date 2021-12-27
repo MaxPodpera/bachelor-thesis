@@ -41,7 +41,6 @@ class Messenger(Independent):
                 else:
                     logging.info("Received message for self: ")
                     self.handle_received_message(received)
-                logging.info(received)
                 continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
             # Nothing to send
