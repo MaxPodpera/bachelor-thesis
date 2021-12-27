@@ -41,8 +41,6 @@ class RFMWrapper:
         data.related_packages = len(packages) - 1
         while len(packages) > 0 and success:
             success &= self._rfm95.send_with_ack(packages[0])
-            print("SENDING: ")
-            print(packages[0], self._rfm95.crc_error)
             packages = packages[1:]
         return success
 
@@ -55,6 +53,6 @@ class RFMWrapper:
         if d:
             print("RECEIVED")
             print(d, "\n")
-        print(self._rfm95.rssi, self._rfm95.crc_error_count, self._rfm95.snr)
+        #print(self._rfm95.rssi, self._rfm95.crc_error_count, self._rfm95.snr)
         m = from_bytes(d)
         return m
