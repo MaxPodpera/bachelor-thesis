@@ -15,8 +15,8 @@ class Messenger(Independent):
     storage: MessageStorage = None  # Access storage
 
     send_queue: [Message] = []  # list of next messages to send
-    known_messages: [] = []
-    incomplete_messages: {} = {}
+    known_messages: [int] = []
+    incomplete_messages: {str: [Message]} = {}
     node_id: str = None
 
     def __init__(self):
@@ -87,7 +87,7 @@ class Messenger(Independent):
         current_sequence_number: int = 0
         full_message: Message
         if len(self.incomplete_messages[str(message.message_id)]) + 1 == message._related_packages:
-            logging.debug("All of many")
+            logging.debug("Last one")
             for i in range(message.related_packages):
                 for m in self.incomplete_messages[str(message.message_id)]:
                     if m.sequence_number == 0:
