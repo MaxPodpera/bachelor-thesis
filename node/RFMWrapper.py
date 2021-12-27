@@ -36,8 +36,8 @@ class RFMWrapper:
         :param data: to be sent
         :return: void
         """
-        packages: [bytearray] = to_bytes(data)
-        packages.append(bytearray("00000000000000000000000000000".encode()))
+        packages: [bytearray] = bytearray("000".encode()).append(to_bytes(data))
+
         success: bool = True
         data.related_packages = len(packages) - 1
         while len(packages) > 0 and success:
