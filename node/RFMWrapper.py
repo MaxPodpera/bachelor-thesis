@@ -22,14 +22,12 @@ class RFMWrapper:
         pin_spi = busio.SPI(board.SCK, MOSI=board.MOSI, MISO=board.MISO)
         baudrate = 1000000
         frequency = 868.0
-        self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
+        self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate, crc=False)
         self._rfm95.tx_power = 23
         self._rfm95.destination = 255
         self._rfm95.enable_crc = True
         self._rfm95.identifier = 255
         self._rfm95.node = 255
-        print(self._rfm95)
-        self._rfm95.enable_crc(True)
 
     def send(self, data: Message) -> bool:
         """
