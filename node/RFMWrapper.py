@@ -28,6 +28,7 @@ class RFMWrapper:
         self._rfm95.enable_crc = True
         self._rfm95.identifier = 255
         self._rfm95.node = 255
+        print(self._rfm95)
         self._rfm95.enable_crc(True)
 
     def send(self, data: Message) -> bool:
