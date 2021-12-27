@@ -40,7 +40,7 @@ class RFMWrapper:
         success: bool = True
         data.related_packages = len(packages) - 1
         while len(packages) > 0 and success:
-            success &= self._rfm95.send(packages[0])
+            success &= self._rfm95.send_with_ack(packages[0])
             print("SENDING: ")
             print(packages[0])
             packages = packages[1:]
@@ -51,6 +51,6 @@ class RFMWrapper:
         Receive data from the module. Data will be converted to message object.
         :return: Message object containing the message or None if nothing was received
         """
-        d = self._rfm95.receive(with_ack=False)
+        d = self._rfm95.receive(with_ack=True)
         m = from_bytes(d)
         return m
