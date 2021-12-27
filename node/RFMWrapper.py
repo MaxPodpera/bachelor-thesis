@@ -54,6 +54,7 @@ class RFMWrapper:
         d = self._rfm95.receive(with_ack=True, keep_listening=True)
         if d:
             print("RECEIVED")
-            print(d, self._rfm95.crc_error)
+            print(d, "\n")
+            print(self._rfm95.rssi, self._rfm95.crc_error_count, self._rfm95.snr)
         m = from_bytes(d)
         return m
