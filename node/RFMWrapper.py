@@ -28,6 +28,7 @@ class RFMWrapper:
         self._rfm95.enable_crc = True
         self._rfm95.identifier = 255
         self._rfm95.node = 255
+        self._rfm95.enable_crc(True)
 
     def send(self, data: Message) -> bool:
         """
@@ -42,7 +43,7 @@ class RFMWrapper:
         while len(packages) > 0 and success:
             success &= self._rfm95.send_with_ack(packages[0])
             print("SENDING: ")
-            print(packages[0])
+            print(packages[0], self._rfm95.crc_error())
             packages = packages[1:]
         return success
 
