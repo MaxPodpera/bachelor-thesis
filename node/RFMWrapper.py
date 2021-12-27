@@ -42,7 +42,7 @@ class RFMWrapper:
         while len(packages) > 0 and success:
             success &= self._rfm95.send_with_ack(packages[0])
             print("SENDING: ")
-            print(packages[0], self._rfm95.crc_error())
+            print(packages[0], self._rfm95.crc_error)
             packages = packages[1:]
         return success
 
