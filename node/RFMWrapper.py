@@ -44,6 +44,7 @@ class RFMWrapper:
             print("SENDING: ")
             print(packages[0])
             packages = packages[1:]
+            time.sleep(2)
         return success
 
     def receive(self) -> Message:
