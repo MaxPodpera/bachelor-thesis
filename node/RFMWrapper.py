@@ -37,6 +37,7 @@ class RFMWrapper:
         :return: void
         """
         packages: [bytearray] = to_bytes(data)
+        packages.append(bytearray("00000000000000000000000000000"))
         success: bool = True
         data.related_packages = len(packages) - 1
         while len(packages) > 0 and success:
