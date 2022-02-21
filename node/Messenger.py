@@ -2,11 +2,6 @@ import logging
 from node.RFMWrapper import RFMWrapper
 from node.Independent import Independent
 from node.MessageStorage import MessageStorage
-print(read_config_file("message"))
-print(read_config_file("message.meta"))
-print(read_config_file("message.meta.length_id"))
-print(int(read_config_file("message.meta.length_id")))
-
 from node.Message import Message
 from node.MessageOrganiser import MessageOrganiser
 from util.Utilities import *
