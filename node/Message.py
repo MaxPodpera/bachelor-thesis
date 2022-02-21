@@ -4,15 +4,16 @@ import math
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
 """
 
-length_node_id: int = 32
-length_pid: int = 5
-length_frame: int = 252
-length_message_id: int = 3
-length_sequence_number: int = 8  # length is expected to be of even length
+length_node_id: int = read_config_file("message.meta.length_id")
+length_pid: int = read_config_file("message.meta.length_pid")
+length_frame: int = read_config_file("message.meta.length_frame")
+length_message_id: int = read_config_file("message.meta.length_message_id")
+length_sequence_number: int = read_config_file("message.meta.length_sequence_number")  # length is expected to be of
+# even length
 length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number + length_message_id
 length_max_data: int = length_frame - length_meta
 
-address_broadcast: str = "00000000000000000000000000000000"
+address_broadcast: str = read_config_file("message.broadcast_address")
 
 
 class Message:
@@ -36,7 +37,7 @@ class Message:
                + ",\nsequence_number:" + str(self.sequence_number) + ",\nrelated_packages:" \
                + str(self._related_packages) + "\n}"
 
-    def combine(self, message) -> bool:
+    def combine(self, message: Message) -> bool:
         if message.message_id != self.message_id: return False
         if message.recipient != self.recipient: return False
         if message.pid != self.pid: return False
@@ -173,21 +174,3 @@ def to_bytes(message: Message) -> [bytearray]:
         seq_num += 1
 
     return result
-
-
-# m: Message() = Message()
-# m.recipient = "11111111111111111111111111111111"
-# m.sender = "00000000000000000000000000000000"
-# m.pid = 22222
-# m.sender_pid = 44444
-# m.time = time.time()
-# m.message_id = 1
-# m.related_packages = 20
-# m.data = (("A" * 254) + "|") * 9999
-# a = to_bytes(m)
-# m = from_bytes(a[0])
-# m1 = from_bytes(a[1])
-# m2 = from_bytes(a[2])
-
-# m.combine(m1)
-# m.combine(m2)

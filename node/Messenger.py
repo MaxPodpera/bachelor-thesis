@@ -3,20 +3,15 @@ from node.RFMWrapper import RFMWrapper
 from node.Independent import Independent
 from node.MessageStorage import MessageStorage
 from node.Message import Message
+from node.MessageOrganiser import MessageOrganiser
 from util.Utilities import *
-
-
-ms_keep_message_in_storage = 50000
 
 
 class Messenger(Independent):
 
     rfm95: RFMWrapper = None  # Access transponder
     storage: MessageStorage = None  # Access storage
-
-    send_queue: [Message] = []  # list of next messages to send
-    known_messages: [int] = []
-    incomplete_messages: {str: [Message]} = {}
+    organiser: MessageOrganiser = MessageOrganiser()
     node_id: str = None
 
     def __init__(self):
@@ -33,71 +28,26 @@ class Messenger(Independent):
         """
         while self.active:
             received: Message = self.rfm95.receive()  # Receive new message
-            if received:
-                if received.recipient != self.node_id:
-                    logging.info("Received message to be forwarded: ")
-                    if received.sender != self.node_id:  # TODO check for known messages instead
-                        self.rfm95.send(received)
-                else:
-                    logging.info("Received message for self: ")
-                    self.handle_received_message(received)
+            if received:                              # Check if something was received
+                self.organiser.push_to_received(received)  # Add to relevant queues and lists
                 continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
+            # Check send queue
+            package = self.organiser.pop_from_send()
             # Nothing to send
-            if self.send_queue == [] or self.send_queue is None:
+            if package is None:
                 logging.info("Nothing received, nothing to send")
                 continue
 
-            # something to send
+            # package to be sent
             logging.info("Nothing received, sending")
-            if self.rfm95.send(self.send_queue[0]):
-                self.send_queue = self.send_queue[1:]
+            if self.rfm95.send(package):
+                logging.info("Sent package")
             else:
-                print("Failed to send")
+                self.organiser.push_to_send(package)
 
     def send(self, data: Message) -> None:
         if data.recipient == self.node_id:
             return
         data.sender = self.node_id
-        self.send_queue.append(data)
-
-    def handle_received_message(self, message: Message) -> None:
-        """
-        Handling of received messages. If its a message that was sent as one package it is stored.
-        Otherwise it is added to the incomplete messages list. If all packets for a message
-        are received the complete message is stored.
-        :param message: to be handled
-        :return: None
-        """
-        if message.related_packages == 0:  # only a single message
-            logging.debug("Single message")
-            self.storage.store(message)
-            return
-
-        if str(message.message_id) not in self.incomplete_messages:  # first message
-            logging.debug("First of many")
-            self.incomplete_messages[str(message.message_id)] = [message]
-            return
-
-        # append message to list
-        self.incomplete_messages[str(message.message_id)].append(message)
-        logging.debug("One of many")
-        # all messages received.
-        current_sequence_number: int = 0
-        full_message: Message
-        if len(self.incomplete_messages[str(message.message_id)]) + 1 == message._related_packages:
-            logging.debug("Last one")
-            for i in range(message.related_packages):
-                for m in self.incomplete_messages[str(message.message_id)]:
-                    if m.sequence_number == 0:
-                        full_message = m
-                        current_sequence_number += 1
-                        break
-                    elif m.sequence_number == current_sequence_number:
-                        if not full_message.combine(m):
-                            logging.info("Failed to combine message")
-                        current_sequence_number += 1
-                        break
-            self.storage.store(full_message)
-            del self.incomplete_messages[str(message.message_id)]
-            return
+        self.organiser.push_to_send(data)

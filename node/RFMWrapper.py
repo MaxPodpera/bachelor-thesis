@@ -53,6 +53,6 @@ class RFMWrapper:
         if d:
             print("RECEIVED")
             print(d, "\n")
-        #print(self._rfm95.rssi, self._rfm95.crc_error_count, self._rfm95.snr)
+
         m = from_bytes(d)
         return m

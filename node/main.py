@@ -2,7 +2,6 @@ import logging
 import time
 import sys
 import os
-
 sys.path.append(os.getcwd())
 from node.Messenger import Messenger
 from node.Message import *
@@ -14,8 +13,11 @@ if __name__ == '__main__':
     # on file or network action take file or network action respectively
     m = Messenger()
     m.start()
+
+    # testing
+
     time.sleep(2)
-    #
+
     # Hard coded message TODO interaction with FS to load messages.
     message = Message()
     message.data = "Hello there this is an amazing message that is very long so it needs more than one package" \
