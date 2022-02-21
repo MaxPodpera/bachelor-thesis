@@ -1,5 +1,7 @@
 from node.Message import *
 from util.Utilities import read_config_file
+from typing import Union
+
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
 
@@ -24,7 +26,7 @@ class MessageOrganiser:
         """
         self.queue_send.append(message)
 
-    def pop_from_send(self) -> Message | None:
+    def pop_from_send(self) -> Union[Message, None]:
         """
         Get element from the list of Messages to be sent.
         The element is then removed from they queue
@@ -65,7 +67,7 @@ class MessageOrganiser:
         """
         return message_id in self.queue_received
 
-    def _handle_message(self, message: Message) -> Message | None:
+    def _handle_message(self, message: Message) -> Union[Message, None]:
         """
         Check if message is split in multiple packages. Returns a message if it is complete
         :param message: to be checked
