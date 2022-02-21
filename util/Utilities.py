@@ -30,6 +30,7 @@ def read_config_file(key: str) -> str:
         with open(sys.argv[1], 'r') as file:
             config = yaml.safe_load(file)
             value = config
+            print(key)
             for k in key.split("."):
                 print(k, value)
                 value = value[k]
