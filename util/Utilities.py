@@ -30,7 +30,9 @@ def read_config_file(key: str) -> str:
             config = yaml.safe_load(file)
             value = config
             for k in key.split("."):
+                print(k, value)
                 value = value[k]
+            print(value)
             if value is None:
                 return ""
             return value
