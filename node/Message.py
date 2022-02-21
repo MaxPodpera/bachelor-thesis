@@ -6,7 +6,6 @@ from util.Utilities import read_config_file
 """
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
 """
-print(read_config_file("uuid_file"))
 print(read_config_file("message.meta"))
 print(read_config_file("message.meta.length_id"))
 print(int(read_config_file("message.meta.length_id")))
