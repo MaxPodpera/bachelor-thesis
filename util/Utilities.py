@@ -31,6 +31,8 @@ def read_config_file(key: str) -> str:
             value = config
             for k in key.split("."):
                 value = value[k]
+            if value is None:
+                return ""
             return value
     except Exception as e:
         return None
