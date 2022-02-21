@@ -39,6 +39,6 @@ def read_config_file(key: str) -> str:
             print(value)
             if value is None:
                 return ""
-            return value
+        return value
     except Exception as e:
         return None
