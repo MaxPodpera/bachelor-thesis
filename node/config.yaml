@@ -9,3 +9,13 @@ message:
     length_frame: 252
     length_message_id: 3
     length_sequence_number: 8  # expected to be even length
+rfm:
+  timeout_receive: 20
+  node: 255
+  receive_timeout: 20
+  receive_keep_listening: True
+  send_keep_listening: True
+  send_destination: 255
+  send_node: 255
+  identifier:
+  identifiere
