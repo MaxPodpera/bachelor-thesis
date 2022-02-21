@@ -36,12 +36,16 @@ class RFMWrapper:
         :param data: to be sent
         :return: void
         """
+        print(data)
         packages: [bytearray] = to_bytes(data)
         success: bool = True
         data.related_packages = len(packages) - 1
+        for p in packages:
+            print(p)
+            print(from_bytes(p))
+
         while len(packages) > 0 and success:
-            success &= self._rfm95.send_with_ack(packages[0])
-            packages = packages[1:]
+            success &= self._rfm95.send_with_ack(packages.pop(0))
         return success
 
     def receive(self) -> Message:

@@ -25,9 +25,6 @@ class MessageOrganiser:
         :return: void
         """
         self.queue_send.append(message)
-        print("New Send queue")
-        for m in self.queue_send:
-            print(m)
 
     def pop_from_send(self) -> Union[Message, None]:
         """
