@@ -40,11 +40,9 @@ class RFMWrapper:
         packages: [bytearray] = to_bytes(data)
         success: bool = True
         data.related_packages = len(packages) - 1
-        for p in packages:
-            print(p)
-            print(from_bytes(p))
 
         while len(packages) > 0 and success:
+            print(packages[0])
             success &= self._rfm95.send_with_ack(packages.pop(0))
         return success
 
