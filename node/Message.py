@@ -8,7 +8,7 @@ Message class. Contains definition of the Messages and functionality to convert 
 """
 print(read_config_file("message.meta"))
 print(read_config_file("message.meta.length_id"))
-print(int(read_config_file("message.meta.length_id")))
+print(read_config_file("message.meta.length_id"))
 print("oida he")
 length_node_id: int = int(read_config_file("message.meta.length_id"))
 length_pid: int = int(read_config_file("message.meta.length_pid"))
