@@ -1,5 +1,6 @@
 import time
 import math
+from util.Utilities import read_config_file
 """
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
 """

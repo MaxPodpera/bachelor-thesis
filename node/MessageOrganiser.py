@@ -1,4 +1,5 @@
 from node.Message import *
+from util.Utilities import read_config_file
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
 
