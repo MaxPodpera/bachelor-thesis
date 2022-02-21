@@ -26,7 +26,7 @@ class MessageOrganiser:
         """
         self.queue_send.append(message)
         print("New Send queue")
-        print(str(self.queue_send))
+        print(','.join(self.queue_send))
 
     def pop_from_send(self) -> Union[Message, None]:
         """
