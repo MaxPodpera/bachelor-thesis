@@ -27,10 +27,7 @@ def read_config_file(key: str) -> str:
     """
     try:
         with open(sys.argv[1], 'r') as file:
-            print("Heee")
-            print(file)
-            config = None
-            print(yaml.safe_load(file))
+            config = yaml.safe_load(file)
             print("afteryaml")
             print(config)
             value = config
