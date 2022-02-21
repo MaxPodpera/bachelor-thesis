@@ -25,6 +25,7 @@ class MessageOrganiser:
         :return: void
         """
         self.queue_send.append(message)
+        print("New Send queue" + str(self.queue_send))
 
     def pop_from_send(self) -> Union[Message, None]:
         """
@@ -44,6 +45,7 @@ class MessageOrganiser:
         :param message: received message
         :return: void
         """
+        print(message)
         # Already received
         if self.was_received(message.message_id):
             return

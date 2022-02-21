@@ -29,6 +29,7 @@ class Messenger(Independent):
         while self.active:
             received: Message = self.rfm95.receive()  # Receive new message
             if received:                              # Check if something was received
+                print("received something")
                 self.organiser.push_to_received(received)  # Add to relevant queues and lists
                 continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
@@ -50,4 +51,5 @@ class Messenger(Independent):
         if data.recipient == self.node_id:
             return
         data.sender = self.node_id
+        print("Add to queue")
         self.organiser.push_to_send(data)
