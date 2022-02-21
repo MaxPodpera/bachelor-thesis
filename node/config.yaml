@@ -4,11 +4,11 @@ message:
   broadcast_address: "00000000000000000000000000000000"
   message_initial_id: 0
   meta:
-    length_id: 32
-    length_pid: 5
-    length_frame: 252
-    length_message_id: 3
-    length_sequence_number: 8  # expected to be even length
+    length_id: "32"
+    length_pid: "5"
+    length_frame: "252"
+    length_message_id: "3"
+    length_sequence_number: "8"  # expected to be even length
 rfm:
   timeout_receive: 20
   node: 255
