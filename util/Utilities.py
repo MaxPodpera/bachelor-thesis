@@ -31,6 +31,7 @@ def read_config_file(key: str) -> str:
             print(file)
             config = yaml.safe_load(file)
             value = config
+            print("key")
             print("Key " + key)
             for k in key.split("."):
                 print(k, value)
