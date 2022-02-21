@@ -7,6 +7,10 @@ from node.Messenger import Messenger
 from node.Message import *
 
 if __name__ == '__main__':
+    print(read_config_file("message"))
+    print(read_config_file("message.meta"))
+    print(read_config_file("message.meta.length_id"))
+    print(int(read_config_file("message.meta.length_id")))
     logging.basicConfig(level=logging.DEBUG)
     # TODO register file interface
     # init lora device
