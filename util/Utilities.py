@@ -30,6 +30,8 @@ def read_config_file(key: str) -> str:
             print("Heee")
             print(file)
             config = yaml.safe_load(file)
+            print("afteryaml")
+            print(config)
             value = config
             print("key")
             print("Key " + key)
