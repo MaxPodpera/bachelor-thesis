@@ -37,11 +37,9 @@ class Messenger(Independent):
             package = self.organiser.pop_from_send()
             # Nothing to send
             if package is None:
-                logging.info("Nothing received, nothing to send")
                 continue
 
             # package to be sent
-            logging.info("Nothing received, sending")
             if self.rfm95.send(package):
                 logging.info("Sent package")
             else:

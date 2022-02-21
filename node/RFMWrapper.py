@@ -36,6 +36,7 @@ class RFMWrapper:
         :param data: to be sent
         :return: void
         """
+        print("SEND")
         print(data)
         packages: [bytearray] = to_bytes(data)
         success: bool = True

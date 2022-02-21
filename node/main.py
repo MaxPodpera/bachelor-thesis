@@ -31,7 +31,6 @@ if __name__ == '__main__':
     message.sender_pid = 22222
     message.message_id = 5
 
-    print(from_bytes(b'42376f7500df44e985e8f7255bcfa0f7111119c67277302db4ca0ae3fcbad51d3c2c72222200600020000'))
     i = 7
     while i > 0:
         m.send(message)
