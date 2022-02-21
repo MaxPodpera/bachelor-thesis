@@ -26,8 +26,9 @@ def read_config_file(key: str) -> str:
     :return:
     """
     try:
-        print("Heee")
         with open(sys.argv[1], 'r') as file:
+            print("Heee")
+            print(file)
             config = yaml.safe_load(file)
             value = config
             print(key)
