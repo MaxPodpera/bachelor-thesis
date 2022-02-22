@@ -28,15 +28,9 @@ def read_config_file(key: str) -> str:
     try:
         with open(sys.argv[1], 'r') as file:
             config = yaml.safe_load(file)
-            print("afteryaml")
-            print(config)
             value = config
-            print("key")
-            print("Key " + key)
             for k in key.split("."):
-                print(k, value)
                 value = value[k]
-            print(value)
             if value is None:
                 return ""
         return value
