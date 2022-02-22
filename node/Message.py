@@ -6,10 +6,6 @@ from util.Utilities import read_config_file
 """
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
 """
-print(read_config_file("message.meta"))
-print(read_config_file("message.meta.length_id"))
-print(read_config_file("message.meta.length_id"))
-print("oida he")
 length_node_id: int = int(read_config_file("message.meta.length_id"))
 length_pid: int = int(read_config_file("message.meta.length_pid"))
 length_frame: int = int(read_config_file("message.meta.length_frame"))
@@ -24,7 +20,7 @@ address_broadcast: str = read_config_file("message.broadcast_address")
 
 class Message:
 
-    message_id: int = 0
+    message_id: int = -1
     data: str = None
     recipient: str = address_broadcast     # Broadcast address
     pid: int = -1

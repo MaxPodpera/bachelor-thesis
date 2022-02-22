@@ -1,14 +1,18 @@
 from node.Message import *
 from util.Utilities import read_config_file
 from typing import Union
-
+import threading
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
+
+_lock = threading.Lock()
+_message_id: int = 0  # id for new messages.
+_message_id_rollover = int(math.pow(10, int(read_config_file("message.meta.length_message_id"))))
 
 
 class MessageOrganiser:
 
-    list_addresses_store_message: [str] = []  # Addresses for which messages are stored (if set as recipient)
+    list_addresses_self: [str] = []  # Addresses for which messages are stored (if set as recipient)
 
     queue_received: [str] = []  # Received Messages
     queue_send: [Message] = []  # To be sent
@@ -20,10 +24,17 @@ class MessageOrganiser:
 
     def push_to_send(self, message: Message):
         """
-        Add package to list of packages to be sent.
+        Add package to list of packages to be sent. An id well be added if non exists
         :param message: bytearray as produced by Message.to_bytes
         :return: void
         """
+        # Add id to the message if there is none
+        global _message_id
+        if package.message_id == -1:
+            with _lock:
+                package.message_id = _message_id
+                _message_id = (_message_id + 1) % message_id_rollover
+        # Add to queue
         self.queue_send.append(message)
 
     def pop_from_send(self) -> Union[Message, None]:
@@ -52,7 +63,7 @@ class MessageOrganiser:
         self.queue_received.append(message.message_id)  # add to known message list
 
         # Message not meant for this node. Add to list to send later
-        if not (message.recipient in self.list_addresses_store_message):
+        if not (message.recipient in self.list_addresses_self):
             self.push_to_send(message)
             return
 

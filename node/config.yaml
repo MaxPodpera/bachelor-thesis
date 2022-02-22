@@ -17,5 +17,4 @@ rfm:
   send_keep_listening: True
   send_destination: 255
   send_node: 255
-  identifier:
-  identifiere
+  identifier: 255
