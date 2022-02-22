@@ -36,8 +36,6 @@ class RFMWrapper:
         :param data: to be sent
         :return: void
         """
-        print("SEND")
-        print(data)
         packages: [bytearray] = to_bytes(data)
         success: bool = True
         data.related_packages = len(packages) - 1
@@ -48,7 +46,7 @@ class RFMWrapper:
                                         destination=255,
                                         node=255,
                                         identifier=255,
-                                        keep_listening=True)
+                                        flags=0)
         return success
 
     def receive(self) -> Message:

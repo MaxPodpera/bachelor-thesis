@@ -5,10 +5,6 @@ import threading
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
 
-_lock = threading.Lock()
-_message_id: int = 0  # id for new messages.
-_message_id_rollover = int(math.pow(10, int(read_config_file("message.meta.length_message_id"))))
-
 
 class MessageOrganiser:
 
@@ -28,12 +24,6 @@ class MessageOrganiser:
         :param message: bytearray as produced by Message.to_bytes
         :return: void
         """
-        # Add id to the message if there is none
-        global _message_id
-        if message.message_id == -1:
-            with _lock:
-                package.message_id = _message_id
-                _message_id = (_message_id + 1) % message_id_rollover
         # Add to queue
         self.queue_send.append(message)
 
