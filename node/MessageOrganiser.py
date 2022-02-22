@@ -30,7 +30,7 @@ class MessageOrganiser:
         """
         # Add id to the message if there is none
         global _message_id
-        if package.message_id == -1:
+        if message.message_id == -1:
             with _lock:
                 package.message_id = _message_id
                 _message_id = (_message_id + 1) % message_id_rollover
