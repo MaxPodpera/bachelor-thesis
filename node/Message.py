@@ -9,6 +9,7 @@ Message class. Contains definition of the Messages and functionality to convert 
 
 address_broadcast: str = read_config_file("message.broadcast_address")
 
+
 def to_package(message: Message) -> [Package]:
     """
     Convert message to bytes according to message specification. If Data is to long for transmission in one package

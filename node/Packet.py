@@ -1,6 +1,7 @@
 import math
 from Message import *
 from util.Utilities import read_config_file
+from typing import Union
 
 length_node_id: int = int(read_config_file("message.meta.length_id"))
 length_pid: int = int(read_config_file("message.meta.length_pid"))
