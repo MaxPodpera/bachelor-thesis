@@ -38,7 +38,7 @@ class RFMWrapper:
         :return: void
         """
         # Message to package
-        packages: [Packet] = data.to_packets()
+        packages: [Packet] = data.from_message()
         success: bool = True
 
         while len(packages) > 0 and success:
