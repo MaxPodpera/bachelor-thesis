@@ -65,38 +65,3 @@ class Message:
 
     def to_packets(self):
         return Packet.from_message(self)
-    
-    
-def from_package(package: Package) -> Message:
-
-    if not package:
-        return None
-
-    next_part_index: int = Packet.length_node_id
-    m: Message = Message()
-
-    _, _, m.message_id, _ = package.headers
-
-    # To
-    m.recipient = bytes_to_convert[:next_part_index].hex()
-    m.pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + Packet.length_pid], byteorder='big', signed=False)
-    next_part_index += length_pid
-
-    # From
-    m.sender = bytes_to_convert[next_part_index: next_part_index + Packet.length_node_id].hex()
-    next_part_index += length_node_id
-    m.sender_pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + Packet.length_pid], byteorder='big', signed=False)
-    next_part_index += length_pid
-
-    # Sequence Number
-    m._related_packages = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)], byteorder='big', signed=False)
-    next_part_index += math.floor(length_sequence_number / 2)
-    m.sequence_number = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)], byteorder='big', signed=False)
-    next_part_index += math.floor(length_sequence_number / 2)
-
-    # Data
-    m.data = bytes_to_convert[next_part_index:].decode("utf-8")
-
-    # Time
-    m.time = time.time()
-    return m
