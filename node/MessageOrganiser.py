@@ -38,7 +38,7 @@ class MessageOrganiser:
         except IndexError:
             return None
 
-    async def push_to_received(self, message: Message):
+    def push_to_received(self, message: Message):
         """
         Add message to received list. If it is a single message or the last
         of a Message the message is returned.
