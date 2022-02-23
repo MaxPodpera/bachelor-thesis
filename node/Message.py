@@ -7,6 +7,7 @@ from node.Packet import *
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
 """
 
+address_broadcast: str = read_config_file("message.broadcast_address")
 
 def to_package(message: Message) -> [Package]:
     """
