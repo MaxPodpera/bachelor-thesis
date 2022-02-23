@@ -87,8 +87,10 @@ def from_message(message: Message) -> [Packet]:
     # how many packages are sent header
     num_packages: int = math.ceil(len(data_bytes) / length_max_data)
     # max id.
+    print(num_packages)
     num_packages -= 1
     # to bytes
+    print(num_packages)
     num_packages_bytes = num_packages.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
     self.b += num_packages_bytes
 
