@@ -18,7 +18,7 @@ def to_package(message: Message) -> [Package]:
     :param message: to be converted
     :return: array containing each message that has to be sent.
     """
-    return Packet.from_message(message)
+    return from_message(message)
 
 
 class Message:
