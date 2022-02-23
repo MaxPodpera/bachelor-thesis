@@ -2,23 +2,12 @@ from __future__ import annotations
 import time
 import math
 from util.Utilities import read_config_file
-from node.Packet import *
+from node.Packet import Packet, from_message
 """
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
 """
 
 address_broadcast: str = read_config_file("message.broadcast_address")
-
-
-def to_package(message: Message) -> [Package]:
-    """
-    Convert message to bytes according to message specification. If Data is to long for transmission in one package
-    multiple will be generated. If they exceed the max number of packages within a sequence, packages with the next
-    message id will be generated.
-    :param message: to be converted
-    :return: array containing each message that has to be sent.
-    """
-    return from_message(message)
 
 
 class Message:
