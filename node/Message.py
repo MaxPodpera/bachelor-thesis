@@ -66,4 +66,4 @@ class Message:
         self._related_packages = value
 
     def to_packets(self):
-        return Packet.from_message(self)
+        return from_message(self)
