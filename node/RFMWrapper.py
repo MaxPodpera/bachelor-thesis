@@ -5,7 +5,6 @@ import time
 from digitalio import DigitalInOut
 from node.Message import *
 from node.Packet import *
-from node.Packet import *
 # Overwrite a
 from micropython import const
 """
