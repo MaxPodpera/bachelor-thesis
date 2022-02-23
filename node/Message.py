@@ -2,7 +2,7 @@ from __future__ import annotations
 import time
 import math
 from util.Utilities import read_config_file
-from node.Packet import Packet, from_message
+
 """
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
 """
@@ -53,6 +53,3 @@ class Message:
     @related_packages.setter
     def related_packages(self, value):
         self._related_packages = value
-
-    def to_packets(self):
-        return from_message(self)
