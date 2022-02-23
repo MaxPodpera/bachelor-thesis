@@ -1,4 +1,3 @@
-from node.Message import Message, from_package
 import math
 
 length_node_id: int = int(read_config_file("message.meta.length_id"))
