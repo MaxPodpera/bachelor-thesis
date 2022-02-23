@@ -83,6 +83,7 @@ def from_message(message: Message) -> [Packet]:
 
     # data
     data_bytes: bytearray = bytearray(message.data.encode())
+    print(message.data)
     print(len(data_bytes))
     print(length_max_data)
     # how many packages are sent header
