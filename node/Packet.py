@@ -28,21 +28,21 @@ class Packet:
         if not self.b or not self.headers:
             return None
 
-        next_part_index: int = Packet.length_node_id
+        next_part_index: int = length_node_id
         m: Message = Message()
 
         _, _, m.message_id, _ = self.headers
 
         # To
         m.recipient = bytes_to_convert[:next_part_index].hex()
-        m.pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + Packet.length_pid], byteorder='big',
+        m.pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid], byteorder='big',
                                signed=False)
         next_part_index += length_pid
 
         # From
-        m.sender = bytes_to_convert[next_part_index: next_part_index + Packet.length_node_id].hex()
+        m.sender = bytes_to_convert[next_part_index: next_part_index + length_node_id].hex()
         next_part_index += length_node_id
-        m.sender_pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + Packet.length_pid],
+        m.sender_pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid],
                                       byteorder='big', signed=False)
         next_part_index += length_pid
 
