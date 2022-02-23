@@ -4,7 +4,7 @@ import adafruit_rfm9x
 import time
 from digitalio import DigitalInOut
 from node.Message import *
-
+from node.Packet import *
 # Overwrite a
 from micropython import const
 """
@@ -15,7 +15,8 @@ Class to wrap the rfm95 module access in.
 class RFMWrapper:
 
     _rfm95: adafruit_rfm9x.RFM9x = None
-
+    _sequence_id: int = 0
+    
     def __init__(self):
         pin_cs = DigitalInOut(board.CE1)
         pin_rst = DigitalInOut(board.D25)
@@ -36,29 +37,28 @@ class RFMWrapper:
         :param data: to be sent
         :return: void
         """
-        packages: [bytearray] = to_bytes(data)
+        # Message to package
+        packages: [Packet] = data.to_packets()
         success: bool = True
-        data.related_packages = len(packages) - 1
 
         while len(packages) > 0 and success:
-            print(packages[0])
-            success &= self._rfm95.send(packages.pop(0),
-                                        destination=255,
-                                        node=255,
-                                        identifier=255,
-                                        flags=0)
+            package: Packet = packages.pop(0)
+            to_id, from_id, message_id, flags = package.headers
+
+            success &= self._rfm95.send(package.b,
+                                        destination=to_id,
+                                        node=from_id,
+                                        identifier=message_id,
+                                        flags=flags)
         return success
 
-    def receive(self) -> Message:
+    def receive(self) -> Union[Message, None]:
         """
         Receive data from the module. Data will be converted to message object.
         :return: Message object containing the message or None if nothing was received
         """
-        d = self._rfm95.receive()
-        m = None
+        d = self._rfm95.receive(with_header=True)
         if d:
-            print("RECEIVED")
-            print(d, "\n")
-            m = from_bytes(d)
-            
-        return m
+            m = Packet.from_data(d)
+            return m.to_message()
+        return None
