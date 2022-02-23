@@ -12,15 +12,15 @@ address_broadcast: str = read_config_file("message.broadcast_address")
 
 class Message:
 
-    message_id: int = -1
+    message_id: int = 0
     data: str = None
     recipient: str = address_broadcast     # Broadcast address
-    pid: int = -1
+    pid: int = 0
     sender: str = "00000000000000000000000000000000"  # todo maybe private
-    sender_pid: int = -1
+    sender_pid: int = 0
     time: time = None
     sequence_number: int = 0  # Number of this package for the message
-    _related_packages: int = -1  # How many other packages for this message
+    _related_packages: int = 0  # How many other packages for this message
 
     def __str__(self) -> str:
         """
