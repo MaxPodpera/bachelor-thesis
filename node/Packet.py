@@ -83,7 +83,8 @@ def from_message(message: Message) -> [Packet]:
 
     # data
     data_bytes: bytearray = bytearray(message.data.encode())
-
+    print(len(data_bytes))
+    print(length_max_data)
     # how many packages are sent header
     num_packages: int = math.ceil(len(data_bytes) / length_max_data)
     # max id.
