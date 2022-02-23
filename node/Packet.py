@@ -28,6 +28,7 @@ class Packet:
         if not self.b or not self.headers:
             return None
 
+        bytes_to_convert = self.b
         next_part_index: int = length_node_id
         m: Message = Message()
 
