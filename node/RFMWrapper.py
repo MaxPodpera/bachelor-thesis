@@ -60,6 +60,6 @@ class RFMWrapper:
         """
         d = self._rfm95.receive(with_header=True)
         if d:
-            m = Packet.from_data(d)
+            m = from_data(d)
             return m.to_message()
         return None
