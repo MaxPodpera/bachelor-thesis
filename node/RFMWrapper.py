@@ -62,6 +62,8 @@ class RFMWrapper:
         if d:
             m = from_data(d)
             print("RECEIVED")
+            print(d)
+            print(m)
             print(m.to_message())
             return m.to_message()
         return None
