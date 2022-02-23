@@ -70,6 +70,8 @@ def from_data(data: bytes) -> Packet:
     
 
 def from_message(message: Message) -> [Packet]:
+    if message.data is None or message.data == "":
+        return []
     # Headers
     to_id, from_id, m_id, flags = 255, 255, message.message_id, 0
     headers = to_id, from_id, m_id, flags
@@ -83,16 +85,12 @@ def from_message(message: Message) -> [Packet]:
 
     # data
     data_bytes: bytearray = bytearray(message.data.encode())
-    print(message.data)
-    print(len(data_bytes))
-    print(length_max_data)
+ 
     # how many packages are sent header
     num_packages: int = math.ceil(len(data_bytes) / length_max_data)
     # max id.
-    print(num_packages)
     num_packages -= 1
     # to bytes
-    print(num_packages)
     num_packages_bytes = num_packages.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
     self.b += num_packages_bytes
 
