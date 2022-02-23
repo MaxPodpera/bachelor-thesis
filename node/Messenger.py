@@ -40,6 +40,7 @@ class Messenger(Independent):
 
             # package to be sent
             if self.rfm95.send(package):
+                print(package)
                 logging.info("Sent package")
             else:
                 self.organiser.push_to_send(package)
