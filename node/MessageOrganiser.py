@@ -58,7 +58,7 @@ class MessageOrganiser:
             return
 
         # Handle message that is meant for this node
-        await self._handle_message(message)
+        self._handle_message(message)
 
     def was_received(self, message_id: str) -> bool:
         """
