@@ -38,12 +38,8 @@ class RFMWrapper:
         :return: void
         """
         # Message to package
-        print("data")
-        print(data)
         packages: [Packet] = from_message(data)
-        print(packages)
         success: bool = True
-        print("-----------------")
         while len(packages) > 0 and success:
             package: Packet = packages.pop(0)
             print(len(package.b))

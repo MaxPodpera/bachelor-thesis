@@ -34,9 +34,6 @@ class Messenger(Independent):
 
             # Check send queue
             package: Message = self.organiser.pop_from_send()
-            print("poped")
-            print(package)
-            print("--------------")
             # Nothing to send
             if package is None:
                 continue
@@ -51,5 +48,4 @@ class Messenger(Independent):
         if data.recipient == self.node_id:
             return
         data.sender = self.node_id
-        print("Add to queue")
         self.organiser.push_to_send(data)
