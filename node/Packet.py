@@ -92,10 +92,10 @@ def from_message(message: Message) -> [Packet]:
     num_packages -= 1
     # to bytes
     num_packages_bytes = num_packages.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
-    self.b += num_packages_bytes
+    b += num_packages_bytes
 
     # Check for invalid metadata
-    if len(self.b) > length_meta - (length_sequence_number / 2):
+    if len(b) > length_meta - (length_sequence_number / 2):
         raise Exception("Invalid meta data")
 
     seq_num = 0
