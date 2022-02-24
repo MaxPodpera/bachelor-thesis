@@ -29,7 +29,7 @@ class Packet:
         if self.headers:
             string += str(self.headers)
         if self.b:
-            string += self.b
+            string += self.b.decode()
         return string
 
     def to_message(self) -> Message:
