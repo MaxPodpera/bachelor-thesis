@@ -112,7 +112,7 @@ def from_message(message: Message) -> [Packet]:
         package.b = meta + data
         
         result.append(package)
-        
+        print(package.b)
         data_bytes = data_bytes[len(data):]
         
     return result
