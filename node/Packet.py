@@ -18,7 +18,7 @@ address_broadcast: str = read_config_file("message.broadcast_address")
 class Packet:
     #         to  from  id   flags
     headers: (int, int, int, int) = (255, 255, 0, 0)
-    b: bytearray
+    b: bytearray = bytearray()
 
     def __init__(self, headers: (int, int, int, int), data_bytes: bytearray):
         self.headers = headers
