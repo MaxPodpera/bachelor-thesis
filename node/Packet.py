@@ -19,9 +19,6 @@ class Packet:
     #         to  from  id   flags
     headers: (int, int, int, int) = (255, 255, 0, 0)
     b: bytearray
-    
-    def get_data(self):
-        return self.b
 
     def to_message(self) -> Message:
         if not self.b or not self.headers:
