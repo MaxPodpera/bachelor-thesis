@@ -117,6 +117,6 @@ def from_message(message: Message) -> [Packet]:
         print(package.b)
         result.append(package)
         data_bytes = data_bytes[len(data):]
-        print("\n\nn")
+        print("\n\n")
     print("\n\n\n\n")
     return result
