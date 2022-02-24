@@ -19,10 +19,6 @@ class Packet:
     #         to  from  id   flags
     headers: (int, int, int, int) = (255, 255, 0, 0)
     b: bytearray
-
-    def __init__(self, headers: (int, int, int, int), data_bytes: bytearray):
-        self.headers = headers
-        self.b = data_bytes
     
     def get_data(self):
         return self.b
@@ -111,15 +107,12 @@ def from_message(message: Message) -> [Packet]:
         meta = b + seq_str
         data = data_bytes[:length_max_data]
         
-        package: Packet = Packet(None, None)
+        package: Packet = Packet()
         package.headers = headers
         package.b = meta + data
         
         result.append(package)
         
         data_bytes = data_bytes[len(data):]
-    
-    for p in result:
-        print(p.get_data(None))
-        print(p.headers)
+        
     return result
