@@ -110,7 +110,12 @@ def from_message(message: Message) -> [Packet]:
         meta = b + seq_str
         data = data_bytes[:length_max_data]
         print(meta + data)
-        result.append(Packet(headers, meta + data))
+        
+        package: Packet = Packet(None, None)
+        package.headers = headers,
+        package.b = meta + data
+        
+        result.append(package)
         
         data_bytes = data_bytes[len(data):]
     
