@@ -62,7 +62,10 @@ class Packet:
 
 
 def from_data(data: bytes) -> Packet:
-    return Packet(data[:4], data[4:])
+    package: Packet = Packet()
+    package.headers = data[:4]
+    package.b = data[4:]
+    return package
     
 
 def from_message(message: Message) -> [Packet]:
