@@ -42,6 +42,7 @@ class RFMWrapper:
         while len(packages) > 0 and success:
             headers, data = packages.pop(0)
             to_id, from_id, message_id, flags = headers
+            print(headers)
             success &= self._rfm95.send(data,
                                         destination=to_id,
                                         node=from_id,
