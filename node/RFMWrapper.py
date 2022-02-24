@@ -37,7 +37,7 @@ class RFMWrapper:
         :return: void
         """
         # Message to package
-        packages: [((int, int, int, int), bytes)] = from_message(data)
+        packages: [((int, int, int, int), bytes)] = data.split()
         success: bool = True
         while len(packages) > 0 and success:
             headers, data = packages.pop(0)
