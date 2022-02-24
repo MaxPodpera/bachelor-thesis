@@ -27,7 +27,7 @@ class Packet:
     def __str__(self):
         string = "Packet:"
         if self.headers:
-            string += self.headers
+            string += str(self.headers)
         if self.b:
             string += self.b
         return string
