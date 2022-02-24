@@ -39,14 +39,9 @@ class RFMWrapper:
         """
         # Message to package
         packages: [Packet] = from_message(data)
-        print(packages)
-        print(packages[0])
         success: bool = True
         while len(packages) > 0 and success:
             package: Packet = packages.pop(0)
-            print("\n\n")
-            print(len(package.get_data()))
-            print(package.b)
             to_id, from_id, message_id, flags = package.headers
             success &= self._rfm95.send(package.b,
                                         destination=to_id,
