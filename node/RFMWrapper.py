@@ -4,7 +4,6 @@ import adafruit_rfm9x
 import time
 from digitalio import DigitalInOut
 from node.Message import *
-from node.Packet import *
 # Overwrite a
 from micropython import const
 """
@@ -38,12 +37,12 @@ class RFMWrapper:
         :return: void
         """
         # Message to package
-        packages: [Packet] = from_message(data)
+        packages: [((int, int, int, int), bytes)] = from_message(data)
         success: bool = True
         while len(packages) > 0 and success:
-            package: Packet = packages.pop(0)
-            to_id, from_id, message_id, flags = package.headers
-            success &= self._rfm95.send(package.b,
+            headers, data = packages.pop(0)
+            to_id, from_id, message_id, flags = headers
+            success &= self._rfm95.send(data,
                                         destination=to_id,
                                         node=from_id,
                                         identifier=message_id,
