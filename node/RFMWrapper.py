@@ -40,6 +40,7 @@ class RFMWrapper:
         # Message to package
         packages: [Packet] = from_message(data)
         success: bool = True
+        print(data)
         print(packages)
         while len(packages) > 0 and success:
             package: Packet = packages.pop(0)
