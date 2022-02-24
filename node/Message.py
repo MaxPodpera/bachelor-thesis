@@ -107,8 +107,7 @@ class Message:
             return []
 
         # Headers
-        to_id, from_id, m_id, flags = 255, 255, self.message_id, 0
-        headers = to_id, from_id, m_id, flags
+        headers = 255, 255, self.message_id, 0
 
         # To
         b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
