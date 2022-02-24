@@ -38,15 +38,16 @@ class RFMWrapper:
         :return: void
         """
         # Message to package
+        print("data")
         print(data)
         packages: [Packet] = from_message(data)
-        success: bool = True
         print(packages)
+        success: bool = True
+        print("-----------------")
         while len(packages) > 0 and success:
             package: Packet = packages.pop(0)
+            print(package)
             to_id, from_id, message_id, flags = package.headers
-            print("SENDING")
-            print(package.b)
             success &= self._rfm95.send(package.b,
                                         destination=to_id,
                                         node=from_id,

@@ -34,13 +34,15 @@ class Messenger(Independent):
 
             # Check send queue
             package: Message = self.organiser.pop_from_send()
+            print("poped")
+            print(package)
+            print("--------------")
             # Nothing to send
             if package is None:
                 continue
 
             # package to be sent
             if self.rfm95.send(package):
-                print(package)
                 logging.info("Sent package")
             else:
                 self.organiser.push_to_send(package)
