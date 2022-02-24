@@ -24,6 +24,9 @@ class Packet:
         self.headers = headers
         self.b = data_bytes
 
+    def __str__(self):
+        return self.headers + self.b
+
     def to_message(self) -> Message:
         if not self.b or not self.headers:
             return None
