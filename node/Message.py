@@ -143,4 +143,5 @@ class Message:
 
             result.append((headers, meta + data))
             data_bytes = data_bytes[len(data):]
+            print(headers, meta + data)
         return result
