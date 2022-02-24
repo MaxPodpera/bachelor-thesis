@@ -101,6 +101,7 @@ def from_message(message: Message) -> [Packet]:
     result = [Packet]
     # split message
     print(len(data_bytes))
+    print(length_max_data)
     while len(data_bytes) > 0:
         seq_str = seq_num.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
         seq_num += 1
