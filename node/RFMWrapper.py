@@ -40,7 +40,7 @@ class RFMWrapper:
         # Message to package
         packages: [Packet] = from_message(data)
         success: bool = True
-
+        print(packages)
         while len(packages) > 0 and success:
             package: Packet = packages.pop(0)
             to_id, from_id, message_id, flags = package.headers
@@ -63,3 +63,7 @@ class RFMWrapper:
             m = from_data(d)
             return m.to_message()
         return None
+
+# TODO:
+Wir wirklich das empfangene geprintet
+Wir wirklich gesendet? ID think so
