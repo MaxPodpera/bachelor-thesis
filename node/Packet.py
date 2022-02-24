@@ -100,23 +100,17 @@ def from_message(message: Message) -> [Packet]:
     seq_num = 0
     result = [Packet]
     # split message
-    print("\n\n\n\n")
     while len(data_bytes) > 0:
-        print(data_bytes)
         seq_str = seq_num.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
         seq_num += 1
-        print(seq_str)
+        
         meta = b + seq_str
-        print(meta)
         data = data_bytes[:length_max_data]
-        print(data)
+        
         package: Packet = Packet()
         package.headers = headers
         package.b = meta + data
-        print(package.headers)
-        print(package.b)
+
         result.append(package)
         data_bytes = data_bytes[len(data):]
-        print("\n\n")
-    print("\n\n\n\n")
     return result
