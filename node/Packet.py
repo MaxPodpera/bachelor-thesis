@@ -120,6 +120,6 @@ def from_message(message: Message) -> [Packet]:
         data_bytes = data_bytes[len(data):]
     
     for p in result:
-        print(p.get_data())
+        print(p.get_data(None))
         print(p.headers)
     return result
