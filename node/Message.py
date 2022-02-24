@@ -19,6 +19,46 @@ length_max_data: int = length_frame - length_meta
 address_broadcast: str = read_config_file("message.broadcast_address")
 
 
+def to_message(headers, bytes_to_convert) -> Union[Message, None]:
+    if not headers or not bytes_to_convert:
+        return None
+
+    next_part_index: int = length_node_id
+    m: Message = Message()
+
+    _, _, m.message_id, _ = headers
+
+    # To
+    m.recipient = bytes_to_convert[:next_part_index].hex()
+    m.pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid], byteorder='big',
+                           signed=False)
+    next_part_index += length_pid
+
+    # From
+    m.sender = bytes_to_convert[next_part_index: next_part_index + length_node_id].hex()
+    next_part_index += length_node_id
+    m.sender_pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid],
+                                  byteorder='big', signed=False)
+    next_part_index += length_pid
+
+    # Sequence Number
+    m._related_packages = int.from_bytes(
+        bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
+        byteorder='big', signed=False)
+    next_part_index += math.floor(length_sequence_number / 2)
+    m.sequence_number = int.from_bytes(
+        bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
+        byteorder='big', signed=False)
+    next_part_index += math.floor(length_sequence_number / 2)
+
+    # Data
+    m.data = bytes_to_convert[next_part_index:].decode("utf-8")
+
+    # Time
+    m.time = time.time()
+    return m
+
+
 class Message:
 
     message_id: int = 0
@@ -62,45 +102,6 @@ class Message:
     @related_packages.setter
     def related_packages(self, value):
         self._related_packages = value
-        
-    def to_message(self, headers, bytes_to_convert) -> Union[Message, None]:
-        if not self.b or not self.headers:
-            return None
-
-        next_part_index: int = length_node_id
-        m: Message = Message()
-
-        _, _, m.message_id, _ = headers
-
-        # To
-        m.recipient = bytes_to_convert[:next_part_index].hex()
-        m.pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid], byteorder='big',
-                               signed=False)
-        next_part_index += length_pid
-
-        # From
-        m.sender = bytes_to_convert[next_part_index: next_part_index + length_node_id].hex()
-        next_part_index += length_node_id
-        m.sender_pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid],
-                                      byteorder='big', signed=False)
-        next_part_index += length_pid
-
-        # Sequence Number
-        m._related_packages = int.from_bytes(
-            bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
-            byteorder='big', signed=False)
-        next_part_index += math.floor(length_sequence_number / 2)
-        m.sequence_number = int.from_bytes(
-            bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
-            byteorder='big', signed=False)
-        next_part_index += math.floor(length_sequence_number / 2)
-
-        # Data
-        m.data = bytes_to_convert[next_part_index:].decode("utf-8")
-
-        # Time
-        m.time = time.time()
-        return m
 
     def split(self) -> [((int, int, int, int), bytes)]:
         if self.data is None or self.data == "":
