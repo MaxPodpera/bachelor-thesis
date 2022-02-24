@@ -23,14 +23,9 @@ class Packet:
     def __init__(self, headers: (int, int, int, int), data_bytes: bytearray):
         self.headers = headers
         self.b = data_bytes
-
-    def __str__(self):
-        string = "Packet:"
-        if self.headers:
-            string += str(self.headers)
-        if self.b:
-            string += self.b.decode()
-        return string
+    
+    def get_data(self):
+        return self.b
 
     def to_message(self) -> Message:
         if not self.b or not self.headers:
@@ -117,17 +112,14 @@ def from_message(message: Message) -> [Packet]:
         data = data_bytes[:length_max_data]
         
         package: Packet = Packet(None, None)
-        print(package)
         package.headers = headers
-        print(package)
         package.b = meta + data
-        print(package)
         
         result.append(package)
         
         data_bytes = data_bytes[len(data):]
     
     for p in result:
-        print(p.b)
+        print(p.get_data())
         print(p.headers)
     return result
