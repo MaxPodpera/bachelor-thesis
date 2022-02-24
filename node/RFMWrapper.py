@@ -65,5 +65,5 @@ class RFMWrapper:
         return None
 
 # TODO:
-Wir wirklich das empfangene geprintet
-Wir wirklich gesendet? ID think so
+#Wir wirklich das empfangene geprintet
+#Wir wirklich gesendet? ID think so
