@@ -132,7 +132,7 @@ class Message:
             raise Exception("Invalid meta data")
 
         seq_num = 0
-        result = [((int, int, int, int), bytes)]
+        result = []
         # split message
         while len(data_bytes) > 0:
             seq_str = seq_num.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
