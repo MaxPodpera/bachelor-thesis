@@ -113,5 +113,8 @@ def from_message(message: Message) -> [Packet]:
         result.append(Packet(headers, meta + data))
         
         data_bytes = data_bytes[len(data):]
-
+    
+    for p in result:
+        print(p.b)
+        print(p.headers)
     return result
