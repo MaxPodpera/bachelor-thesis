@@ -112,9 +112,11 @@ def from_message(message: Message) -> [Packet]:
         data = data_bytes[:length_max_data]
         
         package: Packet = Packet(None, None)
+        print(package)
         package.headers = headers
-        print(meta + data)
+        print(package)
         package.b = meta + data
+        print(package)
         
         result.append(package)
         
