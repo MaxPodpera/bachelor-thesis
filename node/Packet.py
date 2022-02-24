@@ -22,8 +22,6 @@ class Packet:
 
     def __init__(self, headers: (int, int, int, int), data_bytes: bytearray):
         self.headers = headers
-        print("Creating")
-        print(data_bytes)
         self.b = data_bytes
 
     def to_message(self) -> Message:
@@ -109,10 +107,10 @@ def from_message(message: Message) -> [Packet]:
 
         meta = b + seq_str
         data = data_bytes[:length_max_data]
-        print(meta + data)
         
         package: Packet = Packet(None, None)
-        package.headers = headers,
+        package.headers = headers
+        print(meta + data)
         package.b = meta + data
         
         result.append(package)
