@@ -42,7 +42,7 @@ class RFMWrapper:
         while len(packages) > 0 and success:
             headers, data = packages.pop(0)
             to_id, from_id, message_id, flags = headers
-            print("Here", headers, data)
+            print("Before send", headers, data)
             success &= self._rfm95.send(data,
                                         destination=to_id,
                                         node=from_id,
@@ -56,11 +56,13 @@ class RFMWrapper:
         :return: Message object containing the message or None if nothing was received
         """
         d = self._rfm95.receive(with_header=True)
-        if d:
-            headers = d[:4]
-            data = d[4:]
-            return to_message(headers, data)
-        return None
+        if d is None:
+            return None
+        headers = d[:4]
+        data = d[4:]
+        print("Received" + to_message(headers, data))
+        return to_message(headers, data)
+
 
 # TODO:
 #Wir wirklich das empfangene geprintet
