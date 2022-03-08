@@ -32,8 +32,9 @@ if __name__ == '__main__':
     message.sender_pid = 22222
     message.message_id = 4
     
-    print(message.split())
-
+    for p in message.split():
+        print(p)
+        print("\n")
     """   
     i = 1
     while i > 0:
