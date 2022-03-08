@@ -24,12 +24,10 @@ def to_message(package) -> Union[Message, None]:
         print("Nothing to convert")
         return None
 
-    headers, bytes_to_convert = package
-
     next_part_index: int = length_node_id
     m: Message = Message()
 
-    _, _, m.message_id, _ = headers
+    _, _, m.message_id, _, bytes_to_convert = package
 
     # To
     m.recipient = bytes_to_convert[:next_part_index].hex()
