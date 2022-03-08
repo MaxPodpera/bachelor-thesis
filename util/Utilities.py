@@ -1,5 +1,6 @@
 import yaml
 import sys
+import logging
 
 
 def read_uuid_file(path) -> str:
@@ -26,6 +27,7 @@ def read_config_file(key: str) -> str:
     :return:
     """
     try:
+        print(sys.argv[:])
         with open(sys.argv[1], 'r') as file:
             config = yaml.safe_load(file)
             value = config
@@ -35,4 +37,5 @@ def read_config_file(key: str) -> str:
                 return ""
         return value
     except Exception as e:
+        logging.error("Could not read config file: " + str(e))
         return None

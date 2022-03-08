@@ -30,9 +30,7 @@ if __name__ == '__main__':
     message.recipient = "42376f7500df44e985e8f7255bcfa0f7"
     message.pid = 11111
     message.sender_pid = 22222
-    message.message_id = 5
-    print(message)
-    print("-----------------------")
+    message.message_id = 4
     i = 1
     while i > 0:
         m.send(message)
