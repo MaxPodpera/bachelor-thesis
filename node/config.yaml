@@ -8,7 +8,7 @@ message:
     length_pid: "2"
     length_frame: "252"
     length_message_id: "1"
-    length_sequence_number: "8"  # expected to be even length
+    length_sequence_number: "4"  # expected to be even length
 rfm:
   timeout_receive: 20
   node: 255
