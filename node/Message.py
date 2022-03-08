@@ -20,7 +20,9 @@ address_broadcast: str = read_config_file("message.broadcast_address")
 
 
 def to_message(headers, bytes_to_convert) -> Union[Message, None]:
-    if not headers or not bytes_to_convert:
+    if not headers or not bytes_to_convert:            
+        print(headers, bytes_to_convert)
+        print("one of the above is None")
         return None
 
     next_part_index: int = length_node_id
