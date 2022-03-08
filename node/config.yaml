@@ -4,7 +4,7 @@ message:
   broadcast_address: "00000000000000000000000000000000"
   message_initial_id: 0
   meta:
-    length_id: "16" # 32
+    length_id: "32"
     length_pid: "2"
     length_frame: "252"
     length_message_id: "1"
