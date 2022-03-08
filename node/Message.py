@@ -43,6 +43,8 @@ def to_message(package) -> Union[Message, None]:
     next_part_index += length_pid
 
     # Sequence Number
+    print("Sequence Number")
+    print(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)])
     m._related_packages = int.from_bytes(
         bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
         byteorder='big', signed=False)
