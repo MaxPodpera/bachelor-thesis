@@ -40,7 +40,7 @@ class RFMWrapper:
         packages: [(int, int, int, int, bytes)] = data.split()
         success: bool = True
         while len(packages) > 0 and success:
-            id_from, id_to, id_packet, flags, message = packages.pop(0)
+            id_from, id_to, message_id, flags, message = packages.pop(0)
             success &= self._rfm95.send(message,
                                         destination=id_to,
                                         node=id_from,
