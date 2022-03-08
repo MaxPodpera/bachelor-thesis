@@ -1,5 +1,6 @@
 import yaml
 import sys
+import logging
 
 
 def read_uuid_file(path) -> str:
@@ -36,4 +37,5 @@ def read_config_file(key: str) -> str:
                 return ""
         return value
     except Exception as e:
+        logging.error("Could not read config file: " + str(e))
         return None
