@@ -34,10 +34,9 @@ if __name__ == '__main__':
     
     for p in message.split():
         print(p)
-        print(to_message(p)
+        print(to_message(p))
         print("\n")
-        
-        
+
     """   
     i = 1
     while i > 0:
