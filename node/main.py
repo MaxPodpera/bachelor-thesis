@@ -33,8 +33,8 @@ if __name__ == '__main__':
     message.message_id = 4
     
     print(message.split())
-    
- """   
+
+    """   
     i = 1
     while i > 0:
         m.send(message)
@@ -43,5 +43,4 @@ if __name__ == '__main__':
         message.message_id += i
     #time.sleep(10)
     #m.stop()
-"""
- 
+    """
