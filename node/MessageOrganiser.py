@@ -106,5 +106,6 @@ class MessageOrganiser:
         # Remove from incomplete list
         del self.queue_to_be_completed[str(message.message_id)]
         print("Full fucking message:")
+        print("\n\n\n")
         print(full_message)
         return full_message
