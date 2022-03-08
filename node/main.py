@@ -34,7 +34,7 @@ if __name__ == '__main__':
     
     for p in message.split():
         print(p)
-        print(to_message(p))
+        print(to_message(p[:4], p[4:]))
         print("\n")
         
         
