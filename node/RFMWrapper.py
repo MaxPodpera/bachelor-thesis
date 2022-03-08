@@ -59,10 +59,10 @@ class RFMWrapper:
             return None
         headers = d[:4]
         data = d[4:]
-        print("Received" + str(to_message(headers, data)))
+        print("Received:\n" + str(to_message(headers, data)))
         return to_message(headers, data)
 
 
 # TODO:
-#Wir wirklich das empfangene geprintet
-#Wir wirklich gesendet? ID think so
+#Wird wirklich das empfangene geprintet
+#Wird wirklich gesendet? ID think so
