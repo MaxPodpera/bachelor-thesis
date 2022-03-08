@@ -116,7 +116,7 @@ class Message:
         b += self.message_id.to_bytes(length_message_id, byteorder='big')
 
         # data
-        data_bytes: bytearray = bytearray(self.data.encode())
+        data_bytes: bytes = self.data.encode()
 
         # how many packages are sent header
         num_packages: int = math.ceil(len(data_bytes) / length_max_data)
@@ -143,3 +143,15 @@ class Message:
             result.append((headers, meta + data))
             data_bytes = data_bytes[len(data):]
         return result
+
+
+if __name__ == '__main__':
+    m = Message()
+    m.data = "This is an awesome very long text and i cannot stretch enought how fantastic it is. Should we continue wrighting?" \
+             "I do think so otherwise it will not be enough text. Bli bla blub"
+    m.recipient = "A" * 32
+    m.sender = "C" * 32
+    m.sender_pid = 99999
+    m.pid = 888
+    m.message_id = 2
+    print(m.split())
