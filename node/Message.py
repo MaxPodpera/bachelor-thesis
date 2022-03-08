@@ -49,6 +49,8 @@ def to_message(package) -> Union[Message, None]:
         bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
         byteorder='big', signed=False)
     next_part_index += math.floor(length_sequence_number / 2)
+    print("Number2")
+    print(bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)])
     m.sequence_number = int.from_bytes(
         bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
         byteorder='big', signed=False)
