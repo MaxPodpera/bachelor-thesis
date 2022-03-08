@@ -115,7 +115,7 @@ class Message:
         # From
         b += bytes.fromhex(self.sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
         # id
-        b += self.message_id.to_bytes(length_message_id, byteorder='big')
+        # b += self.message_id.to_bytes(length_message_id, byteorder='big')
 
         # data
         data_bytes: bytes = self.data.encode()
@@ -125,8 +125,8 @@ class Message:
         # max id.
         num_packages -= 1
         # to bytes
-        #num_packages_bytes = num_packages.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
-        #b += num_packages_bytes
+        num_packages_bytes = num_packages.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
+        b += num_packages_bytes
 
         # Check for invalid metadata
         if len(b) > length_meta - (length_sequence_number / 2):
