@@ -60,7 +60,7 @@ class RFMWrapper:
             return None
         headers = d[:4]
         data = d[4:]
-        print("Received" + to_message(headers, data))
+        print("Received" + str(to_message(headers, data)))
         return to_message(headers, data)
 
 
