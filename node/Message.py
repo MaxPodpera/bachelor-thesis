@@ -19,11 +19,12 @@ length_max_data: int = length_frame - length_meta
 address_broadcast: str = read_config_file("message.broadcast_address")
 
 
-def to_message(headers, bytes_to_convert) -> Union[Message, None]:
-    if not headers or not bytes_to_convert:            
-        print(headers, bytes_to_convert)
-        print("one of the above is None")
+def to_message(package) -> Union[Message, None]:
+    if not package or package is None:
+        print("Nothing to convert")
         return None
+
+    headers, bytes_to_convert = package
 
     next_part_index: int = length_node_id
     m: Message = Message()
@@ -103,12 +104,9 @@ class Message:
     def related_packages(self, value):
         self._related_packages = value
 
-    def split(self) -> [((int, int, int, int), bytes)]:
+    def split(self) -> [(int, int, int, int, bytes)]:
         if self.data is None or self.data == "":
             return []
-
-        # Headers
-        headers = 255, 255, self.message_id, 0
 
         # To
         b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
@@ -142,6 +140,7 @@ class Message:
             meta = b + seq_str
             data = data_bytes[:length_max_data]
 
-            result.append((headers, meta + data))
+            # Headers
+            result.append((255, 255, self.message_id, 0, meta + data))
             data_bytes = data_bytes[len(data):]
         return result

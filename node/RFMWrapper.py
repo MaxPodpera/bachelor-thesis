@@ -37,14 +37,13 @@ class RFMWrapper:
         :return: void
         """
         # Message to package
-        packages: [((int, int, int, int), bytes)] = data.split()
+        packages: [(int, int, int, int, bytes)] = data.split()
         success: bool = True
         while len(packages) > 0 and success:
-            headers, data = packages.pop(0)
-            to_id, from_id, message_id, flags = headers
-            success &= self._rfm95.send(data,
-                                        destination=to_id,
-                                        node=from_id,
+            id_from, id_to, id_packet, flags, message = packages.pop(0)
+            success &= self._rfm95.send(message,
+                                        destination=id_to,
+                                        node=id_from,
                                         identifier=message_id,
                                         flags=flags)
         return success
@@ -57,12 +56,10 @@ class RFMWrapper:
         d = self._rfm95.receive(with_header=True)
         if d is None:
             return None
-        headers = d[:4]
-        data = d[4:]
-        print("Received:\n" + str(to_message(headers, data)))
+        print("Received:\n" + str(to_message(d)))
         return to_message(headers, data)
 
 
 # TODO:
-#Wird wirklich das empfangene geprintet
-#Wird wirklich gesendet? ID think so
+# Wird wirklich das empfangene geprintet
+# Wird wirklich gesendet? ID think so
