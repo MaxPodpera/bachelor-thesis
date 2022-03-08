@@ -47,5 +47,6 @@ class Messenger(Independent):
     def send(self, data: Message) -> None:
         if data.recipient == self.node_id:
             return
+        print("Add to send queue")
         data.sender = self.node_id
         self.organiser.push_to_send(data)

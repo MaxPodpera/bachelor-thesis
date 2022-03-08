@@ -13,7 +13,7 @@ length_frame: int = int(read_config_file("message.meta.length_frame"))
 length_message_id: int = int(read_config_file("message.meta.length_message_id"))
 length_sequence_number: int = int(read_config_file("message.meta.length_sequence_number"))  # length is expected to be of
 # even length
-length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number + length_message_id
+length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number
 length_max_data: int = length_frame - length_meta
 
 address_broadcast: str = read_config_file("message.broadcast_address")
@@ -114,9 +114,7 @@ class Message:
         b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
         # From
         b += bytes.fromhex(self.sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
-        # id
-        # b += self.message_id.to_bytes(length_message_id, byteorder='big')
-
+        
         # data
         data_bytes: bytes = self.data.encode()
 
