@@ -57,7 +57,7 @@ class RFMWrapper:
         if d is None:
             return None
         
-        return to_message(headers, data)
+        return to_message(d)
 
 
 # TODO:
