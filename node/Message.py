@@ -27,7 +27,8 @@ def to_message(package) -> Union[Message, None]:
     next_part_index: int = length_node_id
     m: Message = Message()
 
-    _, _, m.message_id, _, bytes_to_convert = package
+    _, _, m.message_id, _ = package[:4]
+    bytes_to_convert = package[4:]
 
     # To
     m.recipient = bytes_to_convert[:next_part_index].hex()
