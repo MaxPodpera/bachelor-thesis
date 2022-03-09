@@ -39,6 +39,7 @@ class RFMWrapper:
         # Message to package
         packages: [(int, int, int, int, bytes)] = data.split()
         success: bool = True
+        print("sending", packages)
         while len(packages) > 0 and success:
             id_from, id_to, message_id, flags, message = packages.pop(0)
             print("Sending", id_from, id_to, message_id, flags, message)
