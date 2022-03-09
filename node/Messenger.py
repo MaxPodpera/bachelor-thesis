@@ -37,7 +37,7 @@ class Messenger(Independent):
             # Nothing to send
             if package is None:
                 continue
-
+            print("package", package)
             # package to be sent
             if self.rfm95.send(package):
                 logging.info("Sent package")
