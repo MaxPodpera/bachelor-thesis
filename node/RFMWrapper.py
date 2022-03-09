@@ -56,7 +56,8 @@ class RFMWrapper:
         d = self._rfm95.receive(with_header=True)
         if d is None:
             return None
-        print("Received:\n" + str(to_message(d)))
+        print("received ")
+        print(d)
         return to_message(headers, data)
 
 
