@@ -35,10 +35,10 @@ if __name__ == '__main__':
        
     i = 1
     while i > 0:
-        #m.send(message)
+        m.send(message)
         time.sleep(2)
-        #i = i - 1
-        #message.message_id += i
+        i = i - 1
+        message.message_id += i
     time.sleep(10)
     #m.stop()
 
