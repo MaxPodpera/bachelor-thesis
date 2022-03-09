@@ -42,3 +42,5 @@ if __name__ == '__main__':
     time.sleep(10)
     #m.stop()
 
+# EMPFÄNGT MEHRMALS
+# 
