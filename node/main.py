@@ -31,14 +31,13 @@ if __name__ == '__main__':
     message.pid = 11111
     message.sender_pid = 22222
     message.message_id = 4
-    time.sleep(1000)
-    i = 1
+    i = 10
     while i > 0:
         m.send(message)
-        time.sleep(4)
+        time.sleep(5)
         i = i - 1
         message.message_id += i
-    time.sleep(100)
+    time.sleep(10)
     m.stop()
 
 # EMPFÄNGT MEHRMALS
