@@ -32,6 +32,7 @@ if __name__ == '__main__':
     message.sender_pid = 22222
     message.message_id = 4
     i = 10
+    time.sleep(20)
     while i > 0:
         m.send(message)
         time.sleep(5)
