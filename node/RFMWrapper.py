@@ -39,15 +39,16 @@ class RFMWrapper:
         # Message to package
         packages: [(int, int, int, int, bytes)] = data.split()
         success: bool = True
-
+        print("About to send", packages)
         while len(packages) > 0 and success:
             id_from, id_to, message_id, flags, message = packages.pop(0)
-            print(str(message))
+            
             success &= self._rfm95.send(message,
                                         destination=id_to,
                                         node=id_from,
                                         identifier=message_id,
                                         flags=flags)
+            print("\n\n\n", str(message), success, "\n\n\n")
         return success
 
     def receive(self) -> Union[Message, None]:

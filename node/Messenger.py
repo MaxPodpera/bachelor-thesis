@@ -34,18 +34,21 @@ class Messenger(Independent):
 
             # Check send queue
             package: Message = self.organiser.pop_from_send()
+            print("prepare to send", package)
             # Nothing to send
             if package is None:
                 continue
-            print("package", package)
+            
             # package to be sent
             if self.rfm95.send(package):
                 logging.info("Sent package")
             else:
+                logging.error("Could not send package")
                 self.organiser.push_to_send(package)
 
     def send(self, data: Message) -> None:
         if data.recipient == self.node_id:
             return
         data.sender = self.node_id
+        print("to send queue")
         self.organiser.push_to_send(data)
