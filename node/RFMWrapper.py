@@ -46,7 +46,7 @@ class RFMWrapper:
             success &= self._rfm95.send(message,
                                         destination=id_to,
                                         node=id_from,
-                                        identifier=message_id,
+                                        identifier=message_id + len(packages),
                                         flags=flags)
             
             print("\n\n\n", str(message), success, "\n\n\n")
