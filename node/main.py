@@ -22,7 +22,7 @@ if __name__ == '__main__':
     # Hard coded message TODO interaction with FS to load messages.
     message = Message()
     message.data = "Hello there this is an amazing message that is very long so it needs more than one package" \
-                   #"to be sent over completely. It will be printed once everything was received. This requires some" \
+                   "to be sent over completely. It will be printed once everything was received. This requires some" \
                    #"more characters though. But to completely and thorough test this i will now attempt to create a" \
                    #"message that is long enough to be sent as three messages. This way the later two should be" \
                    #" received. This line is the last one i need for this."
@@ -32,15 +32,14 @@ if __name__ == '__main__':
     message.sender_pid = 22222
     message.message_id = 4
     
-       
-    i = 10
+    i = 1
     while i > 0:
         m.send(message)
         time.sleep(4)
         i = i - 1
         message.message_id += i
-    time.sleep(10)
-    #m.stop()
+    time.sleep(100)
+    m.stop()
 
 # EMPFÄNGT MEHRMALS
 # 
