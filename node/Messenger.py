@@ -34,7 +34,7 @@ class Messenger(Independent):
 
             # Check send queue
             package: Message = self.organiser.pop_from_send()
-            print("prepare to send", package)
+
             # Nothing to send
             if package is None:
                 continue
