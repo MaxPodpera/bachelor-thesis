@@ -30,7 +30,7 @@ if __name__ == '__main__':
     message.recipient = "2b679c67277302db4ca0ae3fcbad51d3" #  "42376f7500df44e985e8f7255bcfa0f7"
     message.pid = 11111
     message.sender_pid = 22222
-    message.message_id = 4
+    message.message_id = 6
     
     message1 = Message()
     message1.data = "Hello again. You guessed it. This is another amazing message that will be transmitted." \
@@ -43,8 +43,8 @@ if __name__ == '__main__':
     
     #i = 10
     #while i > 0:
-    m.send(message)
-    #m.send(message1)
+    #m.send(message)
+    m.send(message1)
     #    time.sleep(5)
     #    i = i - 1
     #    message.message_id += i
