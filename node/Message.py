@@ -88,10 +88,12 @@ class Message:
                + str(self._related_packages) + "\nmessage_id:" + str(self.message_id) + "\n}"
 
     def combine(self, message: Message) -> bool:
-        print("\n\n\n")
-        print(message)
-        print(self)
-        print("\n\n\n")
+        """
+        Combines two messages into self. Combination only happens if the data of the messages is consecutive.
+        :param message: to be combined
+        :return: True in case the messages were combined, false otherwise.
+        """
+        # Two packages for the same message checks
         if message.message_id != self.message_id: return False
         if message.recipient != self.recipient: return False
         if message.pid != self.pid: return False
@@ -99,10 +101,16 @@ class Message:
         if message.sender_pid != self.sender_pid: return False
         if message.sequence_number > self._related_packages: return False
         if message.related_packages < self.sequence_number: return False
-        print("made it through")
-        self.data += message.data
-        return True
-
+        
+        # self comes right before message
+        if self.sequence_number == message.sequence_number - 1:
+            self.data += message.data
+            return True
+        elif self.sequence_number - 1 == message.sequence_number:
+            self.data = message.data + self.data
+            return True
+        return False
+    
     @property
     def related_packages(self):
         return self._related_packages
