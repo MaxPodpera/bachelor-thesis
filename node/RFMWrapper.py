@@ -47,8 +47,9 @@ class RFMWrapper:
             success &= self._rfm95.send(data,
                                         destination=id_to,
                                         node=id_from,
-                                        identifier=message.message_id,
+                                        identifier=self._sequence_id,
                                         flags=flags)
+            self._sequence_id = (self._sequence_id + 1) % 255
             sleep(0.1)
         return success
 
