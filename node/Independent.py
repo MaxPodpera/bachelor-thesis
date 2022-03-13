@@ -17,6 +17,9 @@ class Independent:
 
     def start(self) -> None:
         self.active = True
+        if self._thread is None:
+            self._thread = threading.Thread(target=self.run, args=())
+
         self._thread.start()
 
     def stop(self) -> None:
