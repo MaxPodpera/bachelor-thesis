@@ -29,15 +29,15 @@ class RFMWrapper:
         # self._rfm95.identifier = 255
         # self._rfm95.node = 255
 
-    def send(self, data: Message) -> bool:
+    def send(self, message: Message) -> bool:
         """
         Takes a message object to be send. If the message is too large to be sent
         as one, multiple packages will be send.
-        :param data: to be sent
+        :param message: to be sent
         :return: void
         """
         # Message to package
-        packages: [(int, int, int, int, bytes)] = data.split()
+        packages: [(int, int, int, int, bytes)] = message.split()
         success: bool = True
         # Send the single packages
         while len(packages) > 0 and success:
@@ -47,7 +47,7 @@ class RFMWrapper:
             success &= self._rfm95.send(data,
                                         destination=id_to,
                                         node=id_from,
-                                        identifier=data.message_id,
+                                        identifier=message.message_id,
                                         flags=flags)
             sleep(0.1)
         return success
