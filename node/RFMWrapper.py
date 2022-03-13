@@ -46,7 +46,7 @@ class RFMWrapper:
             success &= self._rfm95.send(data,
                                         destination=id_to,
                                         node=id_from,
-                                        identifier=message_id + len(packages),
+                                        identifier=message_id,
                                         flags=flags)
             sleep(0.1)
         return success

@@ -13,7 +13,7 @@ length_frame: int = int(read_config_file("message.meta.length_frame"))
 length_message_id: int = int(read_config_file("message.meta.length_message_id"))
 length_sequence_number: int = int(read_config_file("message.meta.length_sequence_number"))  # length is expected to be of
 # even length
-length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number
+length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number + length_message_id
 length_max_data: int = length_frame - length_meta
 
 address_broadcast: str = read_config_file("message.broadcast_address")
@@ -26,7 +26,7 @@ def to_message(package) -> Union[Message, None]:
     next_part_index: int = length_node_id
     m: Message = Message()
 
-    _, _, m.message_id, _ = package[:4]
+    # _, _, m.message_id, _ = package[:4]
     bytes_to_convert = package[4:]
 
     # To
@@ -41,6 +41,11 @@ def to_message(package) -> Union[Message, None]:
     m.sender_pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid],
                                   byteorder='big', signed=False)
     next_part_index += length_pid
+
+    # Message id
+    m.message_id = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_message_id]
+                                  , byteorder='big', signed=False)
+    next_part_index += length_message_id
 
     # Sequence Number
     m._related_packages = int.from_bytes(
@@ -111,7 +116,8 @@ class Message:
         b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
         # From
         b += bytes.fromhex(self.sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
-        
+        # Message id
+        b += self.message_id.to_bytes(length_message_id, byteorder='big')
         # data
         data_bytes: bytes = self.data.encode()
 
