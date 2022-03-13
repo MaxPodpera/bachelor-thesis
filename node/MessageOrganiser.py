@@ -99,29 +99,30 @@ class MessageOrganiser:
         if len(self.queue_to_be_completed[(message.message_id, message.sender)]) != message.related_packages + 1:
             print("one of many")
             return None  # Not all received yet
-        print("\n\n\n\n\n")
-        for m in self.queue_to_be_completed[(message.message_id, message.sender)]:
-            print(m)
-        print("\n\n\n\n\n")
-        # All received build full message
-        full_message: Message = None
-        current_sequence_number: int = 0
-        print("Starting building the message")
-        for i in range(message.related_packages):
-            print("i", i)
-            print(self.queue_to_be_completed[(message.message_id, message.sender)])
-            for m in self.queue_to_be_completed[(message.message_id, message.sender)]:
-                print("sequence number", m.sequence_number, current_sequence_number)
-                if m.sequence_number == 0:
-                    full_message = m
-                    current_sequence_number += 1
-                    print(True)
-                    break
-                elif m.sequence_number == current_sequence_number:
-                    print(full_message.combine(m))
-                    current_sequence_number += 1
-                    break
-            print("full message", full_message)
+
+        return self._build_message(self.queue_to_be_completed[(message.message_id, message.sender)])
+
+    def _build_message(self, message_packages: [Message]) -> Message:
+        """
+        Given a list of related packages (parts of the same message as determined by message id and sender) the messages
+         are combined to one message
+        :param message_packages: the parts
+        :return: the combined message
+        """
+        if message_packages is None or not message_packages:
+            return None
+
+        full_message: Message
+        for i in range(0, message_packages[0].related_packages):
+            a = [m for m in message_packages if m.sequence_number == i]
+            if len(a) != 1:
+                logging.error("Transforming message failed")
+            if i == 0:
+                full_message = a[0]
+            else:
+                full_message.combine(a[0])
+       
+        print("full message", full_message)
         # Remove from incomplete list
         del self.queue_to_be_completed[(message.message_id, message.sender)]
         print("Full fucking message:")
