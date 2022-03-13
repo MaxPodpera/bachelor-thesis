@@ -55,7 +55,7 @@ class MessageOrganiser:
             return
 
         # Not yet received
-        self.queue_received.append(message.message_id)  # add to known message list
+        self.queue_received.append((message.message_id, message.sender, message.sequence_number))  # add to known message list
 
         # Message not meant for this node. Add to list to send later
         if not (message.recipient in self.list_addresses_self):
@@ -79,10 +79,9 @@ class MessageOrganiser:
         :param message: to be checked
         :return: Message if it is complete, None otherwise
         """
-        print("Handling message")
-        print(message)
         # Single message
         if message.related_packages == 0:
+            print("Single message")
             return message
 
         # First of multiple packages for this message
@@ -95,7 +94,8 @@ class MessageOrganiser:
         self.queue_to_be_completed[str(message.message_id)].append(message)
         
         # Check if all corresponding packages were received
-        if len(self.queue_to_be_completed[str(message.message_id)]) != message.related_packages:
+        print(len(self.queue_to_be_completed[str(message.message_id)]))
+        if len(self.queue_to_be_completed[str(message.message_id)]) != message.related_packages + 1:
             print("Added another of many")
             return None  # Not all received yet
 
