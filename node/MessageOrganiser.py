@@ -1,14 +1,24 @@
 from node.Message import *
 from util.Utilities import read_config_file
 from typing import Union
+import time
 import threading
 import math
+import logging
+from node.Independent import Independent
+from time import sleep
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
 broadcast_address = read_config_file("message.broadcast_address")
 
 
-class MessageOrganiser:
+# TODO removing from received list if old.
+# TODO Store full messages in files.
+# TODO read messages from files
+# TODO error handling
+
+
+class MessageOrganiser(Independent):
 
     list_addresses_self: [str] = [broadcast_address]  # Addresses for which messages are stored (if set as recipient)
 
@@ -21,7 +31,9 @@ class MessageOrganiser:
 
     def run(self):
         # Todo empty receive queue when necessary.
-        pass
+        while self.active:
+            sleep(1.0)  # Waiting time until the next check if performed
+        logging.info("Message organiser shut down!")
 
     def push_to_send(self, message: Message):
         """
@@ -31,6 +43,7 @@ class MessageOrganiser:
         """
         # TODO add an id.
         # Add to queue
+        
         self.queue_send.append(message)
 
     def pop_from_send(self) -> Union[Message, None]:
@@ -54,12 +67,15 @@ class MessageOrganiser:
         # Already received
         if self.was_received((message.message_id, message.sender, message.sequence_number)):
             return
-
+        
+        logging.info("Received unknown Message")
+        
         # Not yet received
         self.queue_received.append((message.message_id, message.sender, message.sequence_number))  # add to known message list
 
         # Message not meant for this node. Add to list to send later
         if not (message.recipient in self.list_addresses_self):
+            logging.info("Forwarding message")
             self.push_to_send(message)
             return
 
@@ -82,12 +98,12 @@ class MessageOrganiser:
         """
         # Single message
         if message.related_packages == 0:
-            print("just one")
+            logging.debug("Received single message")
             return message
 
         # First of multiple packages for this message
         if (message.message_id, message.sender) not in self.queue_to_be_completed:
-            print("first of many")
+            logging.debug("Received first of many packages")
             self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
             return None
 
@@ -96,9 +112,10 @@ class MessageOrganiser:
         
         # Check if all corresponding packages were received
         if len(self.queue_to_be_completed[(message.message_id, message.sender)]) != message.related_packages + 1:
-            print("one of many")
+            logging.debug("Received further package of large message")
             return None  # Not all received yet
 
+        logging.debug("Received all packages for message")
         return self._build_message(self.queue_to_be_completed[(message.message_id, message.sender)])
 
     def _build_message(self, message_packages: [Message]) -> Message:
@@ -108,6 +125,7 @@ class MessageOrganiser:
         :param message_packages: the parts
         :return: the combined message
         """
+        logging.debug("Combining messages")
         if message_packages is None or not message_packages:
             return None
 
@@ -126,5 +144,4 @@ class MessageOrganiser:
         # Remove from incomplete list
         del self.queue_to_be_completed[(full_message.message_id, full_message.sender)]
         # Return full message
-        print(len(full_message.data))
         return full_message

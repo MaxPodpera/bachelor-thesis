@@ -3,7 +3,7 @@ import time
 from typing import Union
 import math
 from util.Utilities import read_config_file
-
+import logging
 """
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
 """
@@ -63,6 +63,7 @@ def to_message(package) -> Union[Message, None]:
 
     # Time
     m.time = time.time()
+    logging.debug("Created message from bytes")
     return m
 
 
@@ -94,6 +95,7 @@ class Message:
         :return: True in case the messages were combined, false otherwise.
         """
         # Two packages for the same message checks
+        logging.debug("Combining messages")
         if message.message_id != self.message_id: return False
         if message.recipient != self.recipient: return False
         if message.pid != self.pid: return False
@@ -116,6 +118,7 @@ class Message:
         self._related_packages = value
 
     def split(self) -> [(int, int, int, int, bytes)]:
+        logging.debug("Splitting message to packages")
         if self.data is None or self.data == "":
             return []
 

@@ -19,7 +19,6 @@ class Messenger(Independent):
         self.rfm95 = RFMWrapper()
         self.node_id = read_uuid_file(read_config_file("uuid_file"))
         self.organiser = MessageOrganiser(self.node_id)
-        logging.info("Started node with id: " + str(self.node_id))
         super().__init__()
 
     def run(self):
@@ -27,6 +26,8 @@ class Messenger(Independent):
         Check transmitter for incoming messages and send outgoing messages
         :return: void
         """
+        logging.info("Started node with id: " + str(self.node_id))
+        self.organiser.start()
         while self.active:
             received: Message = self.rfm95.receive()  # Receive new message
             if received:                              # Check if something was received
@@ -46,6 +47,8 @@ class Messenger(Independent):
             else:
                 logging.error("Could not send package")
                 self.organiser.push_to_send(package)
+        
+        logging.info("Shut down Messenger")
 
     def send(self, data: Message) -> None:
         """
@@ -56,5 +59,6 @@ class Messenger(Independent):
         """
         if data.recipient == self.node_id:
             return
+        logging.info("Adding message to send queue")
         data.sender = self.node_id
         self.organiser.push_to_send(data)

@@ -1,6 +1,7 @@
 import board
 import busio
 import adafruit_rfm9x
+import logging
 import time
 from digitalio import DigitalInOut
 from node.Message import *
@@ -37,6 +38,7 @@ class RFMWrapper:
         :return: void
         """
         # Message to package
+        logging.info("Sending message")
         packages: [(int, int, int, int, bytes)] = message.split()
         success: bool = True
         # Send the single packages
@@ -49,6 +51,7 @@ class RFMWrapper:
                                         flags=flags)
             self._sequence_id = (self._sequence_id + 1) % 255
             sleep(0.3)
+        logging.info("Transmission end")
         return success
 
     def receive(self) -> Union[Message, None]:
@@ -59,4 +62,5 @@ class RFMWrapper:
         d = self._rfm95.receive(with_header=True)
         if d is None:
             return None
+        logging.info("Received package")
         return to_message(d)
