@@ -92,7 +92,6 @@ class MessageOrganiser:
         self.queue_to_be_completed[str(message.message_id)].append(message)
         
         # Check if all corresponding packages were received
-        print(len(self.queue_to_be_completed[str(message.message_id)]))
         if len(self.queue_to_be_completed[str(message.message_id)]) != message.related_packages + 1:
             return None  # Not all received yet
 
@@ -101,8 +100,8 @@ class MessageOrganiser:
         current_sequence_number: int = 0
         print("Starting building the message")
         for i in range(message.related_packages):
-            print("length", len(self.queue_to_be_completed[str(message.message_id)]))
             for m in self.queue_to_be_completed[str(message.message_id)]:
+                print(m.sequence_number, current_sequence_number)
                 if m.sequence_number == 0:
                     full_message = m
                     current_sequence_number += 1
@@ -112,7 +111,6 @@ class MessageOrganiser:
                     current_sequence_number += 1
                     break
             print("full message", full_message)
-            print("current_sequence_number", current_sequence_number)
         # Remove from incomplete list
         del self.queue_to_be_completed[str(message.message_id)]
         print("Full fucking message:")

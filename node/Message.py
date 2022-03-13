@@ -88,6 +88,8 @@ class Message:
                + str(self._related_packages) + "\nmessage_id:" + str(self.message_id) + "\n}"
 
     def combine(self, message: Message) -> bool:
+        print(message)
+        print(self)
         if message.message_id != self.message_id: return False
         if message.recipient != self.recipient: return False
         if message.pid != self.pid: return False
@@ -95,7 +97,7 @@ class Message:
         if message.sender_pid != self.sender_pid: return False
         if message.sequence_number > self._related_packages: return False
         if message.related_packages < self.sequence_number: return False
-
+        print("made it through")
         self.data += message.data
         return True
 
