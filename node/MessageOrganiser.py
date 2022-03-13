@@ -51,8 +51,6 @@ class MessageOrganiser:
         :return: void
         """
         # Already received
-        print(message)
-        print(self.was_received((message.message_id, message.sender, message.sequence_number)))
         if self.was_received((message.message_id, message.sender, message.sequence_number)):
             return
 
@@ -83,13 +81,11 @@ class MessageOrganiser:
         """
         # Single message
         if message.related_packages == 0:
-            print("Single message")
             return message
 
         # First of multiple packages for this message
         if str(message.message_id) not in self.queue_to_be_completed:
             self.queue_to_be_completed[str(message.message_id)] = [message]
-            print("First of many")
             return None
 
         # TODO is this thread safe
@@ -98,7 +94,6 @@ class MessageOrganiser:
         # Check if all corresponding packages were received
         print(len(self.queue_to_be_completed[str(message.message_id)]))
         if len(self.queue_to_be_completed[str(message.message_id)]) != message.related_packages + 1:
-            print("Added another of many")
             return None  # Not all received yet
 
         # All received build full message
@@ -106,6 +101,7 @@ class MessageOrganiser:
         current_sequence_number: int = 0
         print("Starting building the message")
         for i in range(message.related_packages):
+            print("length", len(self.queue_to_be_completed[str(message.message_id)]))
             for m in self.queue_to_be_completed[str(message.message_id)]:
                 if m.sequence_number == 0:
                     full_message = m
@@ -115,6 +111,8 @@ class MessageOrganiser:
                     full_message.combine(m)
                     current_sequence_number += 1
                     break
+            print("full message", full_message)
+            print("current_sequence_number", current_sequence_number)
         # Remove from incomplete list
         del self.queue_to_be_completed[str(message.message_id)]
         print("Full fucking message:")
