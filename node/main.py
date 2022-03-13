@@ -47,6 +47,8 @@ if __name__ == '__main__':
     message2.pid = 11111
     message2.sender_pid = 22222
     message.message_id = 2
+
+    signal.signal(signal.SIGINT, m.stop)
     
     #i = 10
     #while i > 0:
