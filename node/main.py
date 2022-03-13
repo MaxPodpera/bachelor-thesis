@@ -7,6 +7,7 @@ sys.path.append(os.getcwd())
 from node.Messenger import Messenger
 from node.Message import *
 
+
 if __name__ == '__main__':
 
     logging.basicConfig(level=logging.DEBUG)
@@ -49,7 +50,7 @@ if __name__ == '__main__':
     message2.sender_pid = 22222
     message.message_id = 2
 
-    signal.signal(signal.SIGINT, m.stop)
+    signal.signal(signal.SIGINT, lambda a, b: m.stop())
     
     #i = 10
     #while i > 0:
