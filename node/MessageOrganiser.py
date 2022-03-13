@@ -81,7 +81,6 @@ class MessageOrganiser:
         """
         print("Handling message")
         print(message)
-        print(str(message))
         # Single message
         if message.related_packages == 0:
             return message
