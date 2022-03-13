@@ -11,7 +11,7 @@ class MessageOrganiser:
 
     list_addresses_self: [str] = [broadcast_address]  # Addresses for which messages are stored (if set as recipient)
 
-    queue_received: [str] = []  # Received Messages
+    queue_received: [(str, str, int)] = []  # Received Messages
     queue_send: [Message] = []  # To be sent
     queue_to_be_completed: {str: [Message]} = {}  # not all packages received yet
 
@@ -51,7 +51,7 @@ class MessageOrganiser:
         :return: void
         """
         # Already received
-        if self.was_received(message.message_id):
+        if self.was_received((message.message_id, message.sender, message.sequence_number)):
             return
 
         # Not yet received
@@ -65,13 +65,13 @@ class MessageOrganiser:
         # Handle message that is meant for this node
         self._handle_message(message)
 
-    def was_received(self, message_id: str) -> bool:
+    def was_received(self, message_distinquisher: (str, str, int)) -> bool:
         """
         Check if message was received before.
-        :param message_id: to check if it was received
+        :param message_distinquisher: to check if it was received
         :return: true if it was received false otherwise
         """
-        return message_id in self.queue_received
+        return message_distinquisher in self.queue_received
 
     def _handle_message(self, message: Message) -> Union[Message, None]:
         """
