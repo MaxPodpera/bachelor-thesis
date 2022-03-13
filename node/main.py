@@ -2,6 +2,7 @@ import logging
 import time
 import sys
 import os
+import signal
 sys.path.append(os.getcwd())
 from node.Messenger import Messenger
 from node.Message import *
