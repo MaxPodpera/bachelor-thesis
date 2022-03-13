@@ -52,7 +52,6 @@ class MessageOrganiser:
         :return: void
         """
         # Already received
-        print("hai there", self.was_received((message.message_id, message.sender, message.sequence_number)))
         if self.was_received((message.message_id, message.sender, message.sequence_number)):
             return
 
@@ -65,6 +64,7 @@ class MessageOrganiser:
             return
 
         # Handle message that is meant for this node
+        print(message)
         self._handle_message(message)
 
     def was_received(self, message_distinquisher: (str, str, int)) -> bool:
