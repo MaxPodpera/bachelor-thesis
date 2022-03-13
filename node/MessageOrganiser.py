@@ -106,6 +106,7 @@ class MessageOrganiser:
         print("Starting building the message")
         for i in range(message.related_packages):
             print("i", i)
+            print(self.queue_to_be_completed[(message.message_id, message.sender)])
             for m in self.queue_to_be_completed[(message.message_id, message.sender)]:
                 print("sequence number", m.sequence_number, current_sequence_number)
                 if m.sequence_number == 0:
