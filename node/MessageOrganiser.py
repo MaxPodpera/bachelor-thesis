@@ -119,7 +119,7 @@ class MessageOrganiser:
                     break
             print("full message", full_message)
         # Remove from incomplete list
-        del self.queue_to_be_completed[str(message.message_id)]
+        del self.queue_to_be_completed[(message.message_id, message.sender)]
         print("Full fucking message:")
         print("\n\n\n")
         print(full_message)
