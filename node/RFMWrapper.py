@@ -60,8 +60,3 @@ class RFMWrapper:
         if d is None:
             return None
         return to_message(d)
-
-
-# TODO:
-# Wird wirklich das empfangene geprintet
-# Wird wirklich gesendet? ID think so

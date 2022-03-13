@@ -83,10 +83,12 @@ class MessageOrganiser:
         """
         # Single message
         if message.related_packages == 0:
+            print("just one")
             return message
 
         # First of multiple packages for this message
         if str(message.message_id) not in self.queue_to_be_completed:
+            print("first of many")
             self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
             return None
 
@@ -95,6 +97,7 @@ class MessageOrganiser:
         
         # Check if all corresponding packages were received
         if len(self.queue_to_be_completed[(message.message_id, message.sender)]) != message.related_packages + 1:
+            print("one of many")
             return None  # Not all received yet
 
         # All received build full message
