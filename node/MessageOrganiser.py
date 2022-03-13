@@ -51,6 +51,8 @@ class MessageOrganiser:
         :return: void
         """
         # Already received
+        print(message)
+        print(self.was_received((message.message_id, message.sender, message.sequence_number)))
         if self.was_received((message.message_id, message.sender, message.sequence_number)):
             return
 
