@@ -80,7 +80,7 @@ class Message:
         """
         return "Message{\nto:" + str(self.recipient) + ",\nfrom:" + self.sender + ",\ndata:" + self.data \
                + ",\nsequence_number:" + str(self.sequence_number) + ",\nrelated_packages:" \
-               + str(self._related_packages) + "message_id:" + str(self.message_id) + "\n}"
+               + str(self._related_packages) + "\nmessage_id:" + str(self.message_id) + "\n}"
 
     def combine(self, message: Message) -> bool:
         if message.message_id != self.message_id: return False
