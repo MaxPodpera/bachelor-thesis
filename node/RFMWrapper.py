@@ -48,7 +48,7 @@ class RFMWrapper:
                                         identifier=self._sequence_id,
                                         flags=flags)
             self._sequence_id = (self._sequence_id + 1) % 255
-            print(message.message_id)
+            sleep(0.3)
         return success
 
     def receive(self) -> Union[Message, None]:
