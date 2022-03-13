@@ -114,10 +114,11 @@ class MessageOrganiser:
 
         full_message: Message
         for i in range(0, message_packages[0].related_packages + 1):
+            # Get current element.
             a = [m for m in message_packages if m.sequence_number == i]
-            print("adding", a[0])
             if len(a) != 1:
                 logging.error("Transforming message failed")
+                return None
             if i == 0:
                 full_message = a[0]
             else:
@@ -125,6 +126,5 @@ class MessageOrganiser:
 
         # Remove from incomplete list
         del self.queue_to_be_completed[(full_message.message_id, full_message.sender)]
-        print("\n\n\n")
-        print(full_message)
+        # Return full message
         return full_message
