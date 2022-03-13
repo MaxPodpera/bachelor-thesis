@@ -19,7 +19,7 @@ class Independent:
         self._thread = threading.Thread(target=self.run, args=())
 
     def start(self) -> None:
-        signal.signal(signal.SIGINT, signal_handler)
+        signal.signal(signal.SIGINT, self.signal_handler)
         self.active = True
         self._thread.start()
 
