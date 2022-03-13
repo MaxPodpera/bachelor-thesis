@@ -99,7 +99,10 @@ class MessageOrganiser:
         if len(self.queue_to_be_completed[(message.message_id, message.sender)]) != message.related_packages + 1:
             print("one of many")
             return None  # Not all received yet
-
+        print("\n\n\n\n\n")
+        for m in self.queue_to_be_completed[(message.message_id, message.sender)]:
+            print(m)
+        print("\n\n\n\n\n")
         # All received build full message
         full_message: Message = None
         current_sequence_number: int = 0
