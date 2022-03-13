@@ -87,7 +87,7 @@ class MessageOrganiser:
             return message
 
         # First of multiple packages for this message
-        if (str(message.message_id), message.sender) not in self.queue_to_be_completed:
+        if (message.message_id, message.sender) not in self.queue_to_be_completed:
             print("first of many")
             self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
             return None
