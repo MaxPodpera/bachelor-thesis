@@ -49,5 +49,5 @@ if __name__ == '__main__':
     #    i = i - 1
     #    message.message_id += i
     #    message1.message_id += i
-    time.sleep(10)
+    time.sleep(60)
     m.stop()
