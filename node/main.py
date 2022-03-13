@@ -44,7 +44,7 @@ if __name__ == '__main__':
     #i = 10
     #while i > 0:
     m.send(message)
-    m.send(message1)
+    #m.send(message1)
     #    time.sleep(5)
     #    i = i - 1
     #    message.message_id += i
