@@ -80,6 +80,8 @@ class MessageOrganiser:
         :return: Message if it is complete, None otherwise
         """
         print("Handling message")
+        print(message)
+        print(str(message))
         # Single message
         if message.related_packages == 0:
             return message
