@@ -43,14 +43,14 @@ class RFMWrapper:
         while len(packages) > 0 and success:
             id_from, id_to, message_id, flags, data = packages.pop(0)
             
-            print("\n", message.message_id, "\n")
+            print("\n", message.message_id, self._sequence_id, "\n")
             success &= self._rfm95.send(data,
                                         destination=id_to,
                                         node=id_from,
                                         identifier=self._sequence_id,
                                         flags=flags)
             self._sequence_id = (self._sequence_id + 1) % 255
-            sleep(0.1)
+            sleep(0.3)
         return success
 
     def receive(self) -> Union[Message, None]:
