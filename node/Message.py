@@ -144,6 +144,6 @@ class Message:
             data = data_bytes[:length_max_data]
 
             # Headers
-            result.append((255, 255, self.message_id, 0, meta + data))
+            result.append((255, 255, 0, 0, meta + data))
             data_bytes = data_bytes[len(data):]
         return result

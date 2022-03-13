@@ -30,10 +30,9 @@ class Messenger(Independent):
         while self.active:
             received: Message = self.rfm95.receive()  # Receive new message
             if received:                              # Check if something was received
-                print("got this", received)
                 self.organiser.push_to_received(received)  # Add to relevant queues and lists
                 continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
-            print("nothing received")
+
             # Check send queue
             package: Message = self.organiser.pop_from_send()
 
