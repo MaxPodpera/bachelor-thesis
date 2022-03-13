@@ -19,7 +19,7 @@ class Messenger(Independent):
         self.rfm95 = RFMWrapper()
         self.node_id = read_uuid_file(read_config_file("uuid_file"))
         self.organiser = MessageOrganiser(self.node_id)
-        print("Node id: " + str(self.node_id))
+        logging.info("Started node with id: " + str(self.node_id))
         super().__init__()
 
     def run(self):
@@ -48,8 +48,13 @@ class Messenger(Independent):
                 self.organiser.push_to_send(package)
 
     def send(self, data: Message) -> None:
+        """
+        Add message to send queue, if it not destined for this node.
+        The sender of the message will be set to this node.
+        :param data: message to be sent.
+        :return: void.
+        """
         if data.recipient == self.node_id:
             return
         data.sender = self.node_id
-        print("to send queue")
         self.organiser.push_to_send(data)

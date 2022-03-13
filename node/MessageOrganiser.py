@@ -79,6 +79,7 @@ class MessageOrganiser:
         :param message: to be checked
         :return: Message if it is complete, None otherwise
         """
+        print("Handling message")
         # Single message
         if message.related_packages == 0:
             return message
@@ -86,18 +87,21 @@ class MessageOrganiser:
         # First of multiple packages for this message
         if str(message.message_id) not in self.queue_to_be_completed:
             self.queue_to_be_completed[str(message.message_id)] = [message]
+            print("First of many")
             return None
 
         # TODO is this thread safe
         self.queue_to_be_completed[str(message.message_id)].append(message)
-
+        
         # Check if all corresponding packages were received
         if len(self.queue_to_be_completed[str(message.message_id)]) != message.related_packages:
+            print("Added another of many")
             return None  # Not all received yet
 
         # All received build full message
         full_message: Message = None
         current_sequence_number: int = 0
+        print("Starting building the message")
         for i in range(message.related_packages):
             for m in self.queue_to_be_completed[str(message.message_id)]:
                 if m.sequence_number == 0:

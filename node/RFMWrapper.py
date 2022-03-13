@@ -39,7 +39,7 @@ class RFMWrapper:
         # Message to package
         packages: [(int, int, int, int, bytes)] = data.split()
         success: bool = True
-
+        # Send the single packages
         while len(packages) > 0 and success:
             id_from, id_to, message_id, flags, message = packages.pop(0)
             success &= self._rfm95.send(message,
@@ -47,8 +47,6 @@ class RFMWrapper:
                                         node=id_from,
                                         identifier=message_id + len(packages),
                                         flags=flags)
-            
-            print("\n\n\n", str(message), success, "\n\n\n")
         return success
 
     def receive(self) -> Union[Message, None]:
@@ -56,11 +54,9 @@ class RFMWrapper:
         Receive data from the module. Data will be converted to message object.
         :return: Message object containing the message or None if nothing was received
         """
-        print("Checking for messages")
         d = self._rfm95.receive(with_header=True)
         if d is None:
             return None
-        print("\n\nRECEIVED\n", d, "\n\n")
         return to_message(d)
 
 
