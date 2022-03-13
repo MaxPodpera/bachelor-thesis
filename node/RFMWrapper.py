@@ -50,6 +50,7 @@ class RFMWrapper:
                                         node=id_from,
                                         identifier=message_id + len(packages),
                                         flags=flags)
+            sleep(0.1)
         return success
 
     def receive(self) -> Union[Message, None]:
