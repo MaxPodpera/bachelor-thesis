@@ -42,7 +42,7 @@ class RFMWrapper:
         # Send the single packages
         while len(packages) > 0 and success:
             id_from, id_to, message_id, flags, data = packages.pop(0)
-
+            print(self._sequence_id, message_id)
             success &= self._rfm95.send(data,
                                         destination=id_to,
                                         node=id_from,
