@@ -113,7 +113,7 @@ class MessageOrganiser:
             return None
 
         full_message: Message
-        for i in range(0, message_packages[0].related_packages):
+        for i in range(0, message_packages[0].related_packages + 1):
             a = [m for m in message_packages if m.sequence_number == i]
             print("adding", a[0])
             if len(a) != 1:
