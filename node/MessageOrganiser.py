@@ -64,7 +64,6 @@ class MessageOrganiser:
             return
 
         # Handle message that is meant for this node
-        print(message)
         self._handle_message(message)
 
     def was_received(self, message_distinquisher: (str, str, int)) -> bool:
@@ -127,4 +126,5 @@ class MessageOrganiser:
         # Remove from incomplete list
         del self.queue_to_be_completed[(full_message.message_id, full_message.sender)]
         # Return full message
+        print(len(full_message.data))
         return full_message

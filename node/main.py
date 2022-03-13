@@ -31,7 +31,7 @@ if __name__ == '__main__':
     message.pid = 11111
     message.sender_pid = 22222
     message.message_id = 6
-    
+    ######################
     message1 = Message()
     message1.data = "Hello again. You guessed it. This is another amazing message that will be transmitted." \
                     "The purpose of this message is to see if transmission fails because of split messages" \
@@ -39,6 +39,13 @@ if __name__ == '__main__':
     message1.recipient = message.recipient
     message1.pid = 11111
     message1.sender_pid = 22222
+    message.message_id = 2
+    #######################
+    message2 = Message()
+    message2.data = "abc" * 2000
+    message2.recipient = message.recipient
+    message2.pid = 11111
+    message2.sender_pid = 22222
     message.message_id = 2
     
     #i = 10
