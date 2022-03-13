@@ -81,7 +81,6 @@ class MessageOrganiser:
         :param message: to be checked
         :return: Message if it is complete, None otherwise
         """
-        print(message)
         # Single message
         if message.related_packages == 0:
             print("Single message")
