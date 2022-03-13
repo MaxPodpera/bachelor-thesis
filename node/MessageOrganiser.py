@@ -2,6 +2,7 @@ from node.Message import *
 from util.Utilities import read_config_file
 from typing import Union
 import threading
+import math
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
 broadcast_address = read_config_file("message.broadcast_address")
@@ -11,9 +12,9 @@ class MessageOrganiser:
 
     list_addresses_self: [str] = [broadcast_address]  # Addresses for which messages are stored (if set as recipient)
 
-    queue_received: [(str, str, int)] = []  # Received Messages
+    queue_received: [(int, str, int)] = []  # Received Messages
     queue_send: [Message] = []  # To be sent
-    queue_to_be_completed: {str: [Message]} = {}  # not all packages received yet
+    queue_to_be_completed: {(int, str): [Message]} = {}  # not all packages received yet
 
     def __init__(self, node_id: str):
         self.list_addresses_self.append(node_id)
@@ -85,14 +86,14 @@ class MessageOrganiser:
 
         # First of multiple packages for this message
         if str(message.message_id) not in self.queue_to_be_completed:
-            self.queue_to_be_completed[str(message.message_id)] = [message]
+            self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
             return None
 
         # TODO is this thread safe
-        self.queue_to_be_completed[str(message.message_id)].append(message)
+        self.queue_to_be_completed[(message.message_id, message.sender)].append(message)
         
         # Check if all corresponding packages were received
-        if len(self.queue_to_be_completed[str(message.message_id)]) != message.related_packages + 1:
+        if len(self.queue_to_be_completed[(message.message_id, message.sender)]) != message.related_packages + 1:
             return None  # Not all received yet
 
         # All received build full message
@@ -100,14 +101,16 @@ class MessageOrganiser:
         current_sequence_number: int = 0
         print("Starting building the message")
         for i in range(message.related_packages):
-            for m in self.queue_to_be_completed[str(message.message_id)]:
-                print(m.sequence_number, current_sequence_number)
+            print("i", i)
+            for m in self.queue_to_be_completed[(message.message_id, message.sender)]:
+                print("sequence number", m.sequence_number, current_sequence_number)
                 if m.sequence_number == 0:
                     full_message = m
                     current_sequence_number += 1
+                    print(True)
                     break
                 elif m.sequence_number == current_sequence_number:
-                    full_message.combine(m)
+                    print(full_message.combine(m))
                     current_sequence_number += 1
                     break
             print("full message", full_message)
