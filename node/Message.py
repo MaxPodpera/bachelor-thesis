@@ -103,13 +103,13 @@ class Message:
         if message.related_packages < self.sequence_number: return False
         
         # self comes right before message
-        if self.sequence_number == message.sequence_number - 1:
-            self.data += message.data
-            return True
-        elif self.sequence_number - 1 == message.sequence_number:
-            self.data = message.data + self.data
-            return True
-        return False
+        #if self.sequence_number == message.sequence_number - 1:
+        self.data += message.data
+        return True
+        #elif self.sequence_number - 1 == message.sequence_number:
+        #    self.data = message.data + self.data
+        #    return True
+        #return False
     
     @property
     def related_packages(self):
