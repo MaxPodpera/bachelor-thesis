@@ -11,13 +11,14 @@ class Messenger(Independent):
 
     rfm95: RFMWrapper = None  # Access transponder
     storage: MessageStorage = None  # Access storage
-    organiser: MessageOrganiser = MessageOrganiser()
+    organiser: MessageOrganiser = None
     node_id: str = None
 
     def __init__(self):
         self.storage = MessageStorage()
         self.rfm95 = RFMWrapper()
         self.node_id = read_uuid_file(read_config_file("uuid_file"))
+        self.organiser = MessageOrganiser(self.node_id)
         print("Node id: " + str(self.node_id))
         super().__init__()
 

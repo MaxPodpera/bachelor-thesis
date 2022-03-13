@@ -4,15 +4,19 @@ from typing import Union
 import threading
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
+broadcast_address = read_config_file("message.broadcast_address")
 
 
 class MessageOrganiser:
 
-    list_addresses_self: [str] = []  # Addresses for which messages are stored (if set as recipient)
+    list_addresses_self: [str] = [broadcast_address]  # Addresses for which messages are stored (if set as recipient)
 
     queue_received: [str] = []  # Received Messages
     queue_send: [Message] = []  # To be sent
     queue_to_be_completed: {str: [Message]} = {}  # not all packages received yet
+
+    def __init__(self, node_id: str):
+        self.list_addresses_self.append(node_id)
 
     def run(self):
         # Todo empty receive queue when necessary.
@@ -20,10 +24,11 @@ class MessageOrganiser:
 
     def push_to_send(self, message: Message):
         """
-        Add package to list of packages to be sent. An id well be added if non exists
+        Add package to list of packages to be sent. An id will be added if non exists.
         :param message: bytearray as produced by Message.to_bytes
         :return: void
         """
+        # TODO add an id.
         # Add to queue
         self.queue_send.append(message)
 
