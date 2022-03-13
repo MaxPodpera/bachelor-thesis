@@ -88,8 +88,10 @@ class Message:
                + str(self._related_packages) + "\nmessage_id:" + str(self.message_id) + "\n}"
 
     def combine(self, message: Message) -> bool:
+        print("\n\n\n")
         print(message)
         print(self)
+        print("\n\n\n")
         if message.message_id != self.message_id: return False
         if message.recipient != self.recipient: return False
         if message.pid != self.pid: return False
