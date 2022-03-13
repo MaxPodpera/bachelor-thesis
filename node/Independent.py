@@ -12,6 +12,7 @@ class Independent:
     _thread = None
 
     def __init__(self):
+        print("setting up thread")
         self._thread = threading.Thread(target=self.run, args=())
 
     def start(self) -> None:
