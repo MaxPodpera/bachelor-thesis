@@ -41,17 +41,13 @@ if __name__ == '__main__':
     message1.sender_pid = 22222
     message.message_id = 40
     
-    i = 10
-    time.sleep(20)
-    while i > 0:
+    #i = 10
+    #while i > 0:
         m.send(message)
         m.send(message1)
-        time.sleep(5)
-        i = i - 1
-        message.message_id += i
-        message1.message_id += i
+    #    time.sleep(5)
+    #    i = i - 1
+    #    message.message_id += i
+    #    message1.message_id += i
     time.sleep(10)
     m.stop()
-
-# EMPFÄNGT MEHRMALS
-# 
