@@ -6,23 +6,26 @@ import threading
 import math
 import logging
 from node.Independent import Independent
+from node.MessageStorage import MessageStorage
 from time import sleep
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
 broadcast_address = read_config_file("message.broadcast_address")
 
 
-# TODO removing from received list if old.
-# TODO Store full messages in files.
-# TODO read messages from files
+# TODO Store full messages in files.                        CHECK
+# TODO read messages from files                             NE
 # TODO error handling
+# TODO stopping of everything
+# When stopping. First save all half finished messages
 
 
 class MessageOrganiser(Independent):
 
+    _storage: MessageStorage = MessageStorage()
     list_addresses_self: [str] = [broadcast_address]  # Addresses for which messages are stored (if set as recipient)
 
-    queue_received: [(int, str, int)] = []  # Received Messages
+    queue_received: [{(int, str, int), time}] = []  # Received Messages
     queue_send: [Message] = []  # To be sent
     queue_to_be_completed: {(int, str): [Message]} = {}  # not all packages received yet
 
@@ -30,9 +33,19 @@ class MessageOrganiser(Independent):
         self.list_addresses_self.append(node_id)
 
     def run(self):
-        # Todo empty receive queue when necessary.
+        self._storage.start()
         while self.active:
-            sleep(1.0)  # Waiting time until the next check if performed
+            # Get new Messages
+            message: Message = self._storage.new()
+
+            # Add messages to list to be sent
+            if message:
+                logging.debug("Got message from storage")
+                self.push_to_send(message)
+
+            # Remove elements from received list if they are expired
+            self._clear_expired_from_received()
+        self._storage.stop()
         logging.info("Message organiser shut down!")
 
     def push_to_send(self, message: Message):
@@ -43,7 +56,6 @@ class MessageOrganiser(Independent):
         """
         # TODO add an id.
         # Add to queue
-        
         self.queue_send.append(message)
 
     def pop_from_send(self) -> Union[Message, None]:
@@ -71,7 +83,7 @@ class MessageOrganiser(Independent):
         logging.info("Received unknown Message")
         
         # Not yet received
-        self.queue_received.append((message.message_id, message.sender, message.sequence_number))  # add to known message list
+        self._push_to_received((message.message_id, message.sender, message.sequence_number))  # add to known message list
 
         # Message not meant for this node. Add to list to send later
         if not (message.recipient in self.list_addresses_self):
@@ -82,13 +94,31 @@ class MessageOrganiser(Independent):
         # Handle message that is meant for this node
         self._handle_message(message)
 
+    def _push_to_received(self, message_distinquisher: (str, str, int)):
+        """
+        Add item to received list
+        :param message_distinquisher: identifiere of the message.
+        :return:
+        """
+        self.queue_received.append({message_distinquisher, time.time()})
+
     def was_received(self, message_distinquisher: (str, str, int)) -> bool:
         """
         Check if message was received before.
         :param message_distinquisher: to check if it was received
         :return: true if it was received false otherwise
         """
-        return message_distinquisher in self.queue_received
+        # Search for matching items
+        matches = [item for item in self.queue_received if item[0] == message_distinquisher]
+
+        return matches != []
+
+    def _clear_expired_from_received(self):
+        """
+        Remove items from the received list that expired according to as set time.
+        :return:
+        """
+        self.queue_received = [item for item in self.queue_received if item[1] + ms_memorize_received_message_id > time.time()]
 
     def _handle_message(self, message: Message) -> Union[Message, None]:
         """
@@ -116,7 +146,12 @@ class MessageOrganiser(Independent):
             return None  # Not all received yet
 
         logging.debug("Received all packages for message")
-        return self._build_message(self.queue_to_be_completed[(message.message_id, message.sender)])
+
+        message: Message = self._build_message(self.queue_to_be_completed[(message.message_id, message.sender)])
+
+        # Store message if all parts were received.
+        if message is not None:
+            self._storage.store(message)
 
     def _build_message(self, message_packages: [Message]) -> Message:
         """

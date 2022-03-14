@@ -8,7 +8,7 @@ from node.Message import *
 from time import sleep
 from micropython import const
 """
-Class to wrap the rfm95 module access in.
+Class to wrap the rfm95 module access.
 """
 
 

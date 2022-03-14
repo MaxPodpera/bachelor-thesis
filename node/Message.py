@@ -103,8 +103,7 @@ class Message:
         if message.sender_pid != self.sender_pid: return False
         if message.sequence_number > self._related_packages: return False
         if message.related_packages < self.sequence_number: return False
-        
-        # self comes right before message
+
         self.data += message.data
         return True
     

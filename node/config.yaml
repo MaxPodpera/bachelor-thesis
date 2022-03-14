@@ -1,4 +1,5 @@
 uuid_file: "./uuid_container"
+message_folder: "./storage/" # "~/tmp/lora"
 message:
   ms_memorize_received_message_id: 50000
   broadcast_address: "00000000000000000000000000000000"

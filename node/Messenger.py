@@ -10,12 +10,10 @@ from util.Utilities import *
 class Messenger(Independent):
 
     rfm95: RFMWrapper = None  # Access transponder
-    storage: MessageStorage = None  # Access storage
     organiser: MessageOrganiser = None
     node_id: str = None
 
     def __init__(self):
-        self.storage = MessageStorage()
         self.rfm95 = RFMWrapper()
         self.node_id = read_uuid_file(read_config_file("uuid_file"))
         self.organiser = MessageOrganiser(self.node_id)
@@ -26,7 +24,7 @@ class Messenger(Independent):
         Check transmitter for incoming messages and send outgoing messages
         :return: void
         """
-        logging.info("Started node with id: " + str(self.node_id))
+        logging.info("Started node with id: " + self.node_id)
         self.organiser.start()
         while self.active:
             received: Message = self.rfm95.receive()  # Receive new message
@@ -47,10 +45,9 @@ class Messenger(Independent):
             else:
                 logging.error("Could not send package")
                 self.organiser.push_to_send(package)
-        
         logging.info("Shut down Messenger")
 
-    def send(self, data: Message) -> None:
+    def send(self, data: Message):
         """
         Add message to send queue, if it not destined for this node.
         The sender of the message will be set to this node.
