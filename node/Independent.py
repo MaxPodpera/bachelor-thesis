@@ -1,6 +1,5 @@
 import threading
 import logging
-import signal
 """
 Class to wrap independently running parts of the software in.
 """

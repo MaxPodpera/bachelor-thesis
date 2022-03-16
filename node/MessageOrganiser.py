@@ -36,7 +36,7 @@ class MessageOrganiser(Independent):
         self._storage.start()
         while self.active:
             # Get new Messages
-            message: Message = self._storage.new()
+            message: Message = self._storage.get()
 
             # Add messages to list to be sent
             if message:
