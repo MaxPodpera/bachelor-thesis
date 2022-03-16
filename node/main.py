@@ -35,9 +35,9 @@ if __name__ == '__main__':
     message.message_id = 6
     ######################
     message1 = Message()
-    message1.data = "Hello again. You guessed it. This is another amazing message that will be transmitted." \
-                    "The purpose of this message is to see if transmission fails because of split messages" \
-                    "or just because its too fast or something. But whatever! I will find out soon enough"
+    message1.data = "Hello there. You guessed it. This is an amazing message that will be transmitted." \
+                    "The purpose of this message is to see that everything works just fine." \
+                    #"or just because its too fast or something. But whatever! I will find out soon enough"
     message1.recipient = message.recipient
     message1.pid = 11111
     message1.sender_pid = 22222
