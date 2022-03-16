@@ -149,7 +149,8 @@ class MessageOrganiser(Independent):
         logging.debug("Received all packages for message")
 
         message: Message = self._build_message(self.queue_to_be_completed[(message.message_id, message.sender)])
-
+        print(message)
+        print("\n\n\n")
         # Store message if all parts were received.
         if message is not None:
             self._storage.store(message)
