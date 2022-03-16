@@ -41,14 +41,9 @@ if __name__ == '__main__':
     message1.recipient = message.recipient
     message1.pid = 11111
     message1.sender_pid = 22222
-    message.message_id = 2
+    message1.message_id = 2
     #######################
-    message2 = Message()
-    message2.data = "abc" * 2000
-    message2.recipient = message.recipient
-    message2.pid = 11111
-    message2.sender_pid = 22222
-    message.message_id = 2
+
     
     #i = 10
     #while i > 0:
