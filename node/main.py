@@ -53,8 +53,8 @@ if __name__ == '__main__':
     #i = 10
     #while i > 0:
     #m.send(message)
-    m.send(message)
-    #m.send(message1)
+    #m.send(message)
+    m.send(message1)
     #m.send(message2)
     #    time.sleep(5)
     #    i = i - 1
