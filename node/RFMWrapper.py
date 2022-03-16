@@ -62,5 +62,5 @@ class RFMWrapper:
         d = self._rfm95.receive(with_header=True)
         if d is None:
             return None
-        logging.info("Received package: ", str(d))
+        logging.info("Received package: ", to_message(d))
         return to_message(d)
