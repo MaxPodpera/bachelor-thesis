@@ -111,7 +111,8 @@ class MessageOrganiser(Independent):
 
         # Search for matching items
         for i in self.queue_received:
-            if i[0] == message_distinquisher:
+            distinquisher, _ = i
+            if distinquisher == message_distinquisher:
                 return True
         return False
 
