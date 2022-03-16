@@ -25,6 +25,7 @@ class MessageStorage(Independent):
         :return: identifier to retrieve it again
         """
         try:
+            print(message)
             # Generate filename
             file_name = "IN_" + str(message.pid) + "_" + message.time
             path = os.path.join(self._folder, file_name)
@@ -93,11 +94,11 @@ class MessageStorage(Independent):
         by the get method.
         :return:
         """
-        i_notify = inotify.adapters.Inotify()
-        i.add_watch(self._folder)
-        for event in i_notify.event_gen(yield_nones=False):
-            _, type_names, _, filename = event
-            print(type_names, filename)
-            if 'IN_CLOSE_WRITE' in type_names:
-                self._new_message.append(self._get(filename))
-        logging.info("MessageStorage shut down")
+        #i_notify = inotify.adapters.Inotify()
+        #i.add_watch(self._folder)
+        #for event in i_notify.event_gen(yield_nones=False):
+        #    _, type_names, _, filename = event
+        #    print(type_names, filename)
+        #    if 'IN_CLOSE_WRITE' in type_names:
+        #        self._new_message.append(self._get(filename))
+        #logging.info("MessageStorage shut down")
