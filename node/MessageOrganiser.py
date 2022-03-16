@@ -109,6 +109,7 @@ class MessageOrganiser(Independent):
         :return: true if it was received false otherwise
         """
         # Search for matching items
+        return False    # TODO remove this
         matches = [item for item in self.queue_received if item[0] == message_distinquisher]
 
         return matches != []
