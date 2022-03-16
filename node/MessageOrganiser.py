@@ -108,6 +108,7 @@ class MessageOrganiser(Independent):
         :param message_distinquisher: to check if it was received
         :return: true if it was received false otherwise
         """
+
         # Search for matching items
         for i in self.queue_received:
             if i[0] == message_distinquisher:
