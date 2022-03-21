@@ -48,7 +48,8 @@ class RFMWrapper:
                                         destination=id_to,
                                         node=id_from,
                                         identifier=self._sequence_id,
-                                        flags=flags)
+                                        flags=flags,
+                                        keep_listening=True)
             self._sequence_id = (self._sequence_id + 1) % 255
             sleep(1.3)
         logging.info("Transmission end")
@@ -59,7 +60,7 @@ class RFMWrapper:
         Receive data from the module. Data will be converted to message object.
         :return: Message object containing the message or None if nothing was received
         """
-        d = self._rfm95.receive(with_header=True)
+        d = self._rfm95.receive(with_header=True, with_ack=True)
         if d is None:
             return None
         logging.info("Received package: ")
