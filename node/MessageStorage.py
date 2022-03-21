@@ -4,7 +4,7 @@ import inotify.adapters
 from util.Utilities import read_config_file
 from node.Message import Message
 from typing import Union
-from node.Independent import Independent
+
 
 
 class MessageStorage:

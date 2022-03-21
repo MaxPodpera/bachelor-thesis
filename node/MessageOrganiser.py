@@ -5,7 +5,6 @@ import time
 import threading
 import math
 import logging
-from node.Independent import Independent
 from node.MessageStorage import MessageStorage
 from time import sleep
 
