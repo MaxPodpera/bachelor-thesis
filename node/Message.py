@@ -87,7 +87,7 @@ class Message:
         self.pid = recipient_pid
         logging.info("Building message")
         logging.info(self.sender)
-        self.message_sender_header = int(self.sender[:-1])
+        self.message_sender_header = int(self.sender[-2:])
         logging.info(self.message_sender_header)
 
     def __str__(self) -> str:
