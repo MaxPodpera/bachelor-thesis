@@ -99,7 +99,7 @@ class MessageStorage:
         :return:
         """
         while self._active:
-            if self._to_storage is not []:
+            if len(self._to_storage) != 0:
                 self._store(self._to_storage.pop())
         #i_notify = inotify.adapters.Inotify()
         #i.add_watch(self._folder)
