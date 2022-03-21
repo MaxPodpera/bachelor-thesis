@@ -80,13 +80,6 @@ class Message:
     _message_sender_header: int = 0
     _related_packages: int = 0  # How many other packages for this message
 
-    def set_sender(self, sender: str):
-        self._sender = sender
-        self._message_sender_header = int.from_bytes(bytes.fromhex(self._sender[-2:]), byteorder='big', signed=False)
-
-    def get_sender(self) -> str:
-        return self._sender
-
     def __str__(self) -> str:
         """
         For printing only
@@ -95,7 +88,7 @@ class Message:
         return "Message{\nto:" + str(self.recipient) + ",\nfrom:" + self._sender + ",\ndata:" + self.data \
                + ",\nsequence_number:" + str(self.sequence_number) + ",\nrelated_packages:" \
                + str(self._related_packages) + "\nmessage_id:" + str(self.message_id) \
-               + "\nmessage_sender_header:" + str(self.message_sender_header) + "\n}"
+               + "\nmessage_sender_header:" + str(self._message_sender_header) + "\n}"
 
     def combine(self, message: Message) -> bool:
         """
@@ -116,14 +109,22 @@ class Message:
 
         self.data += message.data
         return True
-    
+
+    @property
+    def sender(self) -> str:
+        return self._sender
+
+    @sender.setter
+    def sender(self, sender: str):
+        self._sender = sender
+        self._message_sender_header = int.from_bytes(bytes.fromhex(self._sender[-2:]), byteorder='big', signed=False)
+
     @property
     def related_packages(self):
         return self._related_packages
 
-    # TODO is this needed
     @related_packages.setter
-    def related_packages(self, value):
+    def related_packages(self, value: int):
         self._related_packages = value
 
     def split(self) -> [(int, int, int, int, bytes)]:
