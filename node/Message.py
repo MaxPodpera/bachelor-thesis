@@ -127,6 +127,10 @@ class Message:
     def related_packages(self, value: int):
         self._related_packages = value
 
+    @property
+    def message_sender_header(self):
+        return self._message_sender_header
+
     def split(self) -> [(int, int, int, int, bytes)]:
         logging.debug("Splitting message to packages")
         if self.data is None or self.data == "":
