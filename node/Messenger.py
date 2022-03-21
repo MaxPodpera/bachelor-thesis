@@ -53,7 +53,7 @@ class Messenger:
                     self._organiser.push_to_send(package)
             except KeyboardInterrupt as e:
                 self._active = False
-                logging.error("Shuting down" + str(e))
+                logging.error("Shutting down" + str(e))
 
         self._organiser.stop()
         t.join()

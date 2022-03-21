@@ -80,6 +80,16 @@ class Message:
     message_sender_header: int = 0
     _related_packages: int = 0  # How many other packages for this message
 
+    def __init__(self, sender: str, sender_pid: int, recipient: str, recipient_pid):
+        self.sender = sender
+        self.sender_pid = sender_pid
+        self.recipient = recipient
+        self.pid = recipient_pid
+        logging.info("Building message")
+        logging.info(self.sender)
+        self.message_sender_header = int(self.sender[:-1])
+        logging.info(self.message_sender_header)
+
     def __str__(self) -> str:
         """
         For printing only
@@ -134,6 +144,7 @@ class Message:
 
         # From
         b += bytes.fromhex(self.sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
+
         # Message id
         b += self.message_id.to_bytes(length_message_id, byteorder='big')
         # data
