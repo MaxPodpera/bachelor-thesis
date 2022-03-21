@@ -26,7 +26,7 @@ def to_message(package) -> Union[Message, None]:
     next_part_index: int = length_node_id
     m: Message = Message()
 
-    m.message_sender_header, _, _, _ = package[:4]
+    m._message_sender_header, _, _, _ = package[:4]
     bytes_to_convert = package[4:]
 
     # To
@@ -36,7 +36,7 @@ def to_message(package) -> Union[Message, None]:
     next_part_index += length_pid
 
     # From
-    m.sender = bytes_to_convert[next_part_index: next_part_index + length_node_id].hex()
+    m._sender = bytes_to_convert[next_part_index: next_part_index + length_node_id].hex()
     next_part_index += length_node_id
     m.sender_pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid],
                                   byteorder='big', signed=False)
@@ -73,22 +73,16 @@ class Message:
     data: str = None
     recipient: str = address_broadcast     # Broadcast address
     pid: int = 0
-    sender: str = "00000000000000000000000000000000"  # todo maybe private
+    _sender: str = "00000000000000000000000000000000"  # todo maybe private
     sender_pid: int = 0
     time: time = None
     sequence_number: int = 0  # Number of this package for the message
-    message_sender_header: int = 0
+    _message_sender_header: int = 0
     _related_packages: int = 0  # How many other packages for this message
 
-    def __init__(self, sender: str, sender_pid: int, recipient: str, recipient_pid):
+    def set_sender(self, sender: str):
         self.sender = sender
-        self.sender_pid = sender_pid
-        self.recipient = recipient
-        self.pid = recipient_pid
-        logging.info("Building message")
-        logging.info(self.sender)
-        self.message_sender_header = int.from_bytes(bytes.fromhex(self.sender[-2:]), byteorder='big', signed=False)
-        logging.info(self.message_sender_header)
+        self._message_sender_header = int.from_bytes(bytes.fromhex(self.sender[-2:]), byteorder='big', signed=False)
 
     def __str__(self) -> str:
         """
@@ -115,7 +109,7 @@ class Message:
         if message.sender_pid != self.sender_pid: return False
         if message.sequence_number > self._related_packages: return False
         if message.related_packages < self.sequence_number: return False
-        if message.message_sender_header != self.message_sender_header: return False
+        if message._message_sender_header != self._message_sender_header: return False
 
         self.data += message.data
         return True
@@ -135,15 +129,13 @@ class Message:
             return []
 
         # Headers
-        id_from = self.message_sender_header
-        if not id_from:
-            id_from = bytes.fromhex(self.sender)[:-1]
+        id_from = self._message_sender_header
 
         # To
         b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
 
         # From
-        b += bytes.fromhex(self.sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
+        b += bytes.fromhex(self._sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
 
         # Message id
         b += self.message_id.to_bytes(length_message_id, byteorder='big')

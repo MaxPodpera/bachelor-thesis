@@ -10,18 +10,20 @@ from time import sleep
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
 broadcast_address = read_config_file("message.broadcast_address")
-
+length_message_id = read_config_file("message.meta.length_message_id")
 
 # TODO Store full messages in files.                        CHECK
 # TODO read messages from files                             NE
 # TODO error handling
 # TODO stopping of everything
-# When stopping. First save all half finished messages
 
 
 class MessageOrganiser:
     _active: bool = True
 
+    _message_id_max_value: int = int.from_bytes(bytes.fromhex('ff' * length_message_id))
+    _node_id: str
+    _message_id: int = 0
     _storage: MessageStorage = MessageStorage()
     list_addresses_self: [str] = [broadcast_address]  # Addresses for which messages are stored (if set as recipient)
 
@@ -31,6 +33,7 @@ class MessageOrganiser:
 
     def __init__(self, node_id: str):
         self.list_addresses_self.append(node_id)
+        self._node_id = node_id
 
     def run(self):
         t = threading.Thread(target=self._storage.run)
@@ -62,7 +65,10 @@ class MessageOrganiser:
         :param message: bytearray as produced by Message.to_bytes
         :return: void
         """
-        # TODO add an id.
+        message.set_sender(self._node_id)
+        # Set the message id.
+        message.message_id = self._message_id
+        self._message_id = self._message_id % self._message_id_max_value
         # Add to queue
         self.queue_send.append(message)
 
