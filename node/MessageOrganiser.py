@@ -33,7 +33,7 @@ class MessageOrganiser:
         self.list_addresses_self.append(node_id)
 
     def run(self):
-        t = threading.Thread(target=self._storage.start)
+        t = threading.Thread(target=self._storage.run)
         t.start()
 
         while self._active:
