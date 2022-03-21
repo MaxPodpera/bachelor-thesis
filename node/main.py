@@ -45,15 +45,15 @@ if __name__ == '__main__':
     message1.sender_pid = 22222
     message1.message_id = 2
     #######################
-
-    print("he")
     #i = 10
     #while i > 0:
     #m.send(message)
     #m.send(message)
     m.send(message1)
     #m.send(message2)
-    #    time.sleep(5)
+
+
+    time.sleep(50)
     #    i = i - 1
     #    message.message_id += i
     #    message1.message_id += i

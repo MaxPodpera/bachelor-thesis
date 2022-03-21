@@ -15,7 +15,6 @@ length_message_id = read_config_file("message.meta.length_message_id")
 # TODO Store full messages in files.                        CHECK
 # TODO read messages from files                             NE
 # TODO error handling
-# TODO stopping of everything
 
 
 class MessageOrganiser:
