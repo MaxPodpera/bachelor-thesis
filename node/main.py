@@ -49,6 +49,7 @@ if __name__ == '__main__':
     #while i > 0:
     #m.send(message)
     #m.send(message)
+    print("heeeee")
     m.send(message1)
     #m.send(message2)
 
