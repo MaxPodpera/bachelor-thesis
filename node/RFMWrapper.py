@@ -63,5 +63,5 @@ class RFMWrapper:
         if d is None:
             return None
         logging.info("Received package: ")
-        print(to_message(d))
+        logging.debug(to_message(d))
         return to_message(d)

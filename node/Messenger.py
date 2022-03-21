@@ -31,6 +31,7 @@ class Messenger:
         t.start()
 
         while self._active:
+            logging.debug("Checking for messages")
             received: Message = self._rfm95.receive()  # Receive new message
             if received:                              # Check if something was received
                 self._organiser.push_to_received(received)  # Add to relevant queues and lists
