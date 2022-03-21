@@ -81,15 +81,18 @@ class Message:
     _related_packages: int = 0  # How many other packages for this message
 
     def set_sender(self, sender: str):
-        self.sender = sender
-        self._message_sender_header = int.from_bytes(bytes.fromhex(self.sender[-2:]), byteorder='big', signed=False)
+        self._sender = sender
+        self._message_sender_header = int.from_bytes(bytes.fromhex(self._sender[-2:]), byteorder='big', signed=False)
+
+    def get_sender(self) -> str:
+        return self._sender
 
     def __str__(self) -> str:
         """
         For printing only
         :return:
         """
-        return "Message{\nto:" + str(self.recipient) + ",\nfrom:" + self.sender + ",\ndata:" + self.data \
+        return "Message{\nto:" + str(self.recipient) + ",\nfrom:" + self._sender + ",\ndata:" + self.data \
                + ",\nsequence_number:" + str(self.sequence_number) + ",\nrelated_packages:" \
                + str(self._related_packages) + "\nmessage_id:" + str(self.message_id) \
                + "\nmessage_sender_header:" + str(self.message_sender_header) + "\n}"
@@ -105,7 +108,7 @@ class Message:
         if message.message_id != self.message_id: return False
         if message.recipient != self.recipient: return False
         if message.pid != self.pid: return False
-        if message.sender != self.sender: return False
+        if message._sender != self._sender: return False
         if message.sender_pid != self.sender_pid: return False
         if message.sequence_number > self._related_packages: return False
         if message.related_packages < self.sequence_number: return False
@@ -135,7 +138,7 @@ class Message:
         b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
 
         # From
-        b += bytes.fromhex(self._sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
+        b += bytes.fromhex(self._sender) + self._sender_pid.to_bytes(length_pid, byteorder='big')
 
         # Message id
         b += self.message_id.to_bytes(length_message_id, byteorder='big')
