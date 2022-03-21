@@ -17,7 +17,7 @@ if __name__ == '__main__':
     # on file or network action take file or network action respectively
     m = Messenger()
     t = threading.Thread(target=m.run)
-    t.run()
+    t.start()
     # testing
 
     time.sleep(2)
