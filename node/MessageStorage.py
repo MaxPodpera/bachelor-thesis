@@ -6,12 +6,12 @@ from node.Message import Message
 from typing import Union
 
 
-
 class MessageStorage:
 
     _active: bool = True
     _folder = read_config_file("message_folder")  # folder to store messages
     _new_message: [Message] = []
+    _to_storage: [Message] = []
 
     def __init__(self):
         # Create the folder for the files
@@ -19,7 +19,10 @@ class MessageStorage:
             os.makedirs(self._folder)
             logging.info("Created sync folder")
 
-    async def store(self, message) -> bool:
+    def store(self, message):
+        self._to_storage.append(message)
+
+    def _store(self, message) -> bool:
         """
         Store a given message returns the identifier to retrieve the message again
         :param message: to be stored
@@ -95,6 +98,9 @@ class MessageStorage:
         by the get method.
         :return:
         """
+        while self._active:
+            if self._to_storage is not []:
+                self._store(self._to_storage.pop())
         #i_notify = inotify.adapters.Inotify()
         #i.add_watch(self._folder)
         #for event in i_notify.event_gen(yield_nones=False):

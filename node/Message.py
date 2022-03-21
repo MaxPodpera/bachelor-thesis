@@ -127,7 +127,7 @@ class Message:
         # Headers
         id_from = self.message_sender_header
         if not id_from:
-            id_from = bytes.fromhex(self.recipient)[0]
+            id_from = bytes.fromhex(self.sender)[:-1]
 
         # To
         b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')

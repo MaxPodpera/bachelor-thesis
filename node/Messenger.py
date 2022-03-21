@@ -31,25 +31,29 @@ class Messenger:
         t.start()
 
         while self._active:
-            logging.debug("Checking for messages")
-            received: Message = self._rfm95.receive()  # Receive new message
-            if received:                              # Check if something was received
-                self._organiser.push_to_received(received)  # Add to relevant queues and lists
-                continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
+            try:
+                logging.debug("Checking for messages")
+                received: Message = self._rfm95.receive()  # Receive new message
+                if received:                              # Check if something was received
+                    self._organiser.push_to_received(received)  # Add to relevant queues and lists
+                    continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 
-            # Check send queue
-            package: Message = self._organiser.pop_from_send()
+                # Check send queue
+                package: Message = self._organiser.pop_from_send()
 
-            # Nothing to send
-            if package is None:
-                continue
-            
-            # package to be sent
-            if self._rfm95.send(package):
-                logging.info("Sent package")
-            else:
-                logging.error("Could not send package")
-                self._organiser.push_to_send(package)
+                # Nothing to send
+                if package is None:
+                    continue
+
+                # package to be sent
+                if self._rfm95.send(package):
+                    logging.info("Sent package")
+                else:
+                    logging.error("Could not send package")
+                    self._organiser.push_to_send(package)
+            except KeyboardInterrupt as e:
+                self._active = False
+                logging.error("Shuting down" + str(e))
 
         self._organiser.stop()
         t.join()
