@@ -66,4 +66,4 @@ class Messenger:
             return
         logging.info("Adding message to send queue")
         data.sender = self.node_id
-        self.organiser.push_to_send(data)
+        self._organiser.push_to_send(data)
