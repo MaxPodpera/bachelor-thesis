@@ -64,7 +64,7 @@ class MessageOrganiser:
         :param message: bytearray as produced by Message.to_bytes
         :return: void
         """
-        message.set_sender(self._node_id)
+        message.sender = self._node_id
         # Set the message id.
         message.message_id = self._message_id
         self._message_id = self._message_id % self._message_id_max_value
