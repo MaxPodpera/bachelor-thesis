@@ -138,7 +138,7 @@ class Message:
         b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
 
         # From
-        b += bytes.fromhex(self._sender) + self._sender_pid.to_bytes(length_pid, byteorder='big')
+        b += bytes.fromhex(self._sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
 
         # Message id
         b += self.message_id.to_bytes(length_message_id, byteorder='big')
