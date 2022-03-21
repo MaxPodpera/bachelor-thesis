@@ -7,8 +7,9 @@ from typing import Union
 from node.Independent import Independent
 
 
-class MessageStorage(Independent):
+class MessageStorage:
 
+    _active: bool = True
     _folder = read_config_file("message_folder")  # folder to store messages
     _new_message: [Message] = []
 
@@ -102,3 +103,6 @@ class MessageStorage(Independent):
         #    if 'IN_CLOSE_WRITE' in type_names:
         #        self._new_message.append(self._get(filename))
         #logging.info("MessageStorage shut down")
+
+    def stop(self):
+        self._active = False

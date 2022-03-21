@@ -26,7 +26,7 @@ def to_message(package) -> Union[Message, None]:
     next_part_index: int = length_node_id
     m: Message = Message()
 
-    # _, _, m.message_id, _ = package[:4]
+    m.message_sender_header, _, _, _ = package[:4]
     bytes_to_convert = package[4:]
 
     # To
@@ -77,6 +77,7 @@ class Message:
     sender_pid: int = 0
     time: time = None
     sequence_number: int = 0  # Number of this package for the message
+    message_sender_header: int = 0
     _related_packages: int = 0  # How many other packages for this message
 
     def __str__(self) -> str:
@@ -86,7 +87,8 @@ class Message:
         """
         return "Message{\nto:" + str(self.recipient) + ",\nfrom:" + self.sender + ",\ndata:" + self.data \
                + ",\nsequence_number:" + str(self.sequence_number) + ",\nrelated_packages:" \
-               + str(self._related_packages) + "\nmessage_id:" + str(self.message_id) + "\n}"
+               + str(self._related_packages) + "\nmessage_id:" + str(self.message_id) \
+               + "\nmessage_sender_header:" + str(self.message_sender_header) + "\n}"
 
     def combine(self, message: Message) -> bool:
         """
@@ -103,6 +105,7 @@ class Message:
         if message.sender_pid != self.sender_pid: return False
         if message.sequence_number > self._related_packages: return False
         if message.related_packages < self.sequence_number: return False
+        if message.message_sender_header != self.message_sender_header: return False
 
         self.data += message.data
         return True
@@ -121,8 +124,14 @@ class Message:
         if self.data is None or self.data == "":
             return []
 
+        # Headers
+        id_from = self.message_sender_header
+        if not id_from:
+            id_from = bytes.fromhex(self.recipient)[0]
+
         # To
         b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
+
         # From
         b += bytes.fromhex(self.sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
         # Message id
@@ -150,9 +159,12 @@ class Message:
             seq_num += 1
 
             meta = b + seq_str
+
             data = data_bytes[:length_max_data]
+            # crc hier weniger strict
+            # TODO HIER IRGENDWO CRC Oder HASH
 
             # Headers
-            result.append((255, 255, 0, 0, meta + data))
+            result.append((id_from, 255, 0, 0, meta + data))
             data_bytes = data_bytes[len(data):]
         return result

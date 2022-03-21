@@ -20,12 +20,13 @@ broadcast_address = read_config_file("message.broadcast_address")
 # When stopping. First save all half finished messages
 
 
-class MessageOrganiser(Independent):
+class MessageOrganiser:
+    _active: bool = True
 
     _storage: MessageStorage = MessageStorage()
     list_addresses_self: [str] = [broadcast_address]  # Addresses for which messages are stored (if set as recipient)
 
-    queue_received: [{(int, str, int), time}] = []  # Received Messages
+    queue_received: [{(int, int, str, int), time}] = []  # Received Messages
     queue_send: [Message] = []  # To be sent
     queue_to_be_completed: {(int, str): [Message]} = {}  # not all packages received yet
 
@@ -33,8 +34,10 @@ class MessageOrganiser(Independent):
         self.list_addresses_self.append(node_id)
 
     def run(self):
-        self._storage.start()
-        while self.active:
+        t = threading.Thread(target=self._storage.start)
+        t.start()
+
+        while self._active:
             # Get new Messages
             message: Message = self._storage.get()
 
@@ -45,8 +48,14 @@ class MessageOrganiser(Independent):
 
             # Remove elements from received list if they are expired
             self._clear_expired_from_received()
+
         self._storage.stop()
+        t.join()
+
         logging.info("Message organiser shut down!")
+
+    def stop(self):
+        self._active = False
 
     def push_to_send(self, message: Message):
         """
@@ -77,13 +86,13 @@ class MessageOrganiser(Independent):
         :return: void
         """
         # Already received
-        if self.was_received((message.message_id, message.sender, message.sequence_number)):
+        if self.was_received(message):
             return
         
         logging.info("Received unknown Message")
         
         # Not yet received
-        self._push_to_received((message.message_id, message.sender, message.sequence_number))  # add to known message list
+        self._push_to_received(message)  # add to known message list
 
         # Message not meant for this node. Add to list to send later
         if not (message.recipient in self.list_addresses_self):
@@ -94,21 +103,22 @@ class MessageOrganiser(Independent):
         # Handle message that is meant for this node
         self._handle_message(message)
 
-    def _push_to_received(self, message_distinquisher: (str, str, int)):
+    def _push_to_received(self, message: Message):
         """
         Add item to received list
-        :param message_distinquisher: identifiere of the message.
+        :param message to be added.
         :return:
         """
+        message_distinquisher = message.message_id, message.message_sender_header, message.message_sender, message.sequence_number
         self.queue_received.append({message_distinquisher, time.time()})
 
-    def was_received(self, message_distinquisher: (str, str, int)) -> bool:
+    def was_received(self, message: Message) -> bool:
         """
         Check if message was received before.
-        :param message_distinquisher: to check if it was received
+        :param message to be checked
         :return: true if it was received false otherwise
         """
-
+        message_distinquisher = message.message_id, message.message_sender_header, message.message_sender, message.sequence_number
         # Search for matching items
         for i in self.queue_received:
             distinquisher, _ = i

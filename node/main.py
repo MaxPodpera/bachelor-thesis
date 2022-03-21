@@ -3,6 +3,7 @@ import time
 import sys
 import os
 import signal
+import threading
 sys.path.append(os.getcwd())
 from node.Messenger import Messenger
 from node.Message import *
@@ -15,8 +16,8 @@ if __name__ == '__main__':
     # init lora device
     # on file or network action take file or network action respectively
     m = Messenger()
-    m.start()
-
+    t = threading.Thread(target=m.run)
+    t.run()
     # testing
 
     time.sleep(2)
@@ -37,7 +38,7 @@ if __name__ == '__main__':
     message1 = Message()
     message1.data = "Hello there. You guessed it. This is an amazing message that will be transmitted." \
                     "The purpose of this message is to see that everything works just fine." \
-                    #"or just because its too fast or something. But whatever! I will find out soon enough"
+                    "or just because its too fast or something. But whatever! I will find out soon enough"
     message1.recipient = message.recipient
     message1.pid = 11111
     message1.sender_pid = 22222
