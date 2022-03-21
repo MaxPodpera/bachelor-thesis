@@ -32,13 +32,10 @@ if __name__ == '__main__':
 
     message.message_id = 6
     ######################
-    message1 = Message()
+    message1 = Message("42376f7500df44e985e8f7255bcfa0f7", 22222, message.recipient, 33333)
     message1.data = "Hello there. You guessed it. This is an amazing message that will be transmitted." \
                     "The purpose of this message is to see that everything works just fine." \
                     "or just because its too fast or something. But whatever! I will find out soon enough"
-    message1.recipient = message.recipient
-    message1.pid = 11111
-    message1.sender_pid = 22222
     message1.message_id = 2
     #######################
 
