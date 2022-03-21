@@ -21,7 +21,7 @@ length_message_id = read_config_file("message.meta.length_message_id")
 class MessageOrganiser:
     _active: bool = True
 
-    _message_id_max_value: int = int.from_bytes(bytes.fromhex('ff' * int(length_message_id)))
+    _message_id_max_value: int = int.from_bytes(bytes.fromhex('ff' * int(length_message_id)), byteorder='big')
     _node_id: str
     _message_id: int = 0
     _storage: MessageStorage = MessageStorage()
