@@ -1,7 +1,6 @@
 import logging
 import threading
 from node.RFMWrapper import RFMWrapper
-from node.Independent import Independent
 from node.MessageStorage import MessageStorage
 from node.Message import Message
 from node.MessageOrganiser import MessageOrganiser
