@@ -62,6 +62,7 @@ class RFMWrapper:
         Receive data from the module. Data will be converted to message object.
         :return: Message object containing the message or None if nothing was received
         """
+        print(self._rfm95.rx_done())
         d = self._rfm95.receive(with_header=True, with_ack=True)
         if d is None:
             return None

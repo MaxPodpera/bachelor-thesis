@@ -34,7 +34,6 @@ class Messenger:
             try:
                 logging.debug("Checking for messages")
                 received: Message = self._rfm95.receive()  # Receive new message
-                print(self._rfm95.rx_done())
                 if received:                              # Check if something was received
                     self._organiser.push_to_received(received)  # Add to relevant queues and lists
                     continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
