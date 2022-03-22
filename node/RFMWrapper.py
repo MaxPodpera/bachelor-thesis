@@ -26,7 +26,6 @@ class RFMWrapper:
         self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self._rfm95.tx_power = 23
         self._rfm95.receive_timeout = 1
-        #self._rfm95.xmit_timeout = 1.5
         # self._rfm95.destination = 255
         self._rfm95.enable_crc = True
         # self._rfm95.identifier = 255
@@ -53,7 +52,7 @@ class RFMWrapper:
                                         identifier=self._sequence_id,
                                         flags=flags,
                                         keep_listening=True)
-            sleep(2)
+            sleep(1.5)
             self._sequence_id = (self._sequence_id + 1) % 255
         logging.info("Transmission end")
         return success
