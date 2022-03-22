@@ -53,6 +53,7 @@ class RFMWrapper:
                                         flags=flags,
                                         keep_listening=True)
             self._sequence_id = (self._sequence_id + 1) % 255
+            sleep(0.5)
         logging.info("Transmission end")
         return success
 
