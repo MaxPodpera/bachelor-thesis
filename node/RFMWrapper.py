@@ -25,7 +25,6 @@ class RFMWrapper:
         frequency = 868.0
         self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self._rfm95.tx_power = 23
-        self._rfm95.xmit_timeout = 0
         # self._rfm95.destination = 255
         self._rfm95.enable_crc = True
         # self._rfm95.identifier = 255
@@ -46,12 +45,6 @@ class RFMWrapper:
         while len(packages) > 0 and success:
             id_from, id_to, _, flags, data = packages.pop(0)
             print(id_from, id_to, self._sequence_id, flags)
-            success &= self._rfm95.send(data,
-                                        destination=id_to,
-                                        node=id_from,
-                                        identifier=self._sequence_id,
-                                        flags=flags,
-                                        keep_listening=True)
             success &= self._rfm95.send(data,
                                         destination=id_to,
                                         node=id_from,
