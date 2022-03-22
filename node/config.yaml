@@ -7,7 +7,7 @@ message:
   meta:
     length_id: "16"
     length_pid: "2"
-    length_frame: "128"  # "100" # 252
+    length_frame: "124"  # "100" # 252
     length_message_id: "1"
     length_sequence_number: "4"  # expected to be even length
 rfm:
