@@ -52,6 +52,12 @@ class RFMWrapper:
                                         identifier=self._sequence_id,
                                         flags=flags,
                                         keep_listening=True)
+            success &= self._rfm95.send(data,
+                                        destination=id_to,
+                                        node=id_from,
+                                        identifier=self._sequence_id,
+                                        flags=flags,
+                                        keep_listening=True)
             self._sequence_id = (self._sequence_id + 1) % 255
         logging.info("Transmission end")
         return success
