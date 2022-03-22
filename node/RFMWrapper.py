@@ -25,7 +25,7 @@ class RFMWrapper:
         frequency = 868.0
         self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self._rfm95.tx_power = 23
-        self._rfm95.xmit_timeout = 0.5
+        self._rfm95.xmit_timeout = 0
         # self._rfm95.destination = 255
         self._rfm95.enable_crc = True
         # self._rfm95.identifier = 255
@@ -53,7 +53,6 @@ class RFMWrapper:
                                         flags=flags,
                                         keep_listening=True)
             self._sequence_id = (self._sequence_id + 1) % 255
-            sleep(5)
         logging.info("Transmission end")
         return success
 
@@ -62,7 +61,7 @@ class RFMWrapper:
         Receive data from the module. Data will be converted to message object.
         :return: Message object containing the message or None if nothing was received
         """
-        d = self._rfm95.receive(with_header=True, with_ack=True)
+        d = self._rfm95.receive(with_header=True)
         if d is None:
             return None
         logging.info("Received package: ")
