@@ -3,7 +3,6 @@ message_folder: "./storage/" # "~/tmp/lora"
 message:
   ms_memorize_received_message_id: 50000
   broadcast_address: "00000000000000000000000000000000"
-  message_initial_id: 0
   meta:
     length_id: "16"
     length_pid: "2"
