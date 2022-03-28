@@ -1,5 +1,5 @@
 import logging
-logging.basicConfig()
+logging.Logger.setLevel(logging.DEBUG)
 import threading
 from node.RFMWrapper import RFMWrapper
 from node.MessageStorage import MessageStorage
@@ -18,7 +18,6 @@ class Messenger:
     node_id: str = None
 
     def __init__(self):
-        logging.critical("test")
         self._rfm95 = RFMWrapper()
         self.node_id = read_uuid_file(read_config_file("uuid_file"))
         self._organiser = MessageOrganiser(self.node_id)
