@@ -108,13 +108,14 @@ class MessageStorage:
             if len(self._to_storage) != 0:
                 logging.debug("Storage queue not empty")
                 self._store(self._to_storage.pop())
-
+            logging.info("Storage loop2")
             for event in i_notify.event_gen(yield_nones=False):
                 _, type_names, _, filename = event
                 print(type_names, filename)
                 if 'IN_CLOSE_WRITE' in type_names:
                     self._new_message.append(self._get(filename))
             logging.info("MessageStorage shut down")
+        logging.info("Stopped storage")
 
     def stop(self):
         self._active = False
