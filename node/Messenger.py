@@ -1,5 +1,5 @@
 import logging
-logging.Logger.setLevel(0)
+logging.basicConfig(level=logging.DEBUG)
 import threading
 from node.RFMWrapper import RFMWrapper
 from node.MessageStorage import MessageStorage
