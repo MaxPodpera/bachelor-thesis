@@ -20,6 +20,7 @@ class MessageStorage:
             logging.info("Created sync folder")
 
     def store(self, message):
+        logging.info("Send message to storage")
         self._to_storage.append(message)
 
     def _store(self, message) -> bool:
@@ -102,6 +103,7 @@ class MessageStorage:
         i_notify.add_watch(self._folder)
         while self._active:
             if len(self._to_storage) != 0:
+                logging.debug("Storage queue not empty")
                 self._store(self._to_storage.pop())
 
             for event in i_notify.event_gen(yield_nones=False):
