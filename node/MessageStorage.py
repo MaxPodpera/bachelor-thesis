@@ -1,5 +1,6 @@
 import logging
 import os
+import threading
 import inotify.adapters
 from util.Utilities import read_config_file
 from node.Message import Message
@@ -101,22 +102,34 @@ class MessageStorage:
         by the get method.
         :return:
         """
-        i_notify = inotify.adapters.Inotify()
-        i_notify.add_watch(self._folder)
+        t = threading.Thread(target=self._watch_file_events)
+        t.start()
         while self._active:
-            logging.info("Storage loop")
             if len(self._to_storage) != 0:
                 logging.debug("Storage queue not empty")
                 self._store(self._to_storage.pop())
-            logging.info("Storage loop2")
-            for event in i_notify.event_gen(yield_nones=False):
-                logging.info("In event loop")
-                _, type_names, _, filename = event
-                print(type_names, filename)
-                if 'IN_CLOSE_WRITE' in type_names:
-                    self._new_message.append(self._get(filename))
+
             logging.info("MessageStorage shut down")
+
         logging.info("Stopped storage")
+
+    def _watch_file_events(self):
+        """
+        Watch filesystem for events and detect new mesasge files. Files will be parsed and added to queue. Can then be retrieved
+        using the get method.
+        :return:
+        """
+        i_notify = inotify.adapters.Inotify()
+        i_notify.add_watch(self._folder)
+
+        for event in i_notify.event_gen(yield_nones=False):
+            if not self._active:
+                break
+            _, type_names, _, filename = event
+
+            if 'IN_CLOSE_WRITE' in type_names:
+                logging.info("Detected write event")
+                self._new_message.append(self._get(filename))
 
     def stop(self):
         self._active = False
