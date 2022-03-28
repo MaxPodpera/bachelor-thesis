@@ -47,8 +47,6 @@ if __name__ == '__main__':
     #######################
 
     m.send(message1)
-    print("hier")
-
 
     time.sleep(50)
     m.stop()
