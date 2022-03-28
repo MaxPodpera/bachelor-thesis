@@ -17,7 +17,6 @@ class Messenger:
     node_id: str = None
 
     def __init__(self):
-        print("Test")
         self._rfm95 = RFMWrapper()
         self.node_id = read_uuid_file(read_config_file("uuid_file"))
         self._organiser = MessageOrganiser(self.node_id)
@@ -33,6 +32,7 @@ class Messenger:
         t.start()
         while self._active:
             try:
+                print("test2")
                 logging.debug("Checking for messages")
                 received: Message = self._rfm95.receive()  # Receive new message
                 if received:                              # Check if something was received
