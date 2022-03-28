@@ -110,6 +110,7 @@ class MessageStorage:
                 self._store(self._to_storage.pop())
             logging.info("Storage loop2")
             for event in i_notify.event_gen(yield_nones=False):
+                logging.info("In event loop")
                 _, type_names, _, filename = event
                 print(type_names, filename)
                 if 'IN_CLOSE_WRITE' in type_names:
