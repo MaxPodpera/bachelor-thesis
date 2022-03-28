@@ -109,8 +109,6 @@ class MessageStorage:
                 logging.debug("Storage queue not empty")
                 self._store(self._to_storage.pop())
 
-            logging.info("MessageStorage shut down")
-
         logging.info("Stopped storage")
 
     def _watch_file_events(self):
