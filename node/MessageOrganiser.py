@@ -39,16 +39,19 @@ class MessageOrganiser:
         t.start()
 
         while self._active:
-            # Get new Messages
-            message: Message = self._storage.get()
+            try:
+                # Get new Messages
+                message: Message = self._storage.get()
 
-            # Add messages to list to be sent
-            if message:
-                logging.debug("Got message from storage")
-                self.push_to_send(message)
+                # Add messages to list to be sent
+                if message:
+                    logging.debug("Got message from storage")
+                    self.push_to_send(message)
 
-            # Remove elements from received list if they are expired
-            self._clear_expired_from_received()
+                # Remove elements from received list if they are expired
+                self._clear_expired_from_received()
+            except Exception as e:
+                logging.error("Error during organiser operation: " + str(e))
 
         self._storage.stop()
         t.join()
@@ -182,7 +185,7 @@ class MessageOrganiser:
         if message_packages is None or not message_packages:
             return None
 
-        full_message: Message
+        full_message: Message = Message()
         for i in range(0, message_packages[0].related_packages + 1):
             # Get current element.
             a = [m for m in message_packages if m.sequence_number == i]

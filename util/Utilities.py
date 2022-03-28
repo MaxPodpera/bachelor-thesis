@@ -1,7 +1,7 @@
 import yaml
 import sys
 import logging
-
+from node.Exceptions import InvalidConfigurationException
 
 def read_uuid_file(path) -> str:
     """
@@ -37,4 +37,4 @@ def read_config_file(key: str) -> str:
         return value
     except Exception as e:
         logging.error("Could not read config file: " + str(e))
-        return None
+        raise InvalidConfigurationException(e)

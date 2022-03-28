@@ -22,49 +22,52 @@ address_broadcast: str = read_config_file("message.broadcast_address")
 def to_message(package) -> Union[Message, None]:
     if not package or package is None:
         return None
+    try:
+        next_part_index: int = length_node_id
+        m: Message = Message()
 
-    next_part_index: int = length_node_id
-    m: Message = Message()
+        _, m._message_sender_header, _, _ = package[:4]
+        bytes_to_convert = package[4:]
 
-    _, m._message_sender_header, _, _ = package[:4]
-    bytes_to_convert = package[4:]
+        # To
+        m.recipient = bytes_to_convert[:next_part_index].hex()
+        m.pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid], byteorder='big',
+                               signed=False)
+        next_part_index += length_pid
 
-    # To
-    m.recipient = bytes_to_convert[:next_part_index].hex()
-    m.pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid], byteorder='big',
-                           signed=False)
-    next_part_index += length_pid
+        # From
+        m._sender = bytes_to_convert[next_part_index: next_part_index + length_node_id].hex()
+        next_part_index += length_node_id
+        m.sender_pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid],
+                                      byteorder='big', signed=False)
+        next_part_index += length_pid
 
-    # From
-    m._sender = bytes_to_convert[next_part_index: next_part_index + length_node_id].hex()
-    next_part_index += length_node_id
-    m.sender_pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid],
-                                  byteorder='big', signed=False)
-    next_part_index += length_pid
+        # Message id
+        m.message_id = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_message_id]
+                                      , byteorder='big', signed=False)
+        next_part_index += length_message_id
 
-    # Message id
-    m.message_id = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_message_id]
-                                  , byteorder='big', signed=False)
-    next_part_index += length_message_id
+        # Sequence Number
+        m._related_packages = int.from_bytes(
+            bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
+            byteorder='big', signed=False)
+        next_part_index += math.floor(length_sequence_number / 2)
 
-    # Sequence Number
-    m._related_packages = int.from_bytes(
-        bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
-        byteorder='big', signed=False)
-    next_part_index += math.floor(length_sequence_number / 2)
+        m.sequence_number = int.from_bytes(
+            bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
+            byteorder='big', signed=False)
+        next_part_index += math.floor(length_sequence_number / 2)
 
-    m.sequence_number = int.from_bytes(
-        bytes_to_convert[next_part_index: next_part_index + math.floor(length_sequence_number / 2)],
-        byteorder='big', signed=False)
-    next_part_index += math.floor(length_sequence_number / 2)
+        # Data
+        m.data = bytes_to_convert[next_part_index:].decode("utf-8")
 
-    # Data
-    m.data = bytes_to_convert[next_part_index:].decode("utf-8")
-
-    # Time
-    m.time = time.time()
-    logging.debug("Created message from bytes")
-    return m
+        # Time
+        m.time = time.time()
+        logging.debug("Created message from bytes")
+        return m
+    except Exception as e:
+        logging.error("Error while creating message: " + str(e))
+        return None
 
 
 class Message:
@@ -135,47 +138,50 @@ class Message:
         logging.debug("Splitting message to packages")
         if self.data is None or self.data == "":
             return []
-
-        # Headers
-        id_from = self._message_sender_header
-
-        # To
-        b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
-
-        # From
-        b += bytes.fromhex(self._sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
-
-        # Message id
-        b += self.message_id.to_bytes(length_message_id, byteorder='big')
-        # data
-        data_bytes: bytes = self.data.encode()
-
-        # how many packages are sent header
-        num_packages: int = math.ceil(len(data_bytes) / length_max_data)
-        # max id.
-        num_packages -= 1
-        # to bytes
-        num_packages_bytes = num_packages.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
-        b += num_packages_bytes
-
-        # Check for invalid metadata
-        if len(b) > length_meta - (length_sequence_number / 2):
-            raise Exception("Invalid meta data")
-
-        seq_num = 0
-        result = []
-        # split message
-        while len(data_bytes) > 0:
-            seq_str = seq_num.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
-            seq_num += 1
-
-            meta = b + seq_str
-
-            data = data_bytes[:length_max_data]
-            # crc hier weniger strict
-            # TODO HIER IRGENDWO CRC Oder HASH
-
+        try:
             # Headers
-            result.append((id_from, 255, 0, 0, meta + data))
-            data_bytes = data_bytes[len(data):]
-        return result
+            id_from = self._message_sender_header
+
+            # To
+            b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
+
+            # From
+            b += bytes.fromhex(self._sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
+
+            # Message id
+            b += self.message_id.to_bytes(length_message_id, byteorder='big')
+            # data
+            data_bytes: bytes = self.data.encode()
+
+            # how many packages are sent header
+            num_packages: int = math.ceil(len(data_bytes) / length_max_data)
+            # max id.
+            num_packages -= 1
+            # to bytes
+            num_packages_bytes = num_packages.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
+            b += num_packages_bytes
+
+            # Check for invalid metadata
+            if len(b) > length_meta - (length_sequence_number / 2):
+                raise Exception("Invalid meta data")
+
+            seq_num = 0
+            result = []
+            # split message
+            while len(data_bytes) > 0:
+                seq_str = seq_num.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
+                seq_num += 1
+
+                meta = b + seq_str
+
+                data = data_bytes[:length_max_data]
+                # crc hier weniger strict
+                # TODO HIER IRGENDWO CRC Oder HASH
+
+                # Headers
+                result.append((id_from, 255, 0, 0, meta + data))
+                data_bytes = data_bytes[len(data):]
+            return result
+        except Exception as e:
+            logging.error("Error while splitting message: " + str(e))
+            return []

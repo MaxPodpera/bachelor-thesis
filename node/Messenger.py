@@ -4,6 +4,7 @@ from node.RFMWrapper import RFMWrapper
 from node.MessageStorage import MessageStorage
 from node.Message import Message
 from node.MessageOrganiser import MessageOrganiser
+from node.Exceptions import MalformedContentException
 from util.Utilities import *
 
 
@@ -54,6 +55,11 @@ class Messenger:
             except KeyboardInterrupt as e:
                 self._active = False
                 logging.error("Shutting down" + str(e))
+            except MalformedContentException as e:
+                logging.error("Error while sending message: " + str(e))
+            except Exception as e:
+                # No user option to handle error so try to keep up operations.
+                logging.error("Unhandled exception. Continuing operation" + str(e))
 
         self._organiser.stop()
         t.join()

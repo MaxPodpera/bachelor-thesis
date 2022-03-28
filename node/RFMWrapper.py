@@ -7,6 +7,8 @@ from digitalio import DigitalInOut
 from node.Message import *
 from time import sleep
 from micropython import const
+from node.Exceptions import MalformedContentException
+
 """
 Class to wrap the rfm95 module access.
 """
@@ -42,19 +44,22 @@ class RFMWrapper:
         logging.info("Sending message")
         packages: [(int, int, int, int, bytes)] = message.split()
         success: bool = True
-        # Send the single packages
-        while len(packages) > 0 and success:
-            id_from, id_to, _, flags, data = packages.pop(0)
-            print(id_from, id_to, self._sequence_id, flags)
-            success &= self._rfm95.send(data,
-                                        destination=id_to,
-                                        node=id_from,
-                                        identifier=self._sequence_id,
-                                        flags=flags,
-                                        keep_listening=True)
-            sleep(2)
-            self._sequence_id = (self._sequence_id + 1) % 255
-        logging.info("Transmission end")
+        try:
+            # Send the single packages
+            while len(packages) > 0 and success:
+                id_from, id_to, _, flags, data = packages.pop(0)
+                success &= self._rfm95.send(data,
+                                            destination=id_to,
+                                            node=id_from,
+                                            identifier=self._sequence_id,
+                                            flags=flags,
+                                            keep_listening=True)
+                sleep(2)
+                self._sequence_id = (self._sequence_id + 1) % 255
+            logging.info("Transmission end")
+        except Exception as e:
+            logging.error("Exception while sending data: " + str(e))
+            raise MalformedContentException(e)
         return success
 
     def receive(self) -> Union[Message, None]:
