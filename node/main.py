@@ -46,7 +46,7 @@ if __name__ == '__main__':
     message1.message_id = 2
     #######################
 
-    m.send(message1)
+    # m.send(message1)
 
     time.sleep(120)
     m.stop()

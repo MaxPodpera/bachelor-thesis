@@ -38,7 +38,7 @@ class MessageStorage:
         try:
             logging.debug("Storing message")
             # Generate filename
-            file_name = "_".join(["IN" + str(message.pid), message.sender, str(message.time)])
+            file_name = "_".join(["IN", str(message.pid), message.sender, str(message.time)])
             path = os.path.join(self._folder, file_name)
 
             # Create the file
