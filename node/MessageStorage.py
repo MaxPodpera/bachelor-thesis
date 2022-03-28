@@ -31,7 +31,7 @@ class MessageStorage:
         try:
             print(message)
             # Generate filename
-            file_name = "IN_" + str(message.pid) + "_" + message.time
+            file_name = "_".join(["IN" + str(message.pid), messsage.sender, str(message.time)])
             path = os.path.join(self._folder, file_name)
 
             # Create the file
@@ -53,7 +53,7 @@ class MessageStorage:
             message: Message = Message()
             infos = [info for info in identifier.split("_")]
 
-            # OUT_SENDER-PID_RECIPIENT_RECIPIENT-PID_TIMESTAMP
+            # OUT_SENDER-PID_RECIPIENT_RECIPIENT-PID
             message.pid = infos[3]
             message.recipient = infos[2]
             message.sender_pid = infos[1]
@@ -98,17 +98,18 @@ class MessageStorage:
         by the get method.
         :return:
         """
+        i_notify = inotify.adapters.Inotify()
+        i.add_watch(self._folder)
         while self._active:
             if len(self._to_storage) != 0:
                 self._store(self._to_storage.pop())
-        #i_notify = inotify.adapters.Inotify()
-        #i.add_watch(self._folder)
-        #for event in i_notify.event_gen(yield_nones=False):
-        #    _, type_names, _, filename = event
-        #    print(type_names, filename)
-        #    if 'IN_CLOSE_WRITE' in type_names:
-        #        self._new_message.append(self._get(filename))
-        #logging.info("MessageStorage shut down")
+
+            for event in i_notify.event_gen(yield_nones=False):
+                _, type_names, _, filename = event
+                print(type_names, filename)
+                if 'IN_CLOSE_WRITE' in type_names:
+                    self._new_message.append(self._get(filename))
+            logging.info("MessageStorage shut down")
 
     def stop(self):
         self._active = False
