@@ -18,6 +18,8 @@ class MessageStorage:
         if not os.path.exists(self._folder):
             os.makedirs(self._folder)
             logging.info("Created sync folder")
+            return
+        logging.debug("Sync folder exists")
 
     def store(self, message):
         logging.info("Send message to storage")
@@ -30,7 +32,7 @@ class MessageStorage:
         :return: identifier to retrieve it again
         """
         try:
-            print(message)
+            logging.debug("Storing message")
             # Generate filename
             file_name = "_".join(["IN" + str(message.pid), messsage.sender, str(message.time)])
             path = os.path.join(self._folder, file_name)
@@ -102,6 +104,7 @@ class MessageStorage:
         i_notify = inotify.adapters.Inotify()
         i_notify.add_watch(self._folder)
         while self._active:
+            logging.info("Storage loop")
             if len(self._to_storage) != 0:
                 logging.debug("Storage queue not empty")
                 self._store(self._to_storage.pop())
