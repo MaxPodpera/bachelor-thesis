@@ -30,7 +30,7 @@ class Messenger:
         logging.info("Started node with id: " + self.node_id)
         t = threading.Thread(target=self._organiser.run)
         t.start()
-
+        logging.info("Hearst")
         while self._active:
             try:
                 logging.debug("Checking for messages")
