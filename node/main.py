@@ -48,5 +48,5 @@ if __name__ == '__main__':
 
     m.send(message1)
 
-    time.sleep(50)
+    time.sleep(120)
     m.stop()

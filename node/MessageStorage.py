@@ -58,9 +58,9 @@ class MessageStorage:
             infos = [info for info in identifier.split("_")]
 
             # OUT_SENDER-PID_RECIPIENT_RECIPIENT-PID
-            message.pid = infos[3]
+            message.pid = int(infos[3])
             message.recipient = infos[2]
-            message.sender_pid = infos[1]
+            message.sender_pid = int(infos[1])
 
             with open(os.path.join(self._folder, identifier), "r") as file:
                 message.data = file.read()

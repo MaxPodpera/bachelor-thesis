@@ -77,3 +77,6 @@ class Messenger:
         logging.info("Adding message to send queue")
         data.sender = self.node_id
         self._organiser.push_to_send(data)
+
+    def stop(self):
+        self._active = False
