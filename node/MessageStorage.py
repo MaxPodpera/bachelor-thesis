@@ -26,7 +26,7 @@ class MessageStorage:
         logging.info("Send message to storage")
         self._to_storage.append(message)
 
-    def _store(self, message) -> bool:
+    def _store(self, message: Message) -> bool:
         """
         Store a given message returns the identifier to retrieve the message again
         :param message: to be stored
@@ -35,7 +35,7 @@ class MessageStorage:
         try:
             logging.debug("Storing message")
             # Generate filename
-            file_name = "_".join(["IN" + str(message.pid), messsage.sender, str(message.time)])
+            file_name = "_".join(["IN" + str(message.pid), message.sender, str(message.time)])
             path = os.path.join(self._folder, file_name)
 
             # Create the file
