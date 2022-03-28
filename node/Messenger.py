@@ -18,6 +18,7 @@ class Messenger:
     node_id: str = None
 
     def __init__(self):
+        logging.critical("test")
         self._rfm95 = RFMWrapper()
         self.node_id = read_uuid_file(read_config_file("uuid_file"))
         self._organiser = MessageOrganiser(self.node_id)
