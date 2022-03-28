@@ -1,4 +1,5 @@
 import logging
+logging.basicConfig()
 import threading
 from node.RFMWrapper import RFMWrapper
 from node.MessageStorage import MessageStorage
@@ -32,7 +33,6 @@ class Messenger:
         t.start()
         while self._active:
             try:
-                print("test2")
                 logging.debug("Checking for messages")
                 received: Message = self._rfm95.receive()  # Receive new message
                 if received:                              # Check if something was received
@@ -60,7 +60,6 @@ class Messenger:
             except Exception as e:
                 # No user option to handle error so try to keep up operations.
                 logging.error("Unhandled exception. Continuing operation" + str(e))
-        print("test3")
         self._organiser.stop()
         t.join()
 
