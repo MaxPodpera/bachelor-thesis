@@ -60,7 +60,7 @@ class Messenger:
             except Exception as e:
                 # No user option to handle error so try to keep up operations.
                 logging.error("Unhandled exception. Continuing operation" + str(e))
-
+        print("test3")
         self._organiser.stop()
         t.join()
 
