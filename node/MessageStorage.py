@@ -25,6 +25,9 @@ class MessageStorage:
     def store(self, message):
         logging.info("Send message to storage")
         self._to_storage.append(message)
+        print("Appended")
+        print(self._to_storage)
+        print(len(self._to_storage))
 
     def _store(self, message: Message) -> bool:
         """
