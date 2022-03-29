@@ -5,7 +5,7 @@ import os
 import signal
 import threading
 sys.path.append(os.getcwd())
-from node.Messenger import Messenger
+from Messenger import Messenger
 from node.Message import *
 
 
