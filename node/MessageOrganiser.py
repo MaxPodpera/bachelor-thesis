@@ -91,9 +91,11 @@ class MessageOrganiser:
         """
         # Already received
         if self.was_received(message):
+            logging.debug("Message already received")
             return
         # Message was sent by this node. Forwarding of neighbour received.
         if message.sender == self._node_id:
+            logging.debug("Message forwarding received")
             return
 
         logging.info("Received unknown Message")
