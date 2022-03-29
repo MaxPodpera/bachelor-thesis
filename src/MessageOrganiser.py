@@ -146,7 +146,7 @@ class MessageOrganiser:
         for i in range(0, len(self.queue_received)):
             message, rec_time = self.queue_received[i]
             print("hearst", rec_time, time.time() + int(ms_memorize_received_message_id), message)
-            if not rec_time + int(ms_memorize_received_message_id) > time.time():
+            if rec_time + int(ms_memorize_received_message_id) > time.time():
                 # remove from received list.
                 del self.queue_received[i]
                 # remove from list of partly received messages
