@@ -4,7 +4,7 @@ import adafruit_rfm9x
 import logging
 import time
 from digitalio import DigitalInOut
-# from node.Message import *
+from Message import *
 from time import sleep
 from micropython import const
 from Exceptions import MalformedContentException
