@@ -24,12 +24,9 @@ class MessageStorage:
 
     def store(self, message):
         logging.info("Send message to storage")
-        self._to_storage.append(message)
-        print("Appended")
-        print(self._to_storage)
-        print(len(self._to_storage))
+        self._store(message)
 
-    def _store(self, message: Message) -> bool:
+    async def _store(self, message: Message) -> bool:
         """
         Store a given message returns the identifier to retrieve the message again
         :param message: to be stored
@@ -105,21 +102,7 @@ class MessageStorage:
         by the get method.
         :return:
         """
-        t = threading.Thread(target=self._watch_file_events)
-        t.start()
-        while self._active:
-            if len(self._to_storage) != 0:
-                logging.debug("Storage queue not empty")
-                self._store(self._to_storage.pop())
 
-        logging.info("Stopped storage")
-
-    def _watch_file_events(self):
-        """
-        Watch filesystem for events and detect new mesasge files. Files will be parsed and added to queue. Can then be retrieved
-        using the get method.
-        :return:
-        """
         i_notify = inotify.adapters.Inotify()
         i_notify.add_watch(self._folder)
 
@@ -131,6 +114,23 @@ class MessageStorage:
             if 'IN_CLOSE_WRITE' in type_names:
                 logging.info("Detected write event")
                 self._new_message.append(self._get(filename))
+
+        #t = threading.Thread(target=self._watch_file_events)
+        #t.start()
+        #while self._active:
+        #    if len(self._to_storage) != 0:
+        #        logging.debug("Storage queue not empty")
+        #        self._store(self._to_storage.pop())
+
+        logging.info("Stopped storage")
+
+    def _watch_file_events(self):
+        """
+        Watch filesystem for events and detect new mesasge files. Files will be parsed and added to queue. Can then be retrieved
+        using the get method.
+        :return:
+        """
+        pass
 
     def stop(self):
         self._active = False

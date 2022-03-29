@@ -172,6 +172,7 @@ class MessageOrganiser:
         print("\n\n\n")
         # Store message if all parts were received.
         if message is not None:
+            print("call storage")
             self._storage.store(message)
 
     def _build_message(self, message_packages: [Message]) -> Message:
