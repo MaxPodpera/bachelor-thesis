@@ -2,6 +2,7 @@ import logging
 import os
 import threading
 import inotify.adapters
+import asyncio
 from util.Utilities import read_config_file
 from node.Message import Message
 from typing import Union
@@ -25,8 +26,7 @@ class MessageStorage:
     def store(self, message):
         logging.info("Send message to storage")
         print("lets go")
-        t = threading.Thread(target=self._store, args=(message,))
-        t.start()
+        asyncio.create_task(self._store(message))
 
     async def _store(self, message: Message) -> bool:
         """
