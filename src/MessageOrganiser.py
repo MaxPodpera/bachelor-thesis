@@ -150,7 +150,7 @@ class MessageOrganiser:
                 # remove from received list.
                 del self.queue_received[i]
                 # remove from list of partly received messages
-                del self.queue_to_be_completed[(message.message_id, message.sender)]
+                del self.queue_to_be_completed[(message[3], message[2])]
 
     def _handle_message(self, message: Message) -> Union[Message, None]:
         """
