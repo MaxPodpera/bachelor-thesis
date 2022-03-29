@@ -1,7 +1,7 @@
 import yaml
 import sys
 import logging
-from .Exceptions import InvalidConfigurationException
+from src.Exceptions import InvalidConfigurationException
 
 
 def read_uuid_file(path) -> str:

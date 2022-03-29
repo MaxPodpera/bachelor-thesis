@@ -3,8 +3,8 @@ import os
 import threading
 import inotify.adapters
 import asyncio
-from .Utilities import read_config_file
-from .Message import Message
+from src.Utilities import read_config_file
+from src.Message import Message
 from typing import Union
 
 

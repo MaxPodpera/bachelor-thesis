@@ -2,7 +2,7 @@ from __future__ import annotations
 import time
 from typing import Union
 import math
-from .Utilities import read_config_file
+from src.Utilities import read_config_file
 import logging
 """
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.

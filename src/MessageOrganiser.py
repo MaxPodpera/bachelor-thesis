@@ -1,11 +1,11 @@
-from .Message import *
-from .Utilities import read_config_file
+from src.Message import *
+from src.Utilities import read_config_file
 from typing import Union
 import time
 import threading
 import math
 import logging
-from .MessageStorage import MessageStorage
+from src.MessageStorage import MessageStorage
 from time import sleep
 
 ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
