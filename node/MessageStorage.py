@@ -24,7 +24,9 @@ class MessageStorage:
 
     def store(self, message):
         logging.info("Send message to storage")
-        self._store(message)
+        print("lets go")
+        t = threading.Thread(target=self._store, args=message)
+        t.start()
 
     async def _store(self, message: Message) -> bool:
         """
@@ -35,16 +37,20 @@ class MessageStorage:
         try:
             logging.debug("Storing message")
             # Generate filename
+            print("storing message")
             file_name = "_".join(["IN", str(message.pid), message.sender, str(message.time)])
+            print(file_name)
             path = os.path.join(self._folder, file_name)
-
+            print(path)
             # Create the file
             with open(path, 'w') as f:
                 f.write(message.data)
             logging.info("Message stored")
+            print("done")
             return True
         except FileExistsError:
             logging.error("Could not create file for storage")
+            print("Store error")
             return False
 
     def _get(self, identifier) -> Union[Message, None]:
