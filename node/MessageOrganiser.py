@@ -68,9 +68,6 @@ class MessageOrganiser:
         message.message_id = self._message_id
         self._message_id = self._message_id % self._message_id_max_value
 
-        # If message is sent it is also known
-        self._push_to_received(message)
-
         # Add to queue
         self.queue_send.append(message)
 
@@ -95,7 +92,10 @@ class MessageOrganiser:
         # Already received
         if self.was_received(message):
             return
-        
+        # Message was sent by this node. Forwarding of neighbour received.
+        if message.sender == self._node_id:
+            return
+
         logging.info("Received unknown Message")
         
         # Not yet received
