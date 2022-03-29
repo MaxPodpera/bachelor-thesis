@@ -25,10 +25,9 @@ class MessageStorage:
 
     def store(self, message):
         logging.info("Send message to storage")
-        print("lets go")
         asyncio.create_task(self._store(message))
 
-    def _store(self, message: Message) -> bool:
+    def _store(self, message: Message):
         """
         Store a given message returns the identifier to retrieve the message again
         :param message: to be stored
@@ -37,21 +36,14 @@ class MessageStorage:
         try:
             logging.debug("Storing message")
             # Generate filename
-            print("storing message")
             file_name = "_".join(["IN", str(message.pid), message.sender, str(message.time)])
-            print(file_name)
             path = os.path.join(self._folder, file_name)
-            print(path)
             # Create the file
             with open(path, 'w') as f:
                 f.write(message.data)
             logging.info("Message stored")
-            print("done")
-            return True
         except FileExistsError:
             logging.error("Could not create file for storage")
-            print("Store error")
-            return False
 
     def _get(self, identifier) -> Union[Message, None]:
         """
@@ -123,13 +115,6 @@ class MessageStorage:
                     logging.debug("OUT file found")
                     self._new_message.append(self._get(filename))
                     self._delete(filename)
-
-        #t = threading.Thread(target=self._watch_file_events)
-        #t.start()
-        #while self._active:
-        #    if len(self._to_storage) != 0:
-        #        logging.debug("Storage queue not empty")
-        #        self._store(self._to_storage.pop())
 
         logging.info("Stopped storage")
 
