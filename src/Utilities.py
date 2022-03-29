@@ -1,7 +1,8 @@
 import yaml
 import sys
 import logging
-from node.Exceptions import InvalidConfigurationException
+from Exceptions import InvalidConfigurationException
+
 
 def read_uuid_file(path) -> str:
     """

@@ -6,7 +6,7 @@ import signal
 import threading
 sys.path.append(os.getcwd())
 from Messenger import Messenger
-from node.Message import *
+from Message import *
 
 
 if __name__ == '__main__':

@@ -7,7 +7,7 @@ from digitalio import DigitalInOut
 # from node.Message import *
 from time import sleep
 from micropython import const
-from node.Exceptions import MalformedContentException
+from Exceptions import MalformedContentException
 
 """
 Class to wrap the rfm95 module access.

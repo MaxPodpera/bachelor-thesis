@@ -3,8 +3,8 @@ import os
 import threading
 import inotify.adapters
 import asyncio
-from util.Utilities import read_config_file
-from node.Message import Message
+from Utilities import read_config_file
+from Message import Message
 from typing import Union
 
 
