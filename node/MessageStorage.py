@@ -25,7 +25,7 @@ class MessageStorage:
     def store(self, message):
         logging.info("Send message to storage")
         print("lets go")
-        t = threading.Thread(target=self._store, args=message)
+        t = threading.Thread(target=self._store, args=(message,))
         t.start()
 
     async def _store(self, message: Message) -> bool:
@@ -120,6 +120,7 @@ class MessageStorage:
             if 'IN_CLOSE_WRITE' in type_names:
                 logging.info("Detected write event")
                 self._new_message.append(self._get(filename))
+                self._delete(filename)
 
         #t = threading.Thread(target=self._watch_file_events)
         #t.start()
