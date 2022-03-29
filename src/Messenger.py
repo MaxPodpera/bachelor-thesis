@@ -1,12 +1,12 @@
 import logging
 logging.basicConfig(level=logging.DEBUG)
 import threading
-from RFMWrapper import RFMWrapper
-from MessageStorage import MessageStorage
-from Message import Message
-from MessageOrganiser import MessageOrganiser
-from Exceptions import MalformedContentException
-from Utilities import *
+from .RFMWrapper import RFMWrapper
+from .MessageStorage import MessageStorage
+from .Message import Message
+from .MessageOrganiser import MessageOrganiser
+from .Exceptions import MalformedContentException
+from .Utilities import *
 
 
 class Messenger:

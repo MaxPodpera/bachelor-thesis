@@ -4,10 +4,10 @@ import adafruit_rfm9x
 import logging
 import time
 from digitalio import DigitalInOut
-from Message import *
+from .Message import *
 from time import sleep
 from micropython import const
-from Exceptions import MalformedContentException
+from .Exceptions import MalformedContentException
 
 """
 Class to wrap the rfm95 module access.

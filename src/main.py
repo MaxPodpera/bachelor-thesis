@@ -5,8 +5,8 @@ import os
 import signal
 import threading
 sys.path.append(os.getcwd())
-from Messenger import Messenger
-from Message import *
+from .Messenger import Messenger
+from .Message import *
 
 
 if __name__ == '__main__':
