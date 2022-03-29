@@ -58,7 +58,7 @@ class RFMWrapper:
                                             flags=flags,
                                             keep_listening=True)
                 sleep(2)
-                logging.critical("Sendinge\t", message, id_to, id_from, identifier, flags)
+                print("Sendinge\t", message, id_to, id_from, identifier, flags)
             logging.info("Transmission end")
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
@@ -78,6 +78,6 @@ class RFMWrapper:
         if d is None:
             return None
         message: Message = to_message(d)
-        logging.critical("received \t", message)
+        print("received \t", message)
         logging.info("Received package")
         return message
