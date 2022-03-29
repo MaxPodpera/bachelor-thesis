@@ -48,16 +48,13 @@ class RFMWrapper:
             # Send the single packages
             while len(packages) > 0 and success:
                 id_from, id_to, _, flags, data = packages.pop(0)
+                sleep(2)
                 success &= self._rfm95.send(data,
                                             destination=id_to,
                                             node=id_from,
                                             identifier=self._sequence_id,
                                             flags=flags,
                                             keep_listening=True)
-                sleep(2)
-
-                message_distinquisher = message.message_id, id_from, message.sender, self._sequence_id
-
                 self._sequence_id = (self._sequence_id + 1) % 255
             logging.info("Transmission end")
         except Exception as e:

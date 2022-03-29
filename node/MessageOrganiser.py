@@ -140,7 +140,13 @@ class MessageOrganiser:
         Remove items from the received list that expired according to as set time.
         :return:
         """
-        # self.queue_received = [item for item in self.queue_received if item[1] + ms_memorize_received_message_id > time.time()]
+        for i in range(0, len(self.queue_received)):
+            item = self.queue_received[i]
+            if not item[1] + ms_memorize_received_message_id > time.time():
+                # remove from received list.
+                del self.queue_received[i]
+                # remove from list of partly received messages
+                del self.queue_to_be_completed[(item[0].message_id, item[0].sender)]
 
     def _handle_message(self, message: Message) -> Union[Message, None]:
         """
