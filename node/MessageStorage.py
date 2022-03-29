@@ -28,7 +28,7 @@ class MessageStorage:
         print("lets go")
         asyncio.create_task(self._store(message))
 
-    async def _store(self, message: Message) -> bool:
+    def _store(self, message: Message) -> bool:
         """
         Store a given message returns the identifier to retrieve the message again
         :param message: to be stored
