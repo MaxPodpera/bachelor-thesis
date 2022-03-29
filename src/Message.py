@@ -2,7 +2,7 @@ from __future__ import annotations
 import time
 from typing import Union
 import math
-from util.Utilities import read_config_file
+from Utilities import read_config_file
 import logging
 """
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
@@ -26,7 +26,7 @@ def to_message(package) -> Union[Message, None]:
         next_part_index: int = length_node_id
         m: Message = Message()
 
-        _, m._message_sender_header, _, _ = package[:4]
+        m._header_to, m._message_sender_header, m._header_id, _ = package[:4]
         bytes_to_convert = package[4:]
 
         # To
@@ -76,12 +76,14 @@ class Message:
     data: str = None
     recipient: str = address_broadcast     # Broadcast address
     pid: int = 0
-    _sender: str = "00000000000000000000000000000000"  # todo maybe private
+    _sender: str = "00000000000000000000000000000000"
     sender_pid: int = 0
     time: time = None
     sequence_number: int = 0  # Number of this package for the message
     _message_sender_header: int = 0
     _related_packages: int = 0  # How many other packages for this message
+    _header_to: int = None
+    _header_id: int = None
 
     def __str__(self) -> str:
         """
@@ -140,7 +142,9 @@ class Message:
             return []
         try:
             # Headers
-            id_from = self._message_sender_header
+            header_from = self._message_sender_header
+            header_to = self._header_to
+            header_id = self._header_id
 
             # To
             b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
@@ -179,7 +183,7 @@ class Message:
                 # TODO HIER IRGENDWO CRC Oder HASH
 
                 # Headers
-                result.append((id_from, 255, 0, 0, meta + data))
+                result.append((header_to, header_from, header_id, 0, meta + data))
                 data_bytes = data_bytes[len(data):]
             return result
         except Exception as e:

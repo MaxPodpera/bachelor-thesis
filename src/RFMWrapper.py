@@ -4,7 +4,7 @@ import adafruit_rfm9x
 import logging
 import time
 from digitalio import DigitalInOut
-from node.Message import *
+# from node.Message import *
 from time import sleep
 from micropython import const
 from node.Exceptions import MalformedContentException
@@ -47,15 +47,17 @@ class RFMWrapper:
         try:
             # Send the single packages
             while len(packages) > 0 and success:
-                id_from, id_to, _, flags, data = packages.pop(0)
-                sleep(2)
+                id_from, id_to, identifier, flags, data = packages.pop(0)
+                if identifier is None:
+                    identifier = self._sequence_id
+                    self._sequence_id = (self._sequence_id + 1) % 255
                 success &= self._rfm95.send(data,
                                             destination=id_to,
                                             node=id_from,
-                                            identifier=self._sequence_id,
+                                            identifier=identifier,
                                             flags=flags,
                                             keep_listening=True)
-                self._sequence_id = (self._sequence_id + 1) % 255
+                sleep(2)
             logging.info("Transmission end")
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
@@ -67,11 +69,14 @@ class RFMWrapper:
         Receive data from the module. Data will be converted to message object.
         :return: Message object containing the message or None if nothing was received
         """
-        d = self._rfm95.receive(with_header=True)
+        d = self._rfm95.receive(
+            with_header=True,
+            keep_listening=True
+        )
 
         if d is None:
             return None
         message: Message = to_message(d)
 
-        logging.info("Received package ")
+        logging.info("Received package")
         return message
