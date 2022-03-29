@@ -12,10 +12,6 @@ ms_memorize_received_message_id = read_config_file("message.ms_memorize_received
 broadcast_address = read_config_file("message.broadcast_address")
 length_message_id = read_config_file("message.meta.length_message_id")
 
-# TODO Store full messages in files.                        CHECK
-# TODO read messages from files                             NE
-# TODO error handling
-
 
 class MessageOrganiser:
     _active: bool = True
@@ -104,7 +100,7 @@ class MessageOrganiser:
         # Message not meant for this node. Add to list to send later
         if not (message.recipient in self.list_addresses_self):
             logging.info("Forwarding message")
-            self.push_to_send(message)
+            self.queue_send.append(message)
             return
 
         # Handle message that is meant for this node

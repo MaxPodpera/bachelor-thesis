@@ -72,11 +72,11 @@ class RFMWrapper:
         :return: Message object containing the message or None if nothing was received
         """
         d = self._rfm95.receive(with_header=True)
+
         if d is None:
             return None
         message: Message = to_message(d)
-        message_distinquisher = message.message_id, message.message_sender_header, message.sender, self._sequence_id
-        print("\t Receiving", message_distinquisher)
+
         logging.info("Received package: ")
         logging.debug(message)
         return message
