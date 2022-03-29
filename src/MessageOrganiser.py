@@ -22,7 +22,7 @@ class MessageOrganiser:
     _storage: MessageStorage = MessageStorage()
     list_addresses_self: [str] = [broadcast_address]  # Addresses for which messages are stored (if set as recipient)
 
-    queue_received: [{(int, int, str, int), time}] = []  # Received Messages
+    queue_received: [((int, int, str, int), time)] = []  # Received Messages
     queue_send: [Message] = []  # To be sent
     queue_to_be_completed: {(int, str): [Message]} = {}  # not all packages received yet
 
@@ -120,7 +120,7 @@ class MessageOrganiser:
         """
         message_distinquisher = message.message_id, message.message_sender_header, message.sender, message.sequence_number
         print("Add to received\t", message_distinquisher)
-        self.queue_received.append({message_distinquisher, time.time()})
+        self.queue_received.append((message_distinquisher, time.time()))
         print(str(self.queue_received))
 
     def was_received(self, message: Message) -> bool:
