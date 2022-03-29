@@ -119,8 +119,9 @@ class MessageStorage:
 
             if 'IN_CLOSE_WRITE' in type_names:
                 logging.info("Detected write event")
-                self._new_message.append(self._get(filename))
-                self._delete(filename)
+                if "OUT" in filename:
+                    self._new_message.append(self._get(filename))
+                    self._delete(filename)
 
         #t = threading.Thread(target=self._watch_file_events)
         #t.start()
