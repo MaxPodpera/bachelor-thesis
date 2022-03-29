@@ -57,7 +57,7 @@ class RFMWrapper:
                 sleep(2)
 
                 message_distinquisher = message.message_id, id_from, message.sender, self._sequence_id
-                print("\t Sending", message_distinquisher)
+                print("\t Sending", message_distinquisher, (id_to, id_from, self._sequence_id, flags))
 
                 self._sequence_id = (self._sequence_id + 1) % 255
             logging.info("Transmission end")
