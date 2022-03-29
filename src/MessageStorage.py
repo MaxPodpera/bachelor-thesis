@@ -36,7 +36,7 @@ class MessageStorage:
         try:
             logging.debug("Storing message")
             # Generate filename
-            file_name = "_".join(["IN", str(message.pid), message.sender, str(message.time)])
+            file_name = "_".join(["IN", str(message.pid), message.sender, str(message.time), message.message_id])
             path = os.path.join(self._folder, file_name)
             # Create the file
             with open(path, 'w') as f:
@@ -117,14 +117,6 @@ class MessageStorage:
                     self._delete(filename)
 
         logging.info("Stopped storage")
-
-    def _watch_file_events(self):
-        """
-        Watch filesystem for events and detect new mesasge files. Files will be parsed and added to queue. Can then be retrieved
-        using the get method.
-        :return:
-        """
-        pass
 
     def stop(self):
         self._active = False
