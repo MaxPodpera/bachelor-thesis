@@ -143,9 +143,11 @@ class MessageOrganiser:
         Remove items from the received list that expired according to as set time.
         :return:
         """
+        print("clearing")
         for i in range(0, len(self.queue_received)):
             rec_time, message = self.queue_received[i]
-            if not rec_time + ms_memorize_received_message_id > time.time():
+            print(rec_time, time.time() + int(ms_memorize_received_message_id), message)
+            if not rec_time + int(ms_memorize_received_message_id) > time.time():
                 # remove from received list.
                 del self.queue_received[i]
                 # remove from list of partly received messages
@@ -184,7 +186,7 @@ class MessageOrganiser:
         if message is not None:
             self._storage.store(message)
 
-    def _build_message(self, message_packages: [Message]) -> Message:
+    def _build_message(self, message_packages: [Message]) -> Union[None, Message]:
         """
         Given a list of related packages (parts of the same message as determined by message id and sender) the messages
          are combined to one message
