@@ -72,7 +72,7 @@ def to_message(package) -> Union[Message, None]:
 
 class Message:
 
-    message_id: int = 0
+    message_id: int = None
     data: str = None
     recipient: str = address_broadcast     # Broadcast address
     pid: int = 0

@@ -59,14 +59,16 @@ class MessageOrganiser:
 
     def push_to_send(self, message: Message):
         """
-        Add package to list of packages to be sent. An id will be added if non exists.
+        Add package to list of packages to be sent. An id and sender will be added if non exists.
         :param message: bytearray as produced by Message.to_bytes
         :return: void
         """
-        message.sender = self._node_id
-        # Set the message id.
-        message.message_id = self._message_id
-        self._message_id = self._message_id % self._message_id_max_value
+        if message.sender is address_broadcast:
+            message.sender = self._node_id
+        # Set the message id
+        if message.message_id is None:
+            message.message_id = self._message_id
+            self._message_id = self._message_id % self._message_id_max_value
 
         # Add to queue
         self.queue_send.append(message)
@@ -106,7 +108,7 @@ class MessageOrganiser:
         # Message not meant for this node. Add to list to send later
         if not (message.recipient in self.list_addresses_self):
             logging.info("Forwarding message")
-            self.queue_send.append(message)
+            self.push_to_send(message)
             return
 
         # Handle message that is meant for this node
@@ -150,7 +152,7 @@ class MessageOrganiser:
                 # remove from received list.
                 del self.queue_received[i]
                 # remove from list of partly received messages
-                del self.queue_to_be_completed[(message[3], message[2])]
+                del self.queue_to_be_completed[(message[0], message[2])]
 
     def _handle_message(self, message: Message) -> Union[Message, None]:
         """
