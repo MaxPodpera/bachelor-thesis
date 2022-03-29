@@ -67,6 +67,10 @@ class MessageOrganiser:
         # Set the message id.
         message.message_id = self._message_id
         self._message_id = self._message_id % self._message_id_max_value
+
+        # If message is sent it is also known
+        self._push_to_received(message)
+
         # Add to queue
         self.queue_send.append(message)
 
