@@ -120,6 +120,7 @@ class MessageStorage:
             if 'IN_CLOSE_WRITE' in type_names:
                 logging.info("Detected write event")
                 if "OUT" in filename:
+                    logging.debug("OUT file found")
                     self._new_message.append(self._get(filename))
                     self._delete(filename)
 
