@@ -119,7 +119,6 @@ class MessageOrganiser:
         :return:
         """
         message_distinquisher = message.message_id, message.message_sender_header, message.sender, message.sequence_number
-        print("\t Add", message_distinquisher)
         self.queue_received.append({message_distinquisher, time.time()})
 
     def was_received(self, message: Message) -> bool:
@@ -129,7 +128,6 @@ class MessageOrganiser:
         :return: true if it was received false otherwise
         """
         message_distinquisher = message.message_id, message.message_sender_header, message.sender, message.sequence_number
-        print("\t Check", message_distinquisher)
         # Search for matching items
         for i in self.queue_received:
             distinquisher, _ = i
