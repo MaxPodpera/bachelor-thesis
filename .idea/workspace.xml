@@ -10,14 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6a1cebb-8ebd-4b84-a313-cb51f30d166a" name="Default Changelist" comment="small changes">
-      <change beforePath="$PROJECT_DIR$/src/MessageOrganiser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/MessageOrganiser.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MessageStorage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/MessageStorage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Messenger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messenger.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RFMWrapper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/RFMWrapper.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
-    </list>
+    <list default="true" id="d6a1cebb-8ebd-4b84-a313-cb51f30d166a" name="Default Changelist" comment="small changes" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -47,6 +40,9 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/node" />
       <recent name="$PROJECT_DIR$/util" />
@@ -229,9 +225,10 @@
       <screen x="0" y="25" width="1680" height="964" />
     </state>
     <state x="4" y="25" width="1676" height="679" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1680.964@0.25.1680.964" timestamp="1640177811599" />
-    <state x="550" y="313" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1640615025552">
-      <screen x="0" y="25" width="1680" height="964" />
+    <state x="550" y="312" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1648557151852">
+      <screen x="0" y="25" width="1680" height="962" />
     </state>
+    <state x="550" y="312" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1680.962@0.25.1680.962" timestamp="1648557151852" />
     <state x="550" y="313" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1680.964@0.25.1680.964" timestamp="1640615025552" />
     <state width="1659" height="257" key="GridCell.Tab.0.bottom" timestamp="1640686455948">
       <screen x="0" y="25" width="1680" height="964" />
