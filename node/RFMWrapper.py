@@ -75,7 +75,7 @@ class RFMWrapper:
         if d is None:
             return None
         message: Message = to_message(d)
-        message_distinquisher = message.message_id, id_from, message.sender, self._sequence_id
+        message_distinquisher = message.message_id, message.message_sender_header, message.sender, self._sequence_id
         print("\t Receiving", message_distinquisher)
         logging.info("Received package: ")
         logging.debug(message)
