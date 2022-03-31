@@ -149,12 +149,14 @@ class MessageOrganiser:
         try:
             for i in range(0, len(self.queue_received)):
                 message, rec_time = self.queue_received[i]
-                print("\t", message, rec_time)
                 if rec_time + int(ms_memorize_received_message_id) > time.time():
                     # remove from received list.
                     del self.queue_received[i]
                     # remove from list of partly received messages
-                    del self.queue_to_be_completed[(message[0], message[2])]
+                    try:
+                        del self.queue_to_be_completed[(message[0], message[2])]
+                    except Exception as e:
+                        print("error2", e)
         except Exception as e:
             print("error", e)
 
