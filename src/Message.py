@@ -26,18 +26,19 @@ def to_message(package: bytes) -> Union[Message, None]:
     if not package or package is None:
         return None
     try:
-        print(package[:4])
-        # Check data before converting
-        valid, package = remove_and_check(package[:4])
-        if not valid:
-            logging.info("Received invalid package, discarding")
-            return None
 
         next_part_index: int = length_node_id
         m: Message = Message()
 
+        # Strip headers
         m._header_to, m._message_sender_header, m._header_id, _ = package[:4]
         bytes_to_convert = package[4:]
+
+        # Check data before converting
+        valid, package = remove_and_check(package)
+        if not valid:
+            logging.info("Received invalid package, discarding")
+            return None
 
         # To
         m.recipient = bytes_to_convert[:next_part_index].hex()
