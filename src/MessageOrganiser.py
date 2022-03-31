@@ -157,7 +157,7 @@ class MessageOrganiser:
                     if (message[0], message[2]) in self.queue_to_be_completed:
                         del self.queue_to_be_completed[(message[0], message[2])]
         except Exception as e:
-            print("error", e)
+            logging.error("Could not clear expired messages: " + str(e))
 
     def _handle_message(self, message: Message) -> Union[Message, None]:
         """
