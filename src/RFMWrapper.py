@@ -62,15 +62,11 @@ class RFMWrapper:
                 self._rfm95.destination = id_to  # so all modules accept the message.
 
                 # Check if identifier is set e.g forwarding a message.
-                if identifier is None:
-                    identifier = self._sequence_id
-                    self._sequence_id = (self._sequence_id + 1) % 255
 
                 # sending
                 success &= self._rfm95.send_with_ack(data)
 
-                sleep(2)
-                print("Sending\t", message, id_to, id_from, identifier, flags)
+                print("Sending\t", data, id_to, id_from, identifier, flags)
             logging.info("Transmission end")
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
