@@ -92,6 +92,8 @@ class RFMWrapper:
             return None
 
         message: Message = to_message(d)
+        if message is None:
+            return None
         print("received \t", message)
         logging.info("Received package")
         return message
