@@ -28,7 +28,7 @@ def to_message(package: bytes) -> Union[Message, None]:
     try:
         print(package)
         # Check data before converting
-        valid, package = remove_and_check(package)
+        valid, package = remove_and_check(package[:4])
         if not valid:
             logging.info("Received invalid package, discarding")
             return None
