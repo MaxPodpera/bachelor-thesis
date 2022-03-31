@@ -1,5 +1,5 @@
 import logging
-logging.basicConfig(level=logging.CRITICAL)
+logging.basicConfig(level=logging.DEBUG)
 import threading
 from src.RFMWrapper import RFMWrapper
 from src.MessageStorage import MessageStorage

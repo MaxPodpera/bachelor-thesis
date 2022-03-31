@@ -11,7 +11,7 @@ from src.Message import *
 
 if __name__ == '__main__':
 
-    logging.basicConfig(level=logging.CRITICAL)
+    logging.basicConfig(level=logging.DEBUG)
     # TODO register file interface
     # init lora device
     # on file or network action take file or network action respectively

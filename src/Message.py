@@ -197,7 +197,7 @@ class Message:
                 # Headers
                 result.append((header_to, header_from, header_id, 0, payload))
                 data_bytes = data_bytes[len(data):]
-            print(result, "\n\n\n")
+            print("\n\n", result, "\n\n\n")
             return result
         except Exception as e:
             logging.error("Error while splitting message: " + str(e))
