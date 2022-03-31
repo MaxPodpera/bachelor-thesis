@@ -156,7 +156,7 @@ class MessageOrganiser:
                     # remove from list of partly received messages
                     del self.queue_to_be_completed[(message[0], message[2])]
         except Exception as e:
-            print(e)
+            print("error", e)
 
     def _handle_message(self, message: Message) -> Union[Message, None]:
         """
