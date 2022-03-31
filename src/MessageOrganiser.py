@@ -63,10 +63,12 @@ class MessageOrganiser:
         :param message: bytearray as produced by Message.to_bytes
         :return: void
         """
-        if message.sender is address_broadcast:
+        if message.sender is None:
+            logging.debug("Adding sender id")
             message.sender = self._node_id
         # Set the message id
         if message.message_id is None:
+            logging.debug("Adding message id")
             message.message_id = self._message_id
             self._message_id = self._message_id % self._message_id_max_value
 
@@ -95,6 +97,7 @@ class MessageOrganiser:
         if self.was_received(message):
             logging.debug("Message already received")
             return
+
         # Message was sent by this node. Forwarding of neighbour received.
         if message.sender == self._node_id:
             logging.debug("Message forwarding received")
@@ -165,7 +168,10 @@ class MessageOrganiser:
         # First of multiple packages for this message
         if (message.message_id, message.sender) not in self.queue_to_be_completed:
             logging.debug("Received first of many packages")
-            self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
+            try:
+                self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
+            except Exception as e:
+                print(e)
             return None
 
         # TODO is this thread safe

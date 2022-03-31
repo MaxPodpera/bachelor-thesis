@@ -26,7 +26,6 @@ def to_message(package: bytes) -> Union[Message, None]:
     if not package or package is None:
         return None
     try:
-        print(package)
         next_part_index: int = length_node_id
         m: Message = Message()
 
@@ -36,7 +35,6 @@ def to_message(package: bytes) -> Union[Message, None]:
 
         # Check data before converting
         valid, bytes_to_convert = remove_and_check(bytes_to_convert)
-        print(bytes_to_convert)
         if not valid:
             logging.info("Received invalid package, discarding")
             return None
@@ -88,7 +86,7 @@ class Message:
     data: str = None
     recipient: str = address_broadcast     # Broadcast address
     pid: int = 0
-    _sender: str = "00000000000000000000000000000000"
+    _sender: str = None
     sender_pid: int = 0
     time: time = None
     sequence_number: int = 0  # Number of this package for the message
