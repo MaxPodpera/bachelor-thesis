@@ -11,9 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d6a1cebb-8ebd-4b84-a313-cb51f30d166a" name="Default Changelist" comment="small changes">
+      <change afterPath="$PROJECT_DIR$/src/ErrorDetection.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Message.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Message.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/MessageOrganiser.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/MessageOrganiser.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RFMWrapper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/RFMWrapper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +55,28 @@
       <recent name="$PROJECT_DIR$/cli" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.ErrorDetection">
+    <configuration name="ErrorDetection" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="bachelor_thesis" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="/usr/local/bin/python3.9" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/src/ErrorDetection.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="bachelor_thesis" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -172,6 +195,11 @@
       <option name="_new_targetType" value="&quot;PATH&quot;" />
       <method v="2" />
     </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.ErrorDetection" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -234,22 +262,42 @@
     </state>
     <state x="550" y="312" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1680.962@0.25.1680.962" timestamp="1648557151852" />
     <state x="550" y="313" key="#com.intellij.fileTypes.FileTypeChooser/0.25.1680.964@0.25.1680.964" timestamp="1640615025552" />
-    <state width="1659" height="257" key="GridCell.Tab.0.bottom" timestamp="1640686455948">
-      <screen x="0" y="25" width="1680" height="964" />
+    <state width="792" height="256" key="GridCell.Tab.0.bottom" timestamp="1648627644015">
+      <screen x="0" y="25" width="1680" height="962" />
     </state>
+    <state width="792" height="256" key="GridCell.Tab.0.bottom/0.25.1680.962@0.25.1680.962" timestamp="1648627644015" />
     <state width="1659" height="257" key="GridCell.Tab.0.bottom/0.25.1680.964@0.25.1680.964" timestamp="1640686455948" />
-    <state width="1659" height="257" key="GridCell.Tab.0.center" timestamp="1640686455944">
-      <screen x="0" y="25" width="1680" height="964" />
+    <state width="792" height="256" key="GridCell.Tab.0.center" timestamp="1648627644014">
+      <screen x="0" y="25" width="1680" height="962" />
     </state>
+    <state width="792" height="256" key="GridCell.Tab.0.center/0.25.1680.962@0.25.1680.962" timestamp="1648627644014" />
     <state width="1659" height="257" key="GridCell.Tab.0.center/0.25.1680.964@0.25.1680.964" timestamp="1640686455944" />
-    <state width="1659" height="257" key="GridCell.Tab.0.left" timestamp="1640686455937">
-      <screen x="0" y="25" width="1680" height="964" />
+    <state width="792" height="256" key="GridCell.Tab.0.left" timestamp="1648627644013">
+      <screen x="0" y="25" width="1680" height="962" />
     </state>
+    <state width="792" height="256" key="GridCell.Tab.0.left/0.25.1680.962@0.25.1680.962" timestamp="1648627644013" />
     <state width="1659" height="257" key="GridCell.Tab.0.left/0.25.1680.964@0.25.1680.964" timestamp="1640686455937" />
-    <state width="1659" height="257" key="GridCell.Tab.0.right" timestamp="1640686455945">
-      <screen x="0" y="25" width="1680" height="964" />
+    <state width="792" height="256" key="GridCell.Tab.0.right" timestamp="1648627644014">
+      <screen x="0" y="25" width="1680" height="962" />
     </state>
+    <state width="792" height="256" key="GridCell.Tab.0.right/0.25.1680.962@0.25.1680.962" timestamp="1648627644014" />
     <state width="1659" height="257" key="GridCell.Tab.0.right/0.25.1680.964@0.25.1680.964" timestamp="1640686455945" />
+    <state width="792" height="317" key="GridCell.Tab.1.bottom" timestamp="1648627607278">
+      <screen x="0" y="25" width="1680" height="962" />
+    </state>
+    <state width="792" height="317" key="GridCell.Tab.1.bottom/0.25.1680.962@0.25.1680.962" timestamp="1648627607278" />
+    <state width="792" height="317" key="GridCell.Tab.1.center" timestamp="1648627607278">
+      <screen x="0" y="25" width="1680" height="962" />
+    </state>
+    <state width="792" height="317" key="GridCell.Tab.1.center/0.25.1680.962@0.25.1680.962" timestamp="1648627607278" />
+    <state width="792" height="317" key="GridCell.Tab.1.left" timestamp="1648627607278">
+      <screen x="0" y="25" width="1680" height="962" />
+    </state>
+    <state width="792" height="317" key="GridCell.Tab.1.left/0.25.1680.962@0.25.1680.962" timestamp="1648627607278" />
+    <state width="792" height="317" key="GridCell.Tab.1.right" timestamp="1648627607278">
+      <screen x="0" y="25" width="1680" height="962" />
+    </state>
+    <state width="792" height="317" key="GridCell.Tab.1.right/0.25.1680.962@0.25.1680.962" timestamp="1648627607278" />
     <state x="266" y="244" key="Vcs.Push.Dialog.v2" timestamp="1646746063517">
       <screen x="0" y="25" width="1680" height="964" />
     </state>

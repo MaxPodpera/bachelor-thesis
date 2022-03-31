@@ -9,6 +9,7 @@ message:
     length_frame: "124"  # "100" # 252
     length_message_id: "1"
     length_sequence_number: "4"  # expected to be even length
+    length_error_detection: "2"
 rfm:
   timeout_receive: 20
   node: 255

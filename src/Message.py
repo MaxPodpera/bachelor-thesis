@@ -4,6 +4,7 @@ from typing import Union
 import math
 from src.Utilities import read_config_file
 import logging
+from src.ErrorDetection import add_check, remove_and_check
 """
 Message class. Contains definition of the Messages and functionality to convert messages to bytes and the other way around.
 """
@@ -12,17 +13,26 @@ length_pid: int = int(read_config_file("message.meta.length_pid"))
 length_frame: int = int(read_config_file("message.meta.length_frame"))
 length_message_id: int = int(read_config_file("message.meta.length_message_id"))
 length_sequence_number: int = int(read_config_file("message.meta.length_sequence_number"))  # length is expected to be of
+length_error_detection: int = int(read_config_file("message.meta.length_error_detection"))
 # even length
-length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number + length_message_id
+length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number + length_message_id + length_error_detection
 length_max_data: int = length_frame - length_meta
+
 
 address_broadcast: str = read_config_file("message.broadcast_address")
 
 
-def to_message(package) -> Union[Message, None]:
+def to_message(package: bytes) -> Union[Message, None]:
     if not package or package is None:
         return None
     try:
+
+        # Check data before converting
+        valid, package = remove_and_check(package)
+        if not valid:
+            logging.info("Received invalid package, discarding")
+            return None
+
         next_part_index: int = length_node_id
         m: Message = Message()
 
@@ -173,17 +183,19 @@ class Message:
             result = []
             # split message
             while len(data_bytes) > 0:
-                seq_str = seq_num.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
+                seq_str: bytes = seq_num.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
                 seq_num += 1
 
-                meta = b + seq_str
+                meta: bytes = b + seq_str
 
-                data = data_bytes[:length_max_data]
-                # crc hier weniger strict
-                # TODO HIER IRGENDWO CRC Oder HASH
+                data: bytes = data_bytes[:length_max_data]
+
+                # Add error detection
+                payload: bytes = meta + data
+                payload = add_check(payload)
 
                 # Headers
-                result.append((header_to, header_from, header_id, 0, meta + data))
+                result.append((header_to, header_from, header_id, 0, payload))
                 data_bytes = data_bytes[len(data):]
             return result
         except Exception as e:

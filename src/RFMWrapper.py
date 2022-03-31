@@ -26,10 +26,20 @@ class RFMWrapper:
         baudrate = 1000000
         frequency = 868.0
         self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
-        self._rfm95.tx_power = 23
-        self._rfm95.receive_timeout = 2
+        # see documentation for meaning
+        self._rfm95.ack_delay = .1
+        self._rfm95.ack_retries = 2
+        # Wait time before resending
+        self._rfm95.ack_wait = .3
+        self._rfm95.node = 255  # so all packages will be received
+
+        # identifier will be overwritten by send_with_ack
+        # self._rfm95.identifier =
+
+        # self._rfm95.tx_power = 23
+        # self._rfm95.receive_timeout = 2
         # self._rfm95.destination = 255
-        self._rfm95.enable_crc = True
+        # self._rfm95.enable_crc = True
         # self._rfm95.identifier = 255
         # self._rfm95.node = 255
 
@@ -47,18 +57,20 @@ class RFMWrapper:
         try:
             # Send the single packages
             while len(packages) > 0 and success:
+                # Get infos
                 id_from, id_to, identifier, flags, data = packages.pop(0)
+                self._rfm95.destination = id_to  # so all modules accept the message.
+
+                # Check if identifier is set e.g forwarding a message.
                 if identifier is None:
                     identifier = self._sequence_id
                     self._sequence_id = (self._sequence_id + 1) % 255
-                success &= self._rfm95.send(data,
-                                            destination=id_to,
-                                            node=id_from,
-                                            identifier=identifier,
-                                            flags=flags,
-                                            keep_listening=True)
+
+                # sending
+                success &= self._rfm95.send_with_ack(data)
+
                 sleep(2)
-                print("Sendinge\t", message, id_to, id_from, identifier, flags)
+                print("Sending\t", message, id_to, id_from, identifier, flags)
             logging.info("Transmission end")
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
@@ -72,11 +84,13 @@ class RFMWrapper:
         """
         d = self._rfm95.receive(
             with_header=True,
-            keep_listening=True
+            keep_listening=True,
+            with_ack=True
         )
 
         if d is None:
             return None
+
         message: Message = to_message(d)
         print("received \t", message)
         logging.info("Received package")
