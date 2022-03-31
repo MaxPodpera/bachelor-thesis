@@ -168,15 +168,14 @@ class MessageOrganiser:
         # First of multiple packages for this message
         if (message.message_id, message.sender) not in self.queue_to_be_completed:
             logging.debug("Received first of many packages")
-            try:
-                self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
-            except Exception as e:
-                print(e)
+            self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
             return None
 
-        # TODO is this thread safe
-        self.queue_to_be_completed[(message.message_id, message.sender)].append(message)
-        
+        try:
+            self.queue_to_be_completed[(message.message_id, message.sender)].append(message)
+        except Exception as e:
+            print(e)
+
         # Check if all corresponding packages were received
         if len(self.queue_to_be_completed[(message.message_id, message.sender)]) != message.related_packages + 1:
             logging.debug("Received further package of large message")
