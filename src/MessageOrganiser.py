@@ -45,7 +45,10 @@ class MessageOrganiser:
                     self.push_to_send(message)
 
                 # Remove elements from received list if they are expired
-                self._clear_expired_from_received()
+                try:
+                    self._clear_expired_from_received()
+                except Exception as e:
+                    print(e)
             except Exception as e:
                 logging.error("Error during organiser operation: " + str(e))
 
@@ -171,10 +174,7 @@ class MessageOrganiser:
             self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
             return None
 
-        try:
-            self.queue_to_be_completed[(message.message_id, message.sender)].append(message)
-        except Exception as e:
-            print(e)
+        self.queue_to_be_completed[(message.message_id, message.sender)].append(message)
 
         # Check if all corresponding packages were received
         if len(self.queue_to_be_completed[(message.message_id, message.sender)]) != message.related_packages + 1:
