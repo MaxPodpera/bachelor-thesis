@@ -1,6 +1,5 @@
 import logging
 import os
-import threading
 import inotify.adapters
 import asyncio
 from src.Utilities import read_config_file

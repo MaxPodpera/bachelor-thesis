@@ -26,14 +26,3 @@ def add_check(d: bytes):
 
 class ErrorDetection:
     pass
-
-
-if __name__ == '__main__':
-    d = int.to_bytes(1234141241241241241241241234, 12, 'big')
-    d1 = add_check(d)
-    check, d2 = remove_and_check(d1)
-
-    print(d)
-    print(d1)
-    print(d2)
-    print(check)

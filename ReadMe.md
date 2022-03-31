@@ -65,7 +65,7 @@ rfm:
 ### Running
 
 After installing the requirements (`pip3 install requirements.txt`), the program can be run using
-`python3 ./node/main.py ./node/config.yaml`
+`python3 ./src/main.py ./src/config.yaml`
 
 To send messages a file has to be created in the folder specified by the `message_folder` option.
 The name of the file should be of the form: ``

@@ -121,9 +121,7 @@ class MessageOrganiser:
         :return:
         """
         message_distinquisher = message.message_id, message.message_sender_header, message.sender, message.sequence_number
-        print("Add to received\t", message_distinquisher)
         self.queue_received.append((message_distinquisher, time.time()))
-        print(str(self.queue_received))
 
     def was_received(self, message: Message) -> bool:
         """
@@ -132,7 +130,6 @@ class MessageOrganiser:
         :return: true if it was received false otherwise
         """
         message_distinquisher = message.message_id, message.message_sender_header, message.sender, message.sequence_number
-        print("Check exists\t", message_distinquisher)
         # Search for matching items
         for i in self.queue_received:
             distinquisher, _ = i
@@ -147,7 +144,7 @@ class MessageOrganiser:
         """
         for i in range(0, len(self.queue_received)):
             message, rec_time = self.queue_received[i]
-            print("hearst", rec_time, time.time() + int(ms_memorize_received_message_id), message)
+
             if rec_time + int(ms_memorize_received_message_id) > time.time():
                 # remove from received list.
                 del self.queue_received[i]

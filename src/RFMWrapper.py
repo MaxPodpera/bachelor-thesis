@@ -32,16 +32,12 @@ class RFMWrapper:
         # Wait time before resending
         self._rfm95.ack_wait = .3
         self._rfm95.node = 255  # so all packages will be received
+        logging.info("Setup of module complete")
 
         # identifier will be overwritten by send_with_ack
         # self._rfm95.identifier =
-
         # self._rfm95.tx_power = 23
         # self._rfm95.receive_timeout = 2
-        # self._rfm95.destination = 255
-        # self._rfm95.enable_crc = True
-        # self._rfm95.identifier = 255
-        # self._rfm95.node = 255
 
     def send(self, message: Message) -> bool:
         """
@@ -58,16 +54,13 @@ class RFMWrapper:
             # Send the single packages
             while len(packages) > 0 and success:
                 # Get infos
-                id_from, id_to, identifier, flags, data = packages.pop(0)
-                self._rfm95.destination = id_to  # so all modules accept the message.
-
-                # Check if identifier is set e.g forwarding a message.
+                _, id_to, _, _, data = packages.pop(0)
+                # Set this to generate more unique messages.
+                self._rfm95.destination = id_to
 
                 # sending
                 success &= self._rfm95.send_with_ack(data)
-
-                print("Sending\t", data, id_to, id_from, identifier, flags)
-            logging.info("Transmission end")
+                logging.debug("Package sent: " + str(success))
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
             raise MalformedContentException(e)
@@ -90,6 +83,5 @@ class RFMWrapper:
         message: Message = to_message(d)
         if message is None:
             return None
-        print("received \t", message)
         logging.info("Received package")
         return message
