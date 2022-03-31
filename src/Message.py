@@ -26,7 +26,7 @@ def to_message(package: bytes) -> Union[Message, None]:
     if not package or package is None:
         return None
     try:
-
+        print(package)
         # Check data before converting
         valid, package = remove_and_check(package)
         if not valid:
