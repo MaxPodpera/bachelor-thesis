@@ -153,13 +153,9 @@ class MessageOrganiser:
                     # remove from received list.
                     del self.queue_received[i]
                     # remove from list of partly received messages
-                    try:
-                        print(self.queue_to_be_completed[(message[0], message[2])])
+
+                    if (message[0], message[2]) in self.queue_to_be_completed:
                         del self.queue_to_be_completed[(message[0], message[2])]
-                    except Exception as e:
-                        print(self.queue_to_be_completed)
-                        print(message)
-                        print(self.queue_to_be_completed[(e)])
         except Exception as e:
             print("error", e)
 
