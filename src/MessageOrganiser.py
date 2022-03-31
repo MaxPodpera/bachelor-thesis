@@ -149,7 +149,7 @@ class MessageOrganiser:
         try:
             for i in range(0, len(self.queue_received)):
                 message, rec_time = self.queue_received[i]
-
+                print(message, rec_time)
                 if rec_time + int(ms_memorize_received_message_id) > time.time():
                     # remove from received list.
                     del self.queue_received[i]
