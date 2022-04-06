@@ -79,7 +79,7 @@ class RFMWrapper:
 
         if d is None:
             return None
-        print(d[:4])
+
         message: Message = to_message(d)
         if message is None:
             return None
