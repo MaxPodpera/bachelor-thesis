@@ -57,7 +57,7 @@ class RFMWrapper:
                 _, id_to, _, _, data = packages.pop(0)
                 # Set this to generate more unique messages.
                 self._rfm95.destination = id_to
-                sleep(1)
+                sleep(3)
                 # sending
                 success &= self._rfm95.send_with_ack(data)
                 logging.debug("Package sent: " + str(success))
@@ -79,7 +79,7 @@ class RFMWrapper:
 
         if d is None:
             return None
-
+        print(d[:4])
         message: Message = to_message(d)
         if message is None:
             return None
