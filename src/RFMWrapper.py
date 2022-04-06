@@ -60,6 +60,7 @@ class RFMWrapper:
                 sleep(3)
                 # sending
                 success &= self._rfm95.send_with_ack(data)
+                print(success)
                 logging.debug("Package sent: " + str(success))
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
