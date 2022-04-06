@@ -69,7 +69,7 @@ class MessageOrganiser:
         if message.message_id is None:
             logging.debug("Adding message id")
             message.message_id = self._message_id
-            self._message_id = self._message_id % self._message_id_max_value
+            self._message_id = (self._message_id + 1) % self._message_id_max_value
 
         # Add to queue
         self.queue_send.append(message)
