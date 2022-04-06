@@ -116,7 +116,10 @@ class MessageOrganiser:
             return
 
         # Handle message that is meant for this node
-        self._handle_message(message)
+        m: Message = self._handle_message(message)
+        if m is None:
+            return
+        self._storage.store(m)
 
     def _push_to_received(self, message: Message):
         """
@@ -186,10 +189,7 @@ class MessageOrganiser:
         logging.debug("Received all packages for message")
 
         message: Message = self._build_message(self.queue_to_be_completed[(message.message_id, message.sender)])
-
-        # Store message if all parts were received.
-        if message is not None:
-            self._storage.store(message)
+        return message
 
     def _build_message(self, message_packages: [Message]) -> Union[None, Message]:
         """
