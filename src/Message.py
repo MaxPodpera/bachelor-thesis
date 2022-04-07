@@ -38,6 +38,7 @@ def to_message(package: bytes) -> Union[Message, None]:
         valid, bytes_to_convert = remove_and_check(bytes_to_convert)
         if not valid:
             logging.info("Received invalid package, discarding")
+            print(bytes_to_convert)
             return None
 
         # To
