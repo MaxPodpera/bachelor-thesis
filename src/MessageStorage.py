@@ -24,7 +24,10 @@ class MessageStorage:
 
     def store(self, message):
         logging.info("Send message to storage")
-        asyncio.create_task(self._store(message))
+        loop = asyncio.get_event_loop()
+        task = loop.create_task(self._store(message))
+        loop.run_until_complete(task)
+        loop.close()
 
     def _store(self, message: Message):
         """
