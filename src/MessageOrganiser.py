@@ -143,6 +143,7 @@ class MessageOrganiser:
         :return: true if it was received false otherwise
         """
         message_distinquisher = _create_distinquisher(message)
+        print("check call", self.queue_received)
         # Search for matching items
         for i in self.queue_received:
             distinquisher, _ = i
