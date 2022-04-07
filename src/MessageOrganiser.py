@@ -11,6 +11,13 @@ broadcast_address = read_config_file("message.broadcast_address")
 length_message_id = read_config_file("message.meta.length_message_id")
 
 
+def _create_distinquisher(message: Message) -> (int, int, str, int):
+    """
+    Create message distinguisher used for identifying packages.
+    """
+    return message.message_id, message.message_sender_header, message.sender, message.sequence_number
+
+
 class MessageOrganiser:
     _active: bool = True
 
@@ -125,7 +132,8 @@ class MessageOrganiser:
         :param message to be added.
         :return:
         """
-        message_distinquisher = message.message_id, message.message_sender_header, message.sender, message.sequence_number
+        message_distinquisher = _create_distinquisher(message)
+        print("Receive add", message_distinquisher, time.time())
         self.queue_received.append((message_distinquisher, time.time()))
 
     def was_received(self, message: Message) -> bool:
@@ -134,10 +142,11 @@ class MessageOrganiser:
         :param message to be checked
         :return: true if it was received false otherwise
         """
-        message_distinquisher = message.message_id, message.message_sender_header, message.sender, message.sequence_number
+        message_distinquisher = _create_distinquisher(message)
         # Search for matching items
         for i in self.queue_received:
             distinquisher, _ = i
+            print("Receive check: ", distinquisher, message_distinquisher)
             if distinquisher == message_distinquisher:
                 return True
         return False
