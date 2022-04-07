@@ -12,7 +12,8 @@ length_node_id: int = int(read_config_file("message.meta.length_id"))
 length_pid: int = int(read_config_file("message.meta.length_pid"))
 length_frame: int = int(read_config_file("message.meta.length_frame"))
 length_message_id: int = int(read_config_file("message.meta.length_message_id"))
-length_sequence_number: int = int(read_config_file("message.meta.length_sequence_number"))  # length is expected to be of
+length_sequence_number: int = int(read_config_file("message.meta.length_sequence_number"))  # length is expected to
+# be of even length
 length_error_detection: int = int(read_config_file("message.meta.length_error_detection"))
 # even length
 length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number + length_message_id + \
@@ -38,7 +39,7 @@ def to_message(package: bytes) -> Union[Message, None]:
         valid, bytes_to_convert = remove_and_check(bytes_to_convert)
         if not valid:
             logging.info("Received invalid package, discarding")
-            print(bytes_to_convert)
+            logging.debug(bytes_to_convert)
             return None
 
         # To
@@ -84,7 +85,7 @@ def to_message(package: bytes) -> Union[Message, None]:
 
 class Message:
 
-    message_id: int = None
+    message_id: int = None  # Sequence number of this message. Makes it unique for this node.
     data: str = None
     recipient: str = address_broadcast     # Broadcast address
     pid: int = 0

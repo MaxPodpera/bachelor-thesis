@@ -11,11 +11,11 @@ broadcast_address = read_config_file("message.broadcast_address")
 length_message_id = read_config_file("message.meta.length_message_id")
 
 
-def _create_distinquisher(message: Message) -> (int, int, str, int):
+def _create_distinquisher(message: Message) -> (int, int, str):
     """
     Create message distinguisher used for identifying packages.
     """
-    return message.message_id, message.message_sender_header, message.sender, message.sequence_number
+    return message.sender, message.message_id, message.sequence_number
 
 
 class MessageOrganiser:
@@ -92,36 +92,36 @@ class MessageOrganiser:
         except IndexError:
             return None
 
-    def push_to_received(self, message: Message):
+    def push_to_received(self, package: Message):
         """
-        Add message to received list. If it is a single message or the last
+        Add package to received list. If it is a single message or the last
         of a Message the message is returned.
-        :param message: received message
+        :param package: received message
         :return: void
         """
         # Already received
-        if self.was_received(message):
-            logging.debug("Message already received")
+        if self.was_received(package):
+            logging.debug("Package already received")
             return
 
         # Message was sent by this node. Forwarding of neighbour received.
-        if message.sender == self._node_id:
-            logging.debug("Message forwarding received")
+        if package.sender == self._node_id:
+            logging.debug("Package forwarding received")
             return
 
-        logging.info("Received unknown Message")
+        logging.info("Received unknown Package")
         
         # Not yet received
-        self._push_to_received(message)  # add to known message list
+        self._push_to_received(package)  # add to known message list
 
         # Message not meant for this node. Add to list to send later
-        if not (message.recipient in self.list_addresses_self):
+        if not (package.recipient in self.list_addresses_self):
             logging.info("Forwarding message")
-            self.push_to_send(message)
+            self.push_to_send(package)
             return
 
         # Handle message that is meant for this node
-        m: Message = self._handle_message(message)
+        m: Message = self._handle_message(package)
         if m is None:
             return
         self._storage.store(m)
