@@ -15,7 +15,8 @@ length_message_id: int = int(read_config_file("message.meta.length_message_id"))
 length_sequence_number: int = int(read_config_file("message.meta.length_sequence_number"))  # length is expected to be of
 length_error_detection: int = int(read_config_file("message.meta.length_error_detection"))
 # even length
-length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number + length_message_id + length_error_detection
+length_meta: int = (length_node_id * 2) + (length_pid * 2) + length_sequence_number + length_message_id + \
+                   length_error_detection
 length_max_data: int = length_frame - length_meta
 
 
@@ -193,7 +194,7 @@ class Message:
                 # Add error detection
                 payload: bytes = meta + data
                 payload = add_check(payload)
-
+                len(payload)
                 # Headers
                 result.append((header_to, header_from, header_id, 0, payload))
                 data_bytes = data_bytes[len(data):]
