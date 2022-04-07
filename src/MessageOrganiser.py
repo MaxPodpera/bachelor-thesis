@@ -27,7 +27,7 @@ class MessageOrganiser:
     _storage: MessageStorage = MessageStorage()
     list_addresses_self: [str] = [broadcast_address]  # Addresses for which messages are stored (if set as recipient)
 
-    queue_received: [((int, int, str, int), time)] = []  # Received Messages
+    queue_received: [((int, int, str), time)] = [(int, int, str)]  # Received Messages
     queue_send: [Message] = []  # To be sent
     queue_to_be_completed: {(int, str): [Message]} = {}  # not all packages received yet
 
