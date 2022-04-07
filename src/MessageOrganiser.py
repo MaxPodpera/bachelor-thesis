@@ -50,7 +50,7 @@ class MessageOrganiser:
                     self.push_to_send(message)
 
                 # Remove elements from received list if they are expired
-                self._clear_expired_from_received()
+                self._clear_expired_from_queue()
 
             except Exception as e:
                 logging.error("Error during organiser operation: " + str(e))
@@ -135,6 +135,7 @@ class MessageOrganiser:
         message_distinquisher = _create_distinquisher(message)
         print("Receive add", message_distinquisher, time.time())
         self.queue_received.append((message_distinquisher, time.time()))
+        print(self.queue_received)
 
     def was_received(self, message: Message) -> bool:
         """
@@ -152,7 +153,7 @@ class MessageOrganiser:
                 return True
         return False
 
-    def _clear_expired_from_received(self):
+    def _clear_expired_from_queue(self):
         """
         Remove items from the received list that expired according to as set time.
         :return:
