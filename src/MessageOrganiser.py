@@ -158,9 +158,9 @@ class MessageOrganiser:
         :return:
         """
         try:
-            print(self.queue_received)
             for i in range(0, len(self.queue_received)):
                 message, rec_time = self.queue_received[i]
+                print(self.queue_received)
                 if rec_time + int(ms_memorize_received_message_id) > time.time():
                     # remove from received list.
                     del self.queue_received[i]
