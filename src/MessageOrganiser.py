@@ -165,13 +165,12 @@ class MessageOrganiser:
                 print("\t\t\tval", rec_time + ms_memorize_received_message_id)
                 print("\t\t\tres", rec_time + ms_memorize_received_message_id <= time.time(), ms_memorize_received_message_id)
                 if rec_time + ms_memorize_received_message_id <= time.time():
-                    print("\t\t\tdel", time.time())
+                    # Still valid to keep information
                     self.queue_received.append((message, rec_time))
-
-                    if (message[0], message[2]) in self.queue_to_be_completed:
-                        del self.queue_to_be_completed[(message[0], message[2])]
                 else:
                     print("\t\t\tremoving", rec_time)
+                    if (message[0], message[2]) in self.queue_to_be_completed:
+                        del self.queue_to_be_completed[(message[0], message[2])]
                 i += 1  # loop progress
             if final != len(self.queue_received):
                 print("\t\t\tchanges", self.queue_received)
