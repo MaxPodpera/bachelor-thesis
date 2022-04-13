@@ -1,4 +1,4 @@
-from crccheck.crc import Crc32, CrcXmodem
+from crccheck.crc import CrcXmodem
 from src.Utilities import *
 
 length_error_detection: int = int(read_config_file("message.meta.length_error_detection"))

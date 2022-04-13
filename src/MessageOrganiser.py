@@ -50,7 +50,7 @@ class MessageOrganiser:
                     self.push_to_send(message)
 
                 # Remove elements from received list if they are expired
-                self._clear_expired_from_queue()
+                # self._clear_expired_from_queue()
 
             except Exception as e:
                 logging.error("Error during organiser operation: " + str(e))
