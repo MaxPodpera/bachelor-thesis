@@ -164,7 +164,7 @@ class MessageOrganiser:
                 print("\t\t\tcheck", rec_time, time.time())
                 print("\t\t\tval", rec_time + ms_memorize_received_message_id)
                 print("\t\t\tres", rec_time + ms_memorize_received_message_id <= time.time(), ms_memorize_received_message_id)
-                if rec_time + ms_memorize_received_message_id <= time.time():
+                if rec_time + ms_memorize_received_message_id > time.time():
                     # Still valid to keep information
                     self.queue_received.append((message, rec_time))
                 else:
