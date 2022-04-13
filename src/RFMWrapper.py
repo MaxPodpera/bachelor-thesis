@@ -30,7 +30,7 @@ class RFMWrapper:
         self._rfm95.ack_delay = .1
         # see documentation for meaning
         # self._rfm95.ack_delay = .1
-        # self._rfm95.ack_retries = 2
+        self._rfm95.ack_retries = 5
         # Wait time before resending
         # self._rfm95.ack_wait = .3
         self._rfm95.node = 255  # so all packages will be received
@@ -81,7 +81,7 @@ class RFMWrapper:
 
         if d is None:
             return None
-        logging.warn(d[:4])
+        logging.critical(d[:4])
         message: Message = to_message(d)
         if message is None:
             return None
