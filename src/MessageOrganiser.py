@@ -161,10 +161,8 @@ class MessageOrganiser:
             final: int = len(self.queue_received)
             while i < final:
                 message, rec_time = self.queue_received.pop()
-                print("\t\t\tcheck", rec_time, time.time())
-                print("\t\t\tval", rec_time + ms_memorize_received_message_id)
-                print("\t\t\tres", rec_time + ms_memorize_received_message_id <= time.time(), ms_memorize_received_message_id)
-                if rec_time + ms_memorize_received_message_id > time.time():
+                del_time: float = rec_time + (ms_memorize_received_message_id / 1000)
+                if del_time > time.time():
                     # Still valid to keep information
                     self.queue_received.append((message, rec_time))
                 else:
