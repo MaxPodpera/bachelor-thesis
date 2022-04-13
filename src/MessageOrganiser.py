@@ -157,7 +157,9 @@ class MessageOrganiser:
         """
         try:
             i: int = 0
+            print(self.queue_received, "\t\t\t\tpre")
             while i < len(self.queue_received):
+                print(self.queue_received, "\t\t\t\tpost")
                 message, rec_time = self.queue_received[i]
 
                 if rec_time + ms_memorize_received_message_id > time.time():
