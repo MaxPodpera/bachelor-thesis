@@ -144,6 +144,7 @@ class MessageOrganiser:
         message_distinquisher = _create_distinquisher(message)
 
         # Search for matching items
+        print("\t\t\tqueue", self.queue_received)
         for i in self.queue_received:
             distinquisher, _ = i
             if distinquisher == message_distinquisher:
