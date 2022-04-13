@@ -6,7 +6,7 @@ import threading
 import logging
 from src.MessageStorage import MessageStorage
 
-ms_memorize_received_message_id = read_config_file("message.ms_memorize_received_message_id")
+ms_memorize_received_message_id: int = int(read_config_file("message.ms_memorize_received_message_id"))
 broadcast_address = read_config_file("message.broadcast_address")
 length_message_id = read_config_file("message.meta.length_message_id")
 
@@ -162,7 +162,7 @@ class MessageOrganiser:
             for i in range(0, len(self.queue_received)):
                 message, rec_time = self.queue_received[i]
                 print(self.queue_received)
-                if rec_time + int(ms_memorize_received_message_id) > time.time():
+                if rec_time + ms_memorize_received_message_id > time.time():
                     # remove from received list.
                     del self.queue_received[i]
                     # remove from list of partly received messages
