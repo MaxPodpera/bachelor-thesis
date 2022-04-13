@@ -156,9 +156,10 @@ class MessageOrganiser:
         :return:
         """
         try:
-            for i in range(0, len(self.queue_received)):
+            i: int = 0
+            while i < len(self.queue_received):
                 message, rec_time = self.queue_received[i]
-                print(self.queue_received)
+
                 if rec_time + ms_memorize_received_message_id > time.time():
                     # remove from received list.
                     self.queue_received = self.queue_received[:i].append(self.queue_received[i:])
@@ -166,6 +167,7 @@ class MessageOrganiser:
 
                     if (message[0], message[2]) in self.queue_to_be_completed:
                         del self.queue_to_be_completed[(message[0], message[2])]
+                i += 1
         except Exception as e:
             logging.error("Could not clear expired messages: " + str(e))
 
