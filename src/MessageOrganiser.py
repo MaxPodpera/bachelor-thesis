@@ -164,10 +164,13 @@ class MessageOrganiser:
                 #                                                               division to get ms.
                 del_time: float = rec_time + (ms_memorize_received_message_id / 1000)
                 if del_time > time.time():
+                    logging.info("Checked package still valid")
                     # Still valid to keep information
                     self.queue_received.append((message, rec_time))
+                # if else is reached the package should be deleted.
+                # check if there are parts of a full message stored for the message to be deleted.
                 elif (message[1], message[0]) in self.queue_to_be_completed:
-                    print("\t\t\trem", (message[1], message[0]))
+                    logging.debug("Removing packages from message memory")
                     del self.queue_to_be_completed[(message[1], message[0])]
                 i += 1  # loop progress
         except Exception as e:
