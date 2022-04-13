@@ -161,17 +161,15 @@ class MessageOrganiser:
             final: int = len(self.queue_received)
             while i < final:
                 message, rec_time = self.queue_received.pop()
+                #                                                               division to get ms.
                 del_time: float = rec_time + (ms_memorize_received_message_id / 1000)
                 if del_time > time.time():
                     # Still valid to keep information
                     self.queue_received.append((message, rec_time))
-                else:
-                    print("\t\t\tremoving", rec_time)
-                    if (message[0], message[2]) in self.queue_to_be_completed:
-                        del self.queue_to_be_completed[(message[0], message[2])]
+                elif (message[0], message[2]) in self.queue_to_be_completed:
+                    print("\t\t\trem", (message[0], message[2]))
+                    del self.queue_to_be_completed[(message[0], message[2])]
                 i += 1  # loop progress
-            if final != len(self.queue_received):
-                print("\t\t\tchanges", self.queue_received)
         except Exception as e:
             logging.error("Could not clear expired messages: " + str(e))
 
