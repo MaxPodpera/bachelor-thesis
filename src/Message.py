@@ -116,6 +116,8 @@ class Message:
         """
         # Two packages for the same message checks
         logging.debug("Combining messages")
+        print(message)
+        print(self)
         if message.message_id != self.message_id: return False
         if message.recipient != self.recipient: return False
         if message.pid != self.pid: return False
