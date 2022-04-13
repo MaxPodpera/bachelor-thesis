@@ -166,9 +166,9 @@ class MessageOrganiser:
                 if del_time > time.time():
                     # Still valid to keep information
                     self.queue_received.append((message, rec_time))
-                elif (message[0], message[2]) in self.queue_to_be_completed:
-                    print("\t\t\trem", (message[0], message[2]))
-                    del self.queue_to_be_completed[(message[0], message[2])]
+                elif (message[1], message[0]) in self.queue_to_be_completed:
+                    print("\t\t\trem", (message[1], message[0]))
+                    del self.queue_to_be_completed[(message[1], message[0])]
                 i += 1  # loop progress
         except Exception as e:
             logging.error("Could not clear expired messages: " + str(e))
