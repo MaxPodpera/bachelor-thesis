@@ -116,16 +116,19 @@ class Message:
         """
         # Two packages for the same message checks
         logging.debug("Combining messages")
-        print(message)
-        print(self)
-        if message.message_id != self.message_id: return False
-        if message.recipient != self.recipient: return False
-        if message.pid != self.pid: return False
-        if message._sender != self._sender: return False
-        if message.sender_pid != self.sender_pid: return False
-        if message.sequence_number > self._related_packages: return False
-        if message.related_packages < self.sequence_number: return False
-        if message._message_sender_header != self._message_sender_header: return False
+        valid: bool = True
+        if message.message_id != self.message_id: valid = False
+        if message.recipient != self.recipient: valid = False
+        if message.pid != self.pid: valid = False
+        if message._sender != self._sender: valid = False
+        if message.sender_pid != self.sender_pid: valid = False
+        if message.sequence_number > self._related_packages: valid = False
+        if message.related_packages < self.sequence_number: valid = False
+        if message._message_sender_header != self._message_sender_header: valid = False
+        if not valid:
+            logging.info(message)
+            logging.info(self)
+            logging.info("\n\n\n")
 
         self.data += message.data
         return True
