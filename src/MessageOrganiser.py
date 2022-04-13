@@ -162,6 +162,7 @@ class MessageOrganiser:
             while i < final:
                 message, rec_time = self.queue_received.pop()
                 print("\t\t\tcheck", rec_time, time.time())
+                print("\t\t\tres", rec_time + ms_memorize_received_message_id <= time.time(), ms_memorize_received_message_id)
                 if rec_time + ms_memorize_received_message_id <= time.time():
                     print("\t\t\tdel", time.time())
                     self.queue_received.append((message, rec_time))
