@@ -164,7 +164,6 @@ class MessageOrganiser:
                 #                                                               division to get ms.
                 del_time: float = rec_time + (ms_memorize_received_message_id / 1000)
                 if del_time > time.time():
-                    logging.info("Checked package still valid")
                     # Still valid to keep information
                     self.queue_received.append((message, rec_time))
                 # if else is reached the package should be deleted.
