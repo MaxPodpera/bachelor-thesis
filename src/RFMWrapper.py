@@ -60,6 +60,9 @@ class RFMWrapper:
                 # Set this to generate more unique messages.
                 self._rfm95.destination = id_to
                 # sending
+                print("\n")
+                print(data)
+                print("\n")
                 success &= self._rfm95.send_with_ack(data)
                 # sleep(self._rfm95.ack_delay)
                 logging.debug("Package sent: " + str(success))
