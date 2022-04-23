@@ -51,25 +51,41 @@ class RFMWrapper:
         # Message to package
         logging.info("Sending message")
         packages: [(int, int, int, int, bytes)] = message.split()
-        success: bool = True
+        success: bool
         try:
-            # Send the single packages
-            while len(packages) > 0 and success:
-                # Get infos
-                _, id_to, _, _, data = packages.pop(0)
-                # Set this to generate more unique messages.
-                self._rfm95.destination = id_to
-                # sending
-                print("\n")
-                print(data)
-                print("\n")
-                success &= self._rfm95.send_with_ack(data)
-                sleep(.3)
-                logging.debug("Package sent: " + str(success))
+            success = self._send_check_once(packages)
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
             raise MalformedContentException(e)
         return success
+
+    def _send_check_every_package(self, packages: [bytes]) -> bool:
+        success: bool = True
+        while len(packages) > 0 and success:
+            # Get infos
+            _, id_to, _, _, data = packages.pop(0)
+            # Set this to generate more unique messages.
+            self._rfm95.destination = id_to
+            # sending
+            print("\n")
+            print(data)
+            print("\n")
+            success &= self._rfm95.send_with_ack(data)
+            sleep(.3)
+            logging.debug("Package sent: " + str(success))
+        return success
+
+    def _send_check_once(self, packages: [bytes]) -> bool:
+        while len(packages) > 1:
+            _, id_to, _, _, data = packages.pop(0)
+            self._rfm95.destination = id_to
+            print("\n")
+            print(data)
+            print("\n")
+            self._rfm95.send_with_ack(data)
+            sleep(.3)
+            logging.debug("Package might have been sent")
+        return self._send_check_every_package(packages)
 
     def receive(self) -> Union[Message, None]:
         """
