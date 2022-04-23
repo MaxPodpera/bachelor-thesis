@@ -28,7 +28,7 @@ class RFMWrapper:
         self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self._rfm95.reset()
         self._rfm95.ack_delay = .1
-        self._rfm95.enable_crc = False
+        self._rfm95.enable_crc = True
         # see documentation for meaning
         # self._rfm95.ack_delay = .1
         # self._rfm95.ack_retries = 5
@@ -54,7 +54,7 @@ class RFMWrapper:
         packages: [(int, int, int, int, bytes)] = message.split()
         success: bool
         try:
-            success = self._send_check_with_retries(packages, 4)
+            success = self._send_check_every_package(packages)
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
             raise MalformedContentException(e)
