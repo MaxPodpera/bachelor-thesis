@@ -29,8 +29,6 @@ class RFMWrapper:
         self._rfm95.reset()
         self._rfm95.ack_delay = .1
         ###########
-        self._rfm95.coding_rate = 8
-        self._rfm95.auto_agc = True
         # see documentation for meaning
         # self._rfm95.ack_delay = .1
         # self._rfm95.ack_retries = 5
