@@ -33,7 +33,7 @@ def to_message(package: bytes) -> Union[Message, None]:
 
         # Strip headers
         m._header_to, m._message_sender_header, m._header_id, _ = package[:4]
-        bytes_to_convert = package[4:-2]
+        bytes_to_convert = package[4:]
 
         # Check data before converting
         valid, bytes_to_convert = remove_and_check(bytes_to_convert)
@@ -201,8 +201,6 @@ class Message:
                 # Add error detection
                 payload: bytes = meta + data
                 payload = add_check(payload)
-                payload += bytes("\r\n", encoding="utf-8")
-                len(payload)
                 # Headers
                 result.append((header_to, header_from, header_id, 0, payload))
                 data_bytes = data_bytes[len(data):]
