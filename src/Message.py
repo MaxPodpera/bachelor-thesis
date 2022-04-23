@@ -33,7 +33,7 @@ def to_message(package: bytes) -> Union[Message, None]:
 
         # Strip headers
         m._header_to, m._message_sender_header, m._header_id, _ = package[:4]
-        bytes_to_convert = package[4:]
+        bytes_to_convert = package[4:-2]
 
         # Check data before converting
         valid, bytes_to_convert = remove_and_check(bytes_to_convert)
