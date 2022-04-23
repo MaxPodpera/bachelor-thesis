@@ -28,6 +28,7 @@ class RFMWrapper:
         self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self._rfm95.reset()
         self._rfm95.ack_delay = .1
+        self._rfm95.enable_crc = False
         # see documentation for meaning
         # self._rfm95.ack_delay = .1
         # self._rfm95.ack_retries = 5
