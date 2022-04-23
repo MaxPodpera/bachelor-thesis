@@ -28,7 +28,8 @@ class RFMWrapper:
         self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self._rfm95.reset()
         self._rfm95.ack_delay = .1
-        self._rfm95.enable_crc = True
+        ###########
+        self._rfm95.coding_rate = 8
         # see documentation for meaning
         # self._rfm95.ack_delay = .1
         # self._rfm95.ack_retries = 5
@@ -36,6 +37,8 @@ class RFMWrapper:
         # self._rfm95.ack_wait = .3
         self._rfm95.node = 255  # so all packages will be received
         logging.info("Setup of module complete")
+        print(self._rfm95.signal_bandwidth)
+        print(self._rfm95.spreading_factor)
 
         # identifier will be overwritten by send_with_ack
         # self._rfm95.identifier =
@@ -118,6 +121,8 @@ class RFMWrapper:
 
         if d is None:
             return None
+        print("\t", self._rfm95.last_rssi)
+        print("\t", self._rfm95.last_snr)
         logging.critical(d[:4])
         message: Message = to_message(d)
         if message is None:
