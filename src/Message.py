@@ -201,7 +201,7 @@ class Message:
                 # Add error detection
                 payload: bytes = meta + data
                 payload = add_check(payload)
-                payload += bytes("\r\n")
+                payload += bytes("\r\n", encoding="utf-8")
                 len(payload)
                 # Headers
                 result.append((header_to, header_from, header_id, 0, payload))
