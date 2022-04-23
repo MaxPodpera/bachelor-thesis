@@ -86,7 +86,7 @@ class RFMWrapper:
             print("\n")
             retries_remaining: int = retries
             package_success: bool = False
-            while package_success and retries_remaining > 0:
+            while not package_success and retries_remaining > 0:
                 package_success = self._rfm95.send_with_ack(data)
                 logging.info("Send failed, retrying")
                 sleep(.3)
