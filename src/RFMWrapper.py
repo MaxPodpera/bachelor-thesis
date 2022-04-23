@@ -54,7 +54,7 @@ class RFMWrapper:
         packages: [(int, int, int, int, bytes)] = message.split()
         success: bool
         try:
-            success = self._send_check_once(packages)
+            success = self._send_check_every_package(packages)
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
             raise MalformedContentException(e)
