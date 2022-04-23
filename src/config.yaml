@@ -6,7 +6,7 @@ message:
   meta:
     length_id: "16" # *2
     length_pid: "2" # *2
-    length_frame: "100" #"120"  # "100" "252"
+    length_frame: "120"
     length_message_id: "1"
     length_sequence_number: "4"  # expected to be even length
     length_error_detection: "2"
