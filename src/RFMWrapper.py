@@ -54,7 +54,7 @@ class RFMWrapper:
         packages: [(int, int, int, int, bytes)] = message.split()
         success: bool
         try:
-            success = self._send_check_every_package(packages)
+            success = self._send_check_with_retries(packages, 4)
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
             raise MalformedContentException(e)
@@ -74,6 +74,23 @@ class RFMWrapper:
             success &= self._rfm95.send_with_ack(data)
             sleep(.3)
             logging.debug("Package sent: " + str(success))
+        return success
+
+    def _send_check_with_retries(self, packages: [bytes], retries: int):
+        success: bool = True
+        while len(packages) > 0 and success:
+            _, id_to, _, _, data = packages.pop(0)
+            self._rfm95.destination = id_to
+            print("\n")
+            print(data)
+            print("\n")
+            retries_remaining: int = retries
+            package_success: bool = False
+            while package_success and retries_remaining > 0:
+                package_success = self._rfm95.send_with_ack(data)
+                logging.info("Send failed, retrying")
+                sleep(.3)
+            success &= package_success
         return success
 
     def _send_check_once(self, packages: [bytes]) -> bool:
