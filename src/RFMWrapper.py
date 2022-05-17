@@ -52,7 +52,7 @@ class RFMWrapper:
                     continue
                 # Otherwise combine prepared messages to packages.
                 else:
-                    print(id_to, id_from, header_id, flags, data)
+                    logging.debug("Could not send. wrapping up")
                     package: bytes = bytes(id_to) + bytes(id_from) + bytes(header_id) + bytes(flags) + data
                     m: Message = to_message(package)
 
