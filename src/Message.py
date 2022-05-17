@@ -160,17 +160,10 @@ class Message:
     def message_sender_header(self):
         return self._message_sender_header
 
-    def internal_reattach_package(self, data: packageType):
-        if data is None:
-            return
-        print(data)
-        _, _, _, _, raw = data
-        valid, raw = remove_and_check(raw)
-
-        if not valid:
-            logging.debug("Trying to attach invalid data")
-
-        self.data = raw + self.data
+    @recipient.setter
+    def recipient(self, value: str):
+        self.recipient = value
+        self._header_to = int.from_bytes(bytes.fromhex(value[-2:]), byteorder='big', signed=False)
 
     def split(self) -> [packageType]:
         logging.debug("Retrieving next package")
