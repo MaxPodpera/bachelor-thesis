@@ -46,11 +46,12 @@ class Messenger:
                     continue
 
                 # package to be sent
-                if self._rfm95.send(package):
+                residue: Message = self._rfm95.send(package)
+                if residue is None:
                     logging.info("Sent package")
                 else:
                     logging.error("Could not send package")
-                    self._organiser.push_to_send(package)
+                    self._organiser.push_to_send(residue)
             except KeyboardInterrupt as e:
                 self._active = False
                 logging.error("Shutting down" + str(e))

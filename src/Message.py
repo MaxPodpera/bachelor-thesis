@@ -154,10 +154,12 @@ class Message:
     def message_sender_header(self):
         return self._message_sender_header
 
-    def split(self) -> [(int, int, int, int, bytes)]:
-        logging.debug("Splitting message to packages")
+    def next_package(self, length) -> Union[None, (int, int, int, int, bytes)]:
+        logging.debug("Retrieving next package")
+        # Everything sent already
         if self.data is None or self.data == "":
-            return []
+            return None
+
         try:
             # Headers
             header_from = self._message_sender_header
@@ -166,12 +168,12 @@ class Message:
 
             # To
             b = bytes.fromhex(self.recipient) + self.pid.to_bytes(length_pid, byteorder='big')
-
             # From
             b += bytes.fromhex(self._sender) + self.sender_pid.to_bytes(length_pid, byteorder='big')
 
             # Message id
             b += self.message_id.to_bytes(length_message_id, byteorder='big')
+
             # data
             data_bytes: bytes = self.data.encode()
 

@@ -1,12 +1,10 @@
 import board
 import busio
 import adafruit_rfm9x
-import logging
-import time
 from digitalio import DigitalInOut
 from src.Message import *
 from time import sleep
-from micropython import const
+from src.Messenger import Messenger
 from src.Exceptions import MalformedContentException
 
 """
@@ -28,23 +26,10 @@ class RFMWrapper:
         self._rfm95 = adafruit_rfm9x.RFM9x(pin_spi, pin_cs, pin_rst, frequency, baudrate=baudrate)
         self._rfm95.reset()
         self._rfm95.ack_delay = .1
-        ###########
-        # see documentation for meaning
-        # self._rfm95.ack_delay = .1
-        # self._rfm95.ack_retries = 5
-        # Wait time before resending
-        # self._rfm95.ack_wait = .3
         self._rfm95.node = 255  # so all packages will be received
         logging.info("Setup of module complete")
-        print(self._rfm95.signal_bandwidth)
-        print(self._rfm95.spreading_factor)
 
-        # identifier will be overwritten by send_with_ack
-        # self._rfm95.identifier =
-        # self._rfm95.tx_power = 23
-        # self._rfm95.receive_timeout = 2
-
-    def send(self, message: Message) -> bool:
+    def send(self, message: Message) -> Union[None, Message]:
         """
         Takes a message object to be send. If the message is too large to be sent
         as one, multiple packages will be send.
@@ -54,29 +39,31 @@ class RFMWrapper:
         # Message to package
         logging.info("Sending message")
         packages: [(int, int, int, int, bytes)] = message.split()
-        success: bool
+        success: bool = True
+        left_over: [Message, None] = None
         try:
-            success = self._send_check_every_package(packages)
+            while len(packages) > 0:
+                id_to, id_from, header_id, flags, data = packages.pop(0)
+                # While messages are being sent continue
+                if success:
+                    self._rfm95.destination = id_from
+
+                    success = self._rfm95.send_with_ack(data)
+                    sleep(.3)
+                    continue
+                # Otherwise combine prepared messages to packages.
+                else:
+                    package: bytes = id_to + id_from + header_id + flags + data
+                    m: Message = to_message(package)
+
+                    if left_over is None:
+                        left_over = m
+                    else:
+                        left_over.combine(m)
+            return left_over
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
             raise MalformedContentException(e)
-        return success
-
-    def _send_check_every_package(self, packages: [bytes]) -> bool:
-        success: bool = True
-        while len(packages) > 0 and success:
-            # Get infos
-            _, id_to, _, _, data = packages.pop(0)
-            # Set this to generate more unique messages.
-            self._rfm95.destination = id_to
-            # sending
-            print("\n")
-            print(data)
-            print("\n")
-            success &= self._rfm95.send_with_ack(data)
-            sleep(.3)
-            logging.debug("Package sent: " + str(success))
-        return success
 
     def _send_check_with_retries(self, packages: [bytes], retries: int):
         success: bool = True
@@ -106,6 +93,22 @@ class RFMWrapper:
             sleep(.3)
             logging.debug("Package might have been sent")
         return self._send_check_every_package(packages)
+
+    def _send_split_message(self, packages: [bytes]):
+        success: bool = True
+        while len(packages) > 0 and success:
+            # Get infos
+            _, id_to, _, _, data = packages.pop(0)
+            # Set this to generate more unique messages.
+            self._rfm95.destination = id_to
+            # sending
+            print("\n")
+            print(data)
+            print("\n")
+            success &= self._rfm95.send_with_ack(data)
+            sleep(.3)
+            logging.debug("Package sent: " + str(success))
+        return success
 
     def receive(self) -> Union[Message, None]:
         """
