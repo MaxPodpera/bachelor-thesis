@@ -8,6 +8,9 @@ from typing import Union
 
 
 class MessageStorage:
+    """
+    Message storage class.
+    """
 
     _active: bool = True
     _folder = read_config_file("message_folder")  # folder to store messages
@@ -23,6 +26,9 @@ class MessageStorage:
         logging.debug("Sync folder exists")
 
     def store(self, message):
+        """
+        Store message in storage
+        """
         logging.info("Send message to storage")
         self._store(message)
 
@@ -118,4 +124,7 @@ class MessageStorage:
         logging.info("Stopped storage")
 
     def stop(self):
+        """
+        Stop the storage. No more file system events will be detected.
+        """
         self._active = False

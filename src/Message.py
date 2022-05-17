@@ -25,6 +25,10 @@ address_broadcast: str = read_config_file("message.broadcast_address")
 
 
 def to_message(package: bytes) -> Union[Message, None]:
+    """
+    Convert package to message object.
+    If package is invalid (crc check) None is returned.
+    """
     if not package or package is None:
         logging.info("empty package. not transforming")
         print("return none")
@@ -94,7 +98,9 @@ packageType = (int, int, int, int, bytes)
 
 
 class Message:
-
+    """
+    Class representing messages for the network
+    """
     @property
     def recipient(self):
         return self._recipient
@@ -174,6 +180,9 @@ class Message:
         self._header_to = int.from_bytes(bytes.fromhex(recipient[-2:]), byteorder='big', signed=False)
 
     def split(self) -> [packageType]:
+        """
+        Split message to packages. data will be prependet with the headers.
+        """
         logging.debug("Retrieving next package")
         # Everything sent already
         if self.data is None or self.data == "":

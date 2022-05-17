@@ -12,6 +12,9 @@ Class to wrap the rfm95 module access.
 
 
 class RFMWrapper:
+    """
+    Wrapper for the network transceiver module.
+    """
     _rfm95: adafruit_rfm9x.RFM9x = None
     _sequence_id: int = 0
 
@@ -30,9 +33,10 @@ class RFMWrapper:
     def send(self, message: Message) -> Union[None, Message]:
         """
         Takes a message object to be send. If the message is too large to be sent
-        as one, multiple packages will be send.
+        as one, multiple packages will be send. On failure data that could not be transmitted is returned.
         :param message: to be sent
-        :return: void
+        :return: None if the message was sent. A message containing the remainder of a message if not all of the message
+        could be sent.
         """
         # Message to package
         logging.info("Sending message")

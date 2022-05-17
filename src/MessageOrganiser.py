@@ -19,6 +19,10 @@ def _create_distinquisher(message: Message) -> (int, int, str):
 
 
 class MessageOrganiser:
+    """
+    Class to handle message queues.
+    Handles messages loaded from storage and received messages.
+    """
     _active: bool = True
 
     _message_id_max_value: int = int.from_bytes(bytes.fromhex('ff' * int(length_message_id)), byteorder='big')
@@ -36,6 +40,11 @@ class MessageOrganiser:
         self._node_id = node_id
 
     def run(self):
+        """
+        Run the organiser. Messages will be deleted after time specified in the configuration.
+        Starts a thread to interface with the Storage.
+        Will run until stop() is called.
+        """
         t = threading.Thread(target=self._storage.run)
         t.start()
 
@@ -61,6 +70,9 @@ class MessageOrganiser:
         logging.info("Message organiser shut down!")
 
     def stop(self):
+        """
+        Stop the message organiser
+        """
         self._active = False
 
     def push_to_send(self, message: Message):

@@ -6,7 +6,8 @@ from src.Messenger import Messenger
 from src.Message import *
 
 """
-
+Entry point into the application.
+Runs indefinitely 
 """
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
