@@ -27,6 +27,7 @@ address_broadcast: str = read_config_file("message.broadcast_address")
 def to_message(package: bytes) -> Union[Message, None]:
     if not package or package is None:
         logging.info("empty package. not transforming")
+        print("return none")
         return None
     try:
         next_part_index: int = length_node_id
@@ -39,6 +40,7 @@ def to_message(package: bytes) -> Union[Message, None]:
         # Check data before converting
         valid, bytes_to_convert = remove_and_check(bytes_to_convert)
         if not valid:
+            print("invalid")
             logging.info("Received invalid package, discarding")
             logging.debug(bytes_to_convert)
             return None
@@ -80,6 +82,7 @@ def to_message(package: bytes) -> Union[Message, None]:
         logging.debug("Created message from bytes")
         return m
     except Exception as e:
+        print("other exception")
         logging.error("Error while creating message: " + str(e))
         return None
 

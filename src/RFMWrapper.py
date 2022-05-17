@@ -57,6 +57,7 @@ class RFMWrapper:
                     m: Message = to_message(package)
 
                     if left_over is None:
+                        print(left_over)
                         left_over = m
                     else:
                         left_over.combine(m)
