@@ -60,6 +60,7 @@ class RFMWrapper:
                         left_over = m
                     else:
                         left_over.combine(m)
+                    print("LEFT OVER 2" + str(left_over))
             print("LEFT OVER" + str(left_over))
             return left_over
         except Exception as e:
