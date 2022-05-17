@@ -52,7 +52,7 @@ class RFMWrapper:
                 # Otherwise combine prepared messages to packages.
                 else:
                     logging.debug("Could not send. wrapping up")
-                    package: bytearray = id_to.to_bytes(1, 'big', False) + \
+                    package: bytearray = id_to.to_bytes(length=1, byteorder='big') + \
                         id_from.to_bytes(length=1, byteorder='big') + \
                         header_id.to_bytes(length=1, byteorder='big') + \
                         flags.to_bytes(length=1, byteorder='big') + \
