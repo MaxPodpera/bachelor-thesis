@@ -163,7 +163,7 @@ class Message:
     def internal_reattach_package(self, data: packageType):
         if data is None:
             return
-
+        print(data)
         _, _, _, _, raw = data
         valid, raw = remove_and_check(raw)
 
@@ -224,7 +224,6 @@ class Message:
                 data_bytes = data_bytes[len(data):]
 
                 # Headers
-                print(header_to, header_from, header_id, 0, payload)
                 yield header_to, header_from, header_id, 0, payload
         except Exception as e:
             logging.error("Error while splitting message: " + str(e))
