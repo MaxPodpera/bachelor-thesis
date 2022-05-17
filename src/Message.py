@@ -43,7 +43,7 @@ def to_message(package: bytes) -> Union[Message, None]:
             return None
 
         # To
-        m.recipient = bytes_to_convert[:next_part_index].hex()
+        m.recipient(bytes_to_convert[:next_part_index].hex())
         m.pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid], byteorder='big',
                                signed=False)
         next_part_index += length_pid
@@ -91,9 +91,13 @@ packageType = (int, int, int, int, bytes)
 
 class Message:
 
+    @property
+    def recipient(self):
+        return self._recipient
+
     message_id: int = None  # Sequence number of this message. Makes it unique for this node.
     data: str = None
-    recipient: str = address_broadcast     # Broadcast address
+    _recipient: str = address_broadcast     # Broadcast address
     pid: int = 0
     _sender: str = None
     sender_pid: int = 0
@@ -161,9 +165,9 @@ class Message:
         return self._message_sender_header
 
     @recipient.setter
-    def recipient(self, value: str):
-        self.recipient = value
-        self._header_to = int.from_bytes(bytes.fromhex(value[-2:]), byteorder='big', signed=False)
+    def recipient(self, recipient):
+        self._recipient = recipient
+        self._header_to = int.from_bytes(bytes.fromhex(recipient[-2:]), byteorder='big', signed=False)
 
     def split(self) -> [packageType]:
         logging.debug("Retrieving next package")
