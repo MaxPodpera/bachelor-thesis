@@ -46,6 +46,7 @@ class RFMWrapper:
                     return None
 
                 # Unpack values
+                print(package)
                 id_to, id_from, header_id, flags, data = package
                 # While messages are being sent continue
                 self._rfm95.destination = id_from
