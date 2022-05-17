@@ -1,8 +1,7 @@
 import logging
-logging.basicConfig(level=logging.DEBUG)
 import threading
+logging.basicConfig(level=logging.DEBUG)
 from src.RFMWrapper import RFMWrapper
-from src.MessageStorage import MessageStorage
 from src.Message import Message
 from src.MessageOrganiser import MessageOrganiser
 from src.Exceptions import MalformedContentException

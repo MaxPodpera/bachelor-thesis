@@ -4,7 +4,6 @@ import adafruit_rfm9x
 from digitalio import DigitalInOut
 from src.Message import *
 from time import sleep
-from src.Messenger import Messenger
 from src.Exceptions import MalformedContentException
 
 """
