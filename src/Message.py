@@ -26,6 +26,7 @@ address_broadcast: str = read_config_file("message.broadcast_address")
 
 def to_message(package: bytes) -> Union[Message, None]:
     if not package or package is None:
+        logging.info("empty package. not transforming")
         return None
     try:
         next_part_index: int = length_node_id
