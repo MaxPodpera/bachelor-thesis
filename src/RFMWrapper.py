@@ -42,7 +42,7 @@ class RFMWrapper:
         left_over: [Message, None] = None
         try:
             while len(packages) > 0:
-                package: packageType = package.pop(0)
+                package: packageType = packages.pop(0)
                 id_to, id_from, header_id, flags, data = package
                 # While messages are being sent continue
                 if success:
