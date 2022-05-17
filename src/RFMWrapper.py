@@ -53,7 +53,7 @@ class RFMWrapper:
                 # Otherwise combine prepared messages to packages.
                 else:
                     print(id_to, id_from, header_id, flags, data)
-                    package: bytes = id_to + id_from + header_id + flags + data
+                    package: bytes = bytes(id_to) + bytes(id_from) + bytes(header_id) + bytes(flags) + data
                     m: Message = to_message(package)
 
                     if left_over is None:
