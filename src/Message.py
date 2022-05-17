@@ -172,7 +172,7 @@ class Message:
 
         self.data = raw + self.data
 
-    def next_package(self) -> Union[None, packageType]:
+    def next_package(self) -> packageType:
         logging.debug("Retrieving next package")
         # Everything sent already
         if self.data is None or self.data == "":
