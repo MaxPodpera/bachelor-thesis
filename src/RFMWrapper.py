@@ -60,6 +60,7 @@ class RFMWrapper:
                         left_over = m
                     else:
                         left_over.combine(m)
+            print("LEFT OVER" + str(left_over))
             return left_over
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
