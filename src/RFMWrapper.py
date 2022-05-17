@@ -37,27 +37,29 @@ class RFMWrapper:
         """
         # Message to package
         logging.info("Sending message")
-        left_over: Message = None
+        packages: [(int, int, int, int, bytes)] = message.split()
+        success: bool = True
+        left_over: [Message, None] = None
         try:
-            package: packageType
-            for package in message.next_package():
-                # Nothing to send anymore or error that will not be fixed
-                if package is None:
-                    return None
-
-                id_to, id_from, header_id, flags, data = package
-
+            while len(packages) > 0:
+                id_to, id_from, header_id, flags, data = packages.pop(0)
                 # While messages are being sent continue
-                self._rfm95.destination = id_from
+                if success:
+                    self._rfm95.destination = id_from
 
-                if not self._rfm95.send_with_ack(data):
+                    success = self._rfm95.send_with_ack(data)
+                    sleep(.3)
+                    continue
+                # Otherwise combine prepared messages to packages.
+                else:
+                    package: bytes = id_to + id_from + header_id + flags + data
+                    m: Message = to_message(package)
+
                     if left_over is None:
-                        left_over = to_message(package)
+                        left_over = m
                     else:
-                        left_over.combine(to_message(package))
-                sleep(.3)
-
-            return message
+                        left_over.combine(m)
+            return left_over
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
             raise MalformedContentException(e)
