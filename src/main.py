@@ -5,7 +5,9 @@ sys.path.append(os.getcwd())
 from src.Messenger import Messenger
 from src.Message import *
 
+"""
 
+"""
 if __name__ == '__main__':
     logging.basicConfig(level=logging.DEBUG)
     m = Messenger()
