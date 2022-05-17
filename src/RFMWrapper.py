@@ -64,15 +64,9 @@ class RFMWrapper:
                     m: Message = to_message(package)
 
                     if left_over is None:
-                        print(left_over)
                         left_over = m
                     else:
                         left_over.combine(m)
-                    print(m)
-                    print(package[:4])
-                    print(package[4:])
-                    print("LEFT OVER 2" + str(left_over), package)
-            print("LEFT OVER" + str(left_over))
             return left_over
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
