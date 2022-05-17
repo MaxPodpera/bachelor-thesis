@@ -172,7 +172,7 @@ class Message:
 
         self.data = raw + self.data
 
-    def next_package(self) -> packageType:
+    def split(self) -> [packageType]:
         logging.debug("Retrieving next package")
         # Everything sent already
         if self.data is None or self.data == "":
@@ -209,6 +209,7 @@ class Message:
 
             seq_num = 0
             # split message
+            result: [packageType] = []
             while len(data_bytes) > 0:
                 seq_str: bytes = seq_num.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
                 seq_num += 1
@@ -224,7 +225,8 @@ class Message:
                 data_bytes = data_bytes[len(data):]
 
                 # Headers
-                yield header_to, header_from, header_id, 0, payload
+                result.append((header_to, header_from, header_id, 0, payload))
+            return result
         except Exception as e:
             logging.error("Error while splitting message: " + str(e))
-            return None
+            return []
