@@ -53,9 +53,9 @@ class RFMWrapper:
                 else:
                     logging.debug("Could not send. wrapping up")
                     package: bytearray = id_to.to_bytes(1, 'big', False) + \
-                        id_from.to_bytes(1, 'big', False) + \
-                        header_id.to_bytes(1, 'big', False) + \
-                        flags.to_bytes(1, 'big', False) + \
+                        id_from.to_bytes(length=1, byteorder='big', signed=False) + \
+                        header_id.to_bytes(length=1, byteorder='big', signed=False) + \
+                        flags.to_bytes(length=1, byteorder='big', signed=False) + \
                         data
                     m: Message = to_message(package)
 
