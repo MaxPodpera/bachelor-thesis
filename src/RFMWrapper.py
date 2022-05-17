@@ -46,7 +46,9 @@ class RFMWrapper:
                     return None
 
                 # Unpack values
+                print("pre exception")
                 id_to, id_from, header_id, flags, data = package
+                print("post exception?")
                 # While messages are being sent continue
                 self._rfm95.destination = id_from
 

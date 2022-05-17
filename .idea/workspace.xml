@@ -10,7 +10,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6a1cebb-8ebd-4b84-a313-cb51f30d166a" name="Default Changelist" comment="small changes" />
+    <list default="true" id="d6a1cebb-8ebd-4b84-a313-cb51f30d166a" name="Default Changelist" comment="small changes">
+      <change beforePath="$PROJECT_DIR$/src/Messenger.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Messenger.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

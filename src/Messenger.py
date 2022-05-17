@@ -1,7 +1,7 @@
 import logging
 import threading
 logging.basicConfig(level=logging.DEBUG,
-                    format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
+                    format='[%(asctime)s] {%(filename)s:%(lineno)d} %(levelname)s - %(message)s',
                     datefmt='%m-%d %H:%M:%S')
 from src.RFMWrapper import RFMWrapper
 from src.Message import Message
