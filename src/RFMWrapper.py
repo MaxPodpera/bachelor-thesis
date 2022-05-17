@@ -37,7 +37,7 @@ class RFMWrapper:
         """
         # Message to package
         logging.info("Sending message")
-
+        left_over: Message = None
         try:
             package: packageType
             for package in message.next_package():
@@ -45,18 +45,16 @@ class RFMWrapper:
                 if package is None:
                     return None
 
-                # Unpack values
-                print("pre exception")
-                print(package)
-                print(str(package))
                 id_to, id_from, header_id, flags, data = package
-                print("post exception?")
+
                 # While messages are being sent continue
                 self._rfm95.destination = id_from
 
                 if not self._rfm95.send_with_ack(data):
-                    message.internal_reattach_package(package)
-                    break
+                    if left_over is None:
+                        left_over = to_message(package)
+                    else:
+                        left_over.combine(to_message(package))
                 sleep(.3)
 
             return message
