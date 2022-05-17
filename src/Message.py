@@ -43,7 +43,7 @@ def to_message(package: bytes) -> Union[Message, None]:
             return None
 
         # To
-        m.recipient(bytes_to_convert[:next_part_index].hex())
+        m.recipient = bytes_to_convert[:next_part_index].hex()
         m.pid = int.from_bytes(bytes_to_convert[next_part_index: next_part_index + length_pid], byteorder='big',
                                signed=False)
         next_part_index += length_pid
