@@ -39,8 +39,8 @@ class RFMWrapper:
         logging.info("Sending message")
 
         try:
-            while True:
-                package: packageType = message.next_package()
+            package: packageType
+            for package in message.next_package():
                 # Nothing to send anymore or error that will not be fixed
                 if package is None:
                     return None
@@ -49,8 +49,6 @@ class RFMWrapper:
                 print("pre exception")
                 print(package)
                 print(str(package))
-                a, b = package
-                print(a, b)
                 id_to, id_from, header_id, flags, data = package
                 print("post exception?")
                 # While messages are being sent continue
