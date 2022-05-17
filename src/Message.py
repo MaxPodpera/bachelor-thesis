@@ -106,7 +106,7 @@ class Message:
     _message_sender_header: int = 0
     _related_packages: int = 0  # How many other packages for this message
     _header_to: int = None
-    _header_id: int = None
+    _header_id: int = 0
 
     def __str__(self) -> str:
         """
