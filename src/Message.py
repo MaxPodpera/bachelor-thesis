@@ -83,6 +83,12 @@ def to_message(package: bytes) -> Union[Message, None]:
         return None
 
 
+"""
+Alias for package type
+"""
+packageType = (int, int, int, int, bytes)
+
+
 class Message:
 
     message_id: int = None  # Sequence number of this message. Makes it unique for this node.
@@ -154,7 +160,19 @@ class Message:
     def message_sender_header(self):
         return self._message_sender_header
 
-    def next_package(self, length) -> Union[None, (int, int, int, int, bytes)]:
+    def internal_reattach_package(self, data: packageType):
+        if data is None:
+            return
+
+        _, _, _, _, raw = data
+        valid, raw = remove_and_check(raw)
+
+        if not valid:
+            logging.debug("Trying to attach invalid data")
+
+        self.data = raw + self.data
+
+    def next_package(self) -> Union[None, packageType]:
         logging.debug("Retrieving next package")
         # Everything sent already
         if self.data is None or self.data == "":
@@ -190,7 +208,6 @@ class Message:
                 raise Exception("Invalid meta data")
 
             seq_num = 0
-            result = []
             # split message
             while len(data_bytes) > 0:
                 seq_str: bytes = seq_num.to_bytes(math.floor(length_sequence_number / 2), byteorder='big')
@@ -203,10 +220,11 @@ class Message:
                 # Add error detection
                 payload: bytes = meta + data
                 payload = add_check(payload)
-                # Headers
-                result.append((header_to, header_from, header_id, 0, payload))
+
                 data_bytes = data_bytes[len(data):]
-            return result
+
+                # Headers
+                yield header_to, header_from, header_id, 0, payload
         except Exception as e:
             logging.error("Error while splitting message: " + str(e))
-            return []
+            return None

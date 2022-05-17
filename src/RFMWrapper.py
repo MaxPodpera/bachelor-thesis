@@ -38,77 +38,28 @@ class RFMWrapper:
         """
         # Message to package
         logging.info("Sending message")
-        packages: [(int, int, int, int, bytes)] = message.split()
-        success: bool = True
-        left_over: [Message, None] = None
+
         try:
-            while len(packages) > 0:
-                id_to, id_from, header_id, flags, data = packages.pop(0)
+            while True:
+                package: Union[Message, None] = message.next_package()
+                # Nothing to send anymore or error that will not be fixed
+                if package is None:
+                    return None
+
+                # Unpack values
+                id_to, id_from, header_id, flags, data = package
                 # While messages are being sent continue
-                if success:
-                    self._rfm95.destination = id_from
+                self._rfm95.destination = id_from
 
-                    success = self._rfm95.send_with_ack(data)
-                    sleep(.3)
-                    continue
-                # Otherwise combine prepared messages to packages.
-                else:
-                    package: bytes = id_to + id_from + header_id + flags + data
-                    m: Message = to_message(package)
+                if not self._rfm95.send_with_ack(data):
+                    message.internal_reattach_package(package)
+                    break
+                sleep(.3)
 
-                    if left_over is None:
-                        left_over = m
-                    else:
-                        left_over.combine(m)
-            return left_over
+            return message
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
             raise MalformedContentException(e)
-
-    def _send_check_with_retries(self, packages: [bytes], retries: int):
-        success: bool = True
-        while len(packages) > 0 and success:
-            _, id_to, _, _, data = packages.pop(0)
-            self._rfm95.destination = id_to
-            print("\n")
-            print(data)
-            print("\n")
-            retries_remaining: int = retries
-            package_success: bool = False
-            while not package_success and retries_remaining > 0:
-                package_success = self._rfm95.send_with_ack(data)
-                logging.info("Send failed, retrying")
-                sleep(.3)
-            success &= package_success
-        return success
-
-    def _send_check_once(self, packages: [bytes]) -> bool:
-        while len(packages) > 1:
-            _, id_to, _, _, data = packages.pop(0)
-            self._rfm95.destination = id_to
-            print("\n")
-            print(data)
-            print("\n")
-            self._rfm95.send_with_ack(data)
-            sleep(.3)
-            logging.debug("Package might have been sent")
-        return self._send_check_every_package(packages)
-
-    def _send_split_message(self, packages: [bytes]):
-        success: bool = True
-        while len(packages) > 0 and success:
-            # Get infos
-            _, id_to, _, _, data = packages.pop(0)
-            # Set this to generate more unique messages.
-            self._rfm95.destination = id_to
-            # sending
-            print("\n")
-            print(data)
-            print("\n")
-            success &= self._rfm95.send_with_ack(data)
-            sleep(.3)
-            logging.debug("Package sent: " + str(success))
-        return success
 
     def receive(self) -> Union[Message, None]:
         """
@@ -123,8 +74,7 @@ class RFMWrapper:
 
         if d is None:
             return None
-        print("\t", self._rfm95.last_rssi)
-        print("\t", self._rfm95.last_snr)
+
         logging.critical(d[:4])
         message: Message = to_message(d)
         if message is None:
