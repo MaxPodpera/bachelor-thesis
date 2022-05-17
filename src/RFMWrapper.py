@@ -40,7 +40,7 @@ class RFMWrapper:
 
         try:
             while True:
-                package: Union[packageType, None] = message.next_package()
+                package: packageType = message.next_package()
                 # Nothing to send anymore or error that will not be fixed
                 if package is None:
                     return None
