@@ -12,10 +12,9 @@ Class to wrap the rfm95 module access.
 
 
 class RFMWrapper:
-
     _rfm95: adafruit_rfm9x.RFM9x = None
     _sequence_id: int = 0
-    
+
     def __init__(self):
         pin_cs = DigitalInOut(board.CE1)
         pin_rst = DigitalInOut(board.D25)
@@ -42,8 +41,7 @@ class RFMWrapper:
         left_over: [Message, None] = None
         try:
             while len(packages) > 0:
-                package: packageType = packages.pop(0)
-                id_to, id_from, header_id, flags, data = package
+                id_to, id_from, header_id, flags, data = packages.pop(0)
                 # While messages are being sent continue
                 if success:
                     self._rfm95.destination = id_from
@@ -54,6 +52,11 @@ class RFMWrapper:
                 # Otherwise combine prepared messages to packages.
                 else:
                     logging.debug("Could not send. wrapping up")
+                    package: bytearray = id_to.to_bytes(1, 'big', False) + \
+                        id_from.to_bytes(1, 'big', False) + \
+                        header_id.to_bytes(1, 'big', False) + \
+                        flags.to_bytes(1, 'big', False) + \
+                        data
                     m: Message = to_message(package)
 
                     if left_over is None:
