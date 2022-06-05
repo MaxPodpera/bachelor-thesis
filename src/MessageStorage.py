@@ -1,7 +1,6 @@
 import logging
 import os
 import inotify.adapters
-import asyncio
 from src.Utilities import read_config_file
 from src.Message import Message
 from typing import Union

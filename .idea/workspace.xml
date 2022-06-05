@@ -12,9 +12,8 @@
   <component name="ChangeListManager">
     <list default="true" id="d6a1cebb-8ebd-4b84-a313-cb51f30d166a" name="Default Changelist" comment="Add comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ReadMe.md" beforeDir="false" afterPath="$PROJECT_DIR$/ReadMe.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MessageStorage.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/MessageStorage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RFMWrapper.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/RFMWrapper.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

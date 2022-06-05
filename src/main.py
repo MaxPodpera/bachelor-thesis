@@ -4,6 +4,7 @@ import threading
 sys.path.append(os.getcwd())
 from src.Messenger import Messenger
 from src.Message import *
+from datetime import datetime
 
 """
 Entry point into the application.
@@ -14,3 +15,12 @@ if __name__ == '__main__':
     m = Messenger()
     t = threading.Thread(target=m.run)
     t.start()
+
+    for i in range(0, 100):
+        msg = Message()
+        msg.sender_pid = 00000
+        msg.pid = 11111
+        msg.recipient = "17109be4e4b711ec8fea0242ac120002"
+        msg.sender = "42376f7500df44e985e8f7255bcfa0f7"
+        msg.data = str(datetime.now()) + ("A" * 70)
+        m.send(msg)
