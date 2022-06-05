@@ -1,0 +1,4 @@
+crccheck
+adafruit-circuitpython-rfm9x
+pyyaml
+inotify

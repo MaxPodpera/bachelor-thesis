@@ -1,12 +1,12 @@
 #Mesh-Lora
 
-This repository was developed for my bachelor-thesis at the technical University of Vienna as part of the project
-NAME OF PROJECT FÜR FEUERWEHR (MAYBE LINK).
+This repository was developed for my bachelor-thesis at the technical University of Vienna as part of a project for the 
+firebrigard in lower austria.
 
 Based on the adafruit_rfm9x library it allows to send messages over the adafruit rfm9x module.
 compared to the native library however, a greater address range as well as larger messages are possible (sent as multiple packages).
 
-##How to run
+## How to run
 
 ### Module connection
 The first step is to connect the raspberry pi to the module, as shown below.
@@ -70,3 +70,6 @@ After installing the requirements (`pip3 install requirements.txt`), the program
 To send messages a file has to be created in the folder specified by the `message_folder` option.
 The name of the file should be of the form: ``
 * HERE LIST THAT EXPLAINS THE VARIABLES.
+
+####Common Problems
+On first installation the error ```ModuleNotFoundError: No module named 'board' often appears``` This can be solved by running:

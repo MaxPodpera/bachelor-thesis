@@ -54,7 +54,7 @@ class RFMWrapper:
                     sleep(.3)
                     continue
                 # Otherwise combine prepared messages to packages.
-                else:
+                if not success:             # TODO watch out for this
                     logging.debug("Could not send. wrapping up")
                     package: bytearray = id_to.to_bytes(length=1, byteorder='big') + \
                         id_from.to_bytes(length=1, byteorder='big') + \
