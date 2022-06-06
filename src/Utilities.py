@@ -39,3 +39,13 @@ def read_config_file(key: str) -> str:
     except Exception as e:
         logging.error("Could not read config file: " + str(e))
         raise InvalidConfigurationException(e)
+
+
+def write_or_append_to_file(path: str, data: str) -> None:
+    try:
+        with open(path, 'a') as file:
+            file.write(data)
+        return None
+    except Exception as e:
+        logging.error("Couldnt append")
+        raise InvalidConfigurationException(e)

@@ -11,14 +11,20 @@ from src.Utilities import *
 
 
 class Messenger:
+    """
+    Class to handle messages on the top level.
 
-    _active: bool = True
+    """
+    _active: bool = True  # keep running
 
     _rfm95: RFMWrapper = None  # Access transponder
     _organiser: MessageOrganiser = None
-    node_id: str = None
+    node_id: str = None  # Network id of this network
 
     def __init__(self):
+        """
+        Load id and create objects for task delegation.
+        """
         self._rfm95 = RFMWrapper()
         self.node_id = read_uuid_file(read_config_file("uuid_file"))
         self._organiser = MessageOrganiser(self.node_id)
@@ -26,7 +32,8 @@ class Messenger:
 
     def run(self):
         """
-        Check transmitter for incoming messages and send outgoing messages
+        Check transmitter for incoming messages and send outgoing messages.
+        Runs until stop() is called.
         :return: void
         """
         logging.info("Started node with id: " + self.node_id)
@@ -51,7 +58,7 @@ class Messenger:
                 if residue is None:
                     logging.info("Sent package")
                 else:
-                    logging.error("Could not send package")
+                    logging.error("Could not send (entire) package")
                     self._organiser.push_to_send(residue)
             except KeyboardInterrupt as e:
                 self._active = False
@@ -61,7 +68,7 @@ class Messenger:
             except Exception as e:
                 # No user option to handle error so try to keep up operations.
                 logging.error("Unhandled exception. Continuing operation: " + str(e))
-        self._organiser.stop()
+        self._organiser.stop()  # Stop the organiser
         t.join()
 
         logging.info("Shut down Messenger")
@@ -80,4 +87,7 @@ class Messenger:
         self._organiser.push_to_send(data)
 
     def stop(self):
+        """
+        Stop the messenger.
+        """
         self._active = False

@@ -2,6 +2,7 @@ import board
 import busio
 import adafruit_rfm9x
 from digitalio import DigitalInOut
+from src.Utilities import write_or_append_to_file
 from src.Message import *
 from time import sleep
 from src.Exceptions import MalformedContentException
@@ -12,6 +13,9 @@ Class to wrap the rfm95 module access.
 
 
 class RFMWrapper:
+    """
+    Wrapper for the network transceiver module.
+    """
     _rfm95: adafruit_rfm9x.RFM9x = None
     _sequence_id: int = 0
 
@@ -30,9 +34,10 @@ class RFMWrapper:
     def send(self, message: Message) -> Union[None, Message]:
         """
         Takes a message object to be send. If the message is too large to be sent
-        as one, multiple packages will be send.
+        as one, multiple packages will be send. On failure data that could not be transmitted is returned.
         :param message: to be sent
-        :return: void
+        :return: None if the message was sent. A message containing the remainder of a message if not all of the message
+        could be sent.
         """
         # Message to package
         logging.info("Sending message")
@@ -50,7 +55,7 @@ class RFMWrapper:
                     sleep(.3)
                     continue
                 # Otherwise combine prepared messages to packages.
-                else:
+                if not success:             # TODO watch out for this
                     logging.debug("Could not send. wrapping up")
                     package: bytearray = id_to.to_bytes(length=1, byteorder='big') + \
                         id_from.to_bytes(length=1, byteorder='big') + \
@@ -60,15 +65,9 @@ class RFMWrapper:
                     m: Message = to_message(package)
 
                     if left_over is None:
-                        print(left_over)
                         left_over = m
                     else:
                         left_over.combine(m)
-                    print(m)
-                    print(package[:4])
-                    print(package[4:])
-                    print("LEFT OVER 2" + str(left_over), package)
-            print("LEFT OVER" + str(left_over))
             return left_over
         except Exception as e:
             logging.error("Exception while sending data: " + str(e))
@@ -88,7 +87,8 @@ class RFMWrapper:
         if d is None:
             return None
 
-        logging.critical(d[:4])
+        write_or_append_to_file("statistics", "1;")
+
         message: Message = to_message(d)
         if message is None:
             return None
