@@ -5,3 +5,5 @@ out2
 
 node/__pycache__
 .DS_Store
+
+storage/
