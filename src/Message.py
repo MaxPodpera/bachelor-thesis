@@ -86,7 +86,7 @@ def to_message(package: bytes) -> Union[Message, None]:
 
         # Time
         m.time = time.time()
-        write_or_append_to_file(m.data[:26] + ";" + str(datetime.now()) + ";")  # received
+        write_or_append_to_file(m.data[:26] + ";")  # received
 
         logging.debug("Created message from bytes")
         return m

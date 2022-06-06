@@ -136,7 +136,7 @@ class MessageOrganiser:
             return
 
         # Handle message that is meant for this node
-        write_or_append_to_file("handling;\n")
+
         m: Message = self._handle_message(package)
         if m is None:
             return
@@ -199,23 +199,26 @@ class MessageOrganiser:
         # Single message
         if message.related_packages == 0:
             logging.debug("Received single message")
+            write_or_append_to_file("full;" + str(datetime.now()) + ";\n")
             return message
 
         # First of multiple packages for this message
         if (message.message_id, message.sender) not in self.queue_to_be_completed:
             logging.debug("Received first of many packages")
             self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
+            write_or_append_to_file("first;" + str(datetime.now()) + ";\n")
             return None
 
         self.queue_to_be_completed[(message.message_id, message.sender)].append(message)
 
         # Check if all corresponding packages were received
         if len(self.queue_to_be_completed[(message.message_id, message.sender)]) != message.related_packages + 1:
+            write_or_append_to_file("other;" + str(datetime.now()) + ";\n")
             logging.debug("Received further package of large message")
             return None  # Not all received yet
 
         logging.debug("Received all packages for message")
-
+        write_or_append_to_file("last;" + str(datetime.now()) + ";\n")
         message: Message = self._build_message(self.queue_to_be_completed[(message.message_id, message.sender)])
         return message
 
