@@ -1,8 +1,9 @@
 from __future__ import annotations
 import time
 from typing import Union
+from datetime import datetime
 import math
-from src.Utilities import read_config_file
+from src.Utilities import read_config_file, write_or_append_to_file
 import logging
 from src.ErrorDetection import add_check, remove_and_check
 """
@@ -33,6 +34,7 @@ def to_message(package: bytes) -> Union[Message, None]:
         logging.info("empty package. not transforming")
         print("return none")
         return None
+
     try:
         next_part_index: int = length_node_id
         m: Message = Message()
@@ -44,10 +46,11 @@ def to_message(package: bytes) -> Union[Message, None]:
         # Check data before converting
         valid, bytes_to_convert = remove_and_check(bytes_to_convert)
         if not valid:
-            print("invalid")
+            write_or_append_to_file("statistic", "invalid;\n")
             logging.info("Received invalid package, discarding")
             logging.debug(bytes_to_convert)
             return None
+        write_or_append_to_file("statistic", "valid;")
 
         # To
         m.recipient = bytes_to_convert[:next_part_index].hex()
@@ -83,6 +86,8 @@ def to_message(package: bytes) -> Union[Message, None]:
 
         # Time
         m.time = time.time()
+        write_or_append_to_file("statistics", m.data[:26] + ";" + str(datetime.now()) + ";")  # received
+
         logging.debug("Created message from bytes")
         return m
     except Exception as e:

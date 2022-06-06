@@ -2,6 +2,7 @@ import board
 import busio
 import adafruit_rfm9x
 from digitalio import DigitalInOut
+from src.Utilities import write_or_append_to_file
 from src.Message import *
 from time import sleep
 from src.Exceptions import MalformedContentException
@@ -86,7 +87,8 @@ class RFMWrapper:
         if d is None:
             return None
 
-        logging.critical(d[:4])
+        write_or_append_to_file("statistics", "1;")
+
         message: Message = to_message(d)
         if message is None:
             return None
