@@ -16,7 +16,7 @@ if __name__ == '__main__':
     t = threading.Thread(target=m.run)
     t.start()
 
-    if m.node_id is "42376f7500df44e985e8f7255bcfa0f7":
+    if m.node_id == "42376f7500df44e985e8f7255bcfa0f7":
         for i in range(0, 100):
             msg = Message()
             msg.sender_pid = 00000
