@@ -10,7 +10,9 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d6a1cebb-8ebd-4b84-a313-cb51f30d166a" name="Default Changelist" comment="Add comments" />
+    <list default="true" id="d6a1cebb-8ebd-4b84-a313-cb51f30d166a" name="Default Changelist" comment="Add comments">
+      <change beforePath="$PROJECT_DIR$/uuid_container" beforeDir="false" afterPath="$PROJECT_DIR$/uuid_container" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -241,15 +243,11 @@
     </state>
     <state x="266" y="244" key="Vcs.Push.Dialog.v2/0.25.1680.962@0.25.1680.962" timestamp="1652803731797" />
     <state x="266" y="244" key="Vcs.Push.Dialog.v2/0.25.1680.964@0.25.1680.964" timestamp="1646746063517" />
-    <state x="468" y="424" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1647866305487">
+    <state x="468" y="424" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1654500083537">
       <screen x="0" y="25" width="1680" height="962" />
     </state>
-    <state x="468" y="424" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1680.962@0.25.1680.962" timestamp="1647866305487" />
+    <state x="468" y="424" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1680.962@0.25.1680.962" timestamp="1654500083537" />
     <state x="468" y="425" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2/0.25.1680.964@0.25.1680.964" timestamp="1646746003150" />
-    <state x="833" y="25" width="847" height="514" key="dock-window-1" timestamp="1645441536988">
-      <screen x="0" y="25" width="1680" height="964" />
-    </state>
-    <state x="833" y="25" width="847" height="514" key="dock-window-1/0.25.1680.964@0.25.1680.964" timestamp="1645441536988" />
     <state x="212" y="236" width="670" height="685" key="search.everywhere.popup" timestamp="1648489069634">
       <screen x="0" y="25" width="1680" height="962" />
     </state>
