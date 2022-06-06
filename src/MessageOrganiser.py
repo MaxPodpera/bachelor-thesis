@@ -1,5 +1,5 @@
 from src.Message import *
-from src.Utilities import read_config_file
+from src.Utilities import read_config_file, write_or_append_to_file
 from typing import Union
 import time
 import threading
@@ -114,11 +114,13 @@ class MessageOrganiser:
         # Already received
         if self.was_received(package):
             logging.debug("Package already received")
+            write_or_append_to_file("statistic", "multi_received;\n")
             return
 
         # Message was sent by this node. Forwarding of neighbour received.
         if package.sender == self._node_id:
             logging.debug("Package forwarding received")
+            write_or_append_to_file("statistic", "bounce_back;\n")
             return
 
         logging.info("Received unknown Package")
@@ -129,10 +131,12 @@ class MessageOrganiser:
         # Message not meant for this node. Add to list to send later
         if not (package.recipient in self.list_addresses_self):
             logging.info("Forwarding message")
+            write_or_append_to_file("statistic", "forwarding;\n")
             self.push_to_send(package)
             return
 
         # Handle message that is meant for this node
+        write_or_append_to_file("statistic", "handling;\n")
         m: Message = self._handle_message(package)
         if m is None:
             return
@@ -156,7 +160,6 @@ class MessageOrganiser:
         message_distinquisher = _create_distinquisher(message)
 
         # Search for matching items
-        print("\t\t\tqueue", self.queue_received)
         for i in self.queue_received:
             distinquisher, _ = i
             if distinquisher == message_distinquisher:
