@@ -87,7 +87,7 @@ class RFMWrapper:
         if d is None:
             return None
 
-        write_or_append_to_file("statistics", "1;")
+        write_or_append_to_file("1;")
 
         message: Message = to_message(d)
         if message is None:

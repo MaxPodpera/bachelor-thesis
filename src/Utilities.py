@@ -41,9 +41,9 @@ def read_config_file(key: str) -> str:
         raise InvalidConfigurationException(e)
 
 
-def write_or_append_to_file(path: str, data: str) -> None:
+def write_or_append_to_file(data: str) -> None:
     try:
-        with open(path, 'a') as file:
+        with open("statistics_5sec_1pck_100msg.csv", 'a') as file:
             file.write(data)
         return None
     except Exception as e:

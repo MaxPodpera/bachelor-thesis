@@ -114,13 +114,13 @@ class MessageOrganiser:
         # Already received
         if self.was_received(package):
             logging.debug("Package already received")
-            write_or_append_to_file("statistics", "multi_received;\n")
+            write_or_append_to_file("multi_received;\n")
             return
 
         # Message was sent by this node. Forwarding of neighbour received.
         if package.sender == self._node_id:
             logging.debug("Package forwarding received")
-            write_or_append_to_file("statistics", "bounce_back;\n")
+            write_or_append_to_file("bounce_back;\n")
             return
 
         logging.info("Received unknown Package")
@@ -131,12 +131,12 @@ class MessageOrganiser:
         # Message not meant for this node. Add to list to send later
         if not (package.recipient in self.list_addresses_self):
             logging.info("Forwarding message")
-            write_or_append_to_file("statistics", "forwarding;\n")
+            write_or_append_to_file("forwarding;\n")
             self.push_to_send(package)
             return
 
         # Handle message that is meant for this node
-        write_or_append_to_file("statistics", "handling;\n")
+        write_or_append_to_file("handling;\n")
         m: Message = self._handle_message(package)
         if m is None:
             return
