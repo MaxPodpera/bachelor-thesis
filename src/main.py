@@ -17,7 +17,7 @@ if __name__ == '__main__':
     t.start()
 
     if m.node_id == "42376f7500df44e985e8f7255bcfa0f7":
-        for i in range(0, 1):
+        for i in range(0, 100):
             msg = Message()
             msg.sender_pid = 00000
             msg.pid = 11111
