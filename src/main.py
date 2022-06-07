@@ -27,7 +27,7 @@ if __name__ == '__main__':
             m.send(msg)
             time.sleep(10)
 
-        time.sleep(60 * 40)
+        time.sleep(3600)
 
         for i in range(0, 100):
             msg = Message()
@@ -35,11 +35,11 @@ if __name__ == '__main__':
             msg.pid = 11111
             msg.recipient = "17109be4e4b711ec8fea0242ac120002"
             msg.sender = "42376f7500df44e985e8f7255bcfa0f7"
-            msg.data = str(datetime.now()) + str(i) + ("A" * 90) + str(i) + ("B" * 80)
+            msg.data = str(datetime.now()) + str(i) + ("C" * 90) + str(i) + ("D" * 80)
             m.send(msg)
             time.sleep(5)
 
-        time.sleep(60 * 40)
+        time.sleep(3600)
 
         for i in range(0, 100):
             msg = Message()
@@ -47,6 +47,6 @@ if __name__ == '__main__':
             msg.pid = 11111
             msg.recipient = "17109be4e4b711ec8fea0242ac120002"
             msg.sender = "42376f7500df44e985e8f7255bcfa0f7"
-            msg.data = str(datetime.now()) + str(i) + ("A" * 90) + str(i) + ("B" * 80)
+            msg.data = str(datetime.now()) + str(i) + ("E" * 90) + str(i) + ("F" * 80)
             m.send(msg)
             time.sleep(1)
