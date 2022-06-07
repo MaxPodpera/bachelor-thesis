@@ -30,7 +30,7 @@ if __name__ == '__main__':
             time.sleep(10)
 
         file_name = "statistics_5sec_3pck_100msg.csv"
-        time.sleep(60 * 40)
+        time.sleep(5)
 
         for i in range(0, 100):
             msg = Message()
