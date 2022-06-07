@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
     if m.node_id == "42376f7500df44e985e8f7255bcfa0f7":
         file_name = "statistics_10sec_3pck_100msg.csv"
-        for i in range(0, 100):
+        for i in range(0, 1):
             msg = Message()
             msg.sender_pid = 00000
             msg.pid = 11111
