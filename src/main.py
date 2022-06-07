@@ -25,7 +25,7 @@ if __name__ == '__main__':
             msg.sender = "42376f7500df44e985e8f7255bcfa0f7"
             msg.data = str(datetime.now()) + str(i) + ("A" * 90) + str(i) + ("B" * 80)
             m.send(msg)
-            time.sleep(10)
+            time.sleep(5)
         #
         # time.sleep(3600)
         #
