@@ -18,7 +18,6 @@ if __name__ == '__main__':
     t.start()
 
     if m.node_id == "42376f7500df44e985e8f7255bcfa0f7":
-        file_name = "statistics_10sec_3pck_100msg.csv"
         for i in range(0, 1):
             msg = Message()
             msg.sender_pid = 00000
@@ -29,8 +28,7 @@ if __name__ == '__main__':
             m.send(msg)
             time.sleep(10)
 
-        file_name = "statistics_5sec_3pck_100msg.csv"
-        time.sleep(5)
+        time.sleep(60 * 40)
 
         for i in range(0, 100):
             msg = Message()
@@ -42,7 +40,6 @@ if __name__ == '__main__':
             m.send(msg)
             time.sleep(5)
 
-        file_name = "statistics_1sec_3pck_100msg.csv"
         time.sleep(60 * 40)
 
         for i in range(0, 100):
