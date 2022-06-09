@@ -10,7 +10,11 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fc1468a2-03da-4f45-8196-d53296308a32" name="Default Changelist" comment="testcase_2_10sec_3pck_100msg" />
+    <list default="true" id="fc1468a2-03da-4f45-8196-d53296308a32" name="Default Changelist" comment="testcase_2_10sec_3pck_100msg">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -32,6 +36,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/testcase2" />
       <recent name="$PROJECT_DIR$/testcase1" />
     </key>
   </component>
@@ -128,7 +133,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654720514220</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="testcase_2_10sec_3pck_100msg">
+      <created>1654761232996</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1654761232996</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -149,10 +161,10 @@
     <option name="LAST_COMMIT_MESSAGE" value="testcase_2_10sec_3pck_100msg" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="440" y="243" key="Vcs.Push.Dialog.v2" timestamp="1654720515221">
+    <state x="440" y="243" key="Vcs.Push.Dialog.v2" timestamp="1654761234175">
       <screen x="0" y="25" width="1680" height="962" />
     </state>
-    <state x="440" y="243" key="Vcs.Push.Dialog.v2/0.25.1680.962@0.25.1680.962" timestamp="1654720515221" />
+    <state x="440" y="243" key="Vcs.Push.Dialog.v2/0.25.1680.962@0.25.1680.962" timestamp="1654761234175" />
     <state x="641" y="424" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1654761057817">
       <screen x="0" y="25" width="1680" height="962" />
     </state>
@@ -161,16 +173,5 @@
       <screen x="0" y="25" width="1680" height="962" />
     </state>
     <state x="424" y="236" width="670" height="676" key="search.everywhere.popup/0.25.1680.962@0.25.1680.962" timestamp="1654638393555" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/src/Utilities.py</url>
-          <line>35</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
