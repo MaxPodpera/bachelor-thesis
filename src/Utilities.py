@@ -43,7 +43,7 @@ def read_config_file(key: str) -> str:
 
 def write_or_append_to_file(data: str) -> None:
     try:
-        with open("statistics_case3_1sec_1pck_10sec_5sec_1sec_3pck_100msg.csv", 'a') as file:
+        with open("statistics_case2_1sec_1pck_100msg.csv", 'a') as file:
             file.write(data)
         return None
     except Exception as e:

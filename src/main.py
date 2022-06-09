@@ -27,7 +27,7 @@ if __name__ == '__main__':
             m.send(msg)
             time.sleep(1)
 
-        time.sleep(3600 * 3)
+       # time.sleep(3600 * 3)
 
     if m.node_id == "2b679c67277302db4ca0ae3fcbad51d3":
         for i in range(0, 100):
@@ -36,42 +36,42 @@ if __name__ == '__main__':
             msg.pid = 11111
             msg.recipient = "17109be4e4b711ec8fea0242ac120002"
             msg.sender = "2b679c67277302db4ca0ae3fcbad51d3"
-            msg.data = str(datetime.now()) + str(i) + ("F" * 90) + str(i) + ("F" * 80)
+            msg.data = str(datetime.now()) + str(i) #  + ("F" * 90) + str(i) + ("F" * 80)
             m.send(msg)
             time.sleep(1)
 
-        time.sleep(3600 * 3)
+        # time.sleep(3600 * 3)
 
-        for i in range(0, 100):
-            msg = Message()
-            msg.sender_pid = 00000
-            msg.pid = 11111
-            msg.recipient = "17109be4e4b711ec8fea0242ac120002"
-            msg.sender = "2b679c67277302db4ca0ae3fcbad51d3"
-            msg.data = str(datetime.now()) + str(i) + ("D" * 90) + str(i) + ("D" * 80)
-            m.send(msg)
-            time.sleep(1)
-
-        time.sleep(3600 * 4)
-
-        for i in range(0, 100):
-            msg = Message()
-            msg.sender_pid = 00000
-            msg.pid = 11111
-            msg.recipient = "17109be4e4b711ec8fea0242ac120002"
-            msg.sender = "2b679c67277302db4ca0ae3fcbad51d3"
-            msg.data = str(datetime.now()) + str(i) + ("E" * 90) + str(i) + ("E" * 80)
-            m.send(msg)
-            time.sleep(5)
-
-        time.sleep(3600 * 4)
-
-        for i in range(0, 100):
-            msg = Message()
-            msg.sender_pid = 00000
-            msg.pid = 11111
-            msg.recipient = "17109be4e4b711ec8fea0242ac120002"
-            msg.sender = "2b679c67277302db4ca0ae3fcbad51d3"
-            msg.data = str(datetime.now()) + str(i) + ("F" * 90) + str(i) + ("F" * 80)
-            m.send(msg)
-            time.sleep(1)
+        # for i in range(0, 100):
+        #     msg = Message()
+        #     msg.sender_pid = 00000
+        #     msg.pid = 11111
+        #     msg.recipient = "17109be4e4b711ec8fea0242ac120002"
+        #     msg.sender = "2b679c67277302db4ca0ae3fcbad51d3"
+        #     msg.data = str(datetime.now()) + str(i) + ("D" * 90) + str(i) + ("D" * 80)
+        #     m.send(msg)
+        #     time.sleep(1)
+        #
+        # time.sleep(3600 * 4)
+        #
+        # for i in range(0, 100):
+        #     msg = Message()
+        #     msg.sender_pid = 00000
+        #     msg.pid = 11111
+        #     msg.recipient = "17109be4e4b711ec8fea0242ac120002"
+        #     msg.sender = "2b679c67277302db4ca0ae3fcbad51d3"
+        #     msg.data = str(datetime.now()) + str(i) + ("E" * 90) + str(i) + ("E" * 80)
+        #     m.send(msg)
+        #     time.sleep(5)
+        #
+        # time.sleep(3600 * 4)
+        #
+        # for i in range(0, 100):
+        #     msg = Message()
+        #     msg.sender_pid = 00000
+        #     msg.pid = 11111
+        #     msg.recipient = "17109be4e4b711ec8fea0242ac120002"
+        #     msg.sender = "2b679c67277302db4ca0ae3fcbad51d3"
+        #     msg.data = str(datetime.now()) + str(i) + ("F" * 90) + str(i) + ("F" * 80)
+        #     m.send(msg)
+        #     time.sleep(1)
