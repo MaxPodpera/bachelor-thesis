@@ -23,9 +23,9 @@ if __name__ == '__main__':
             msg.pid = 11111
             msg.recipient = "17109be4e4b711ec8fea0242ac120002"
             msg.sender = "2b679c67277302db4ca0ae3fcbad51d3"
-            msg.data = str(datetime.now()) + str(i) + ("F" * 90) + str(i) + ("F" * 80)
+            msg.data = str(datetime.now()) + str(i) + ("F" * 90)
             m.send(msg)
-            time.sleep(1)
+            time.sleep(10)
 
         # time.sleep(3600 * 3)
 

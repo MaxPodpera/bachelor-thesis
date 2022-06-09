@@ -11,14 +11,21 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fc1468a2-03da-4f45-8196-d53296308a32" name="Default Changelist" comment="testcase_2_10sec_3pck_100msg">
+      <change afterPath="$PROJECT_DIR$/excelAnalyze.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utilities.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nohup.out" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -36,6 +43,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/testcase2" />
       <recent name="$PROJECT_DIR$/testcase1" />
     </key>
@@ -154,7 +162,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654770455255</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="testcase_2_10sec_3pck_100msg">
+      <created>1654772398424</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1654772398424</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -175,10 +190,14 @@
     <option name="LAST_COMMIT_MESSAGE" value="testcase_2_10sec_3pck_100msg" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="440" y="243" key="Vcs.Push.Dialog.v2" timestamp="1654770456529">
+    <state x="578" y="257" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1654775589148">
       <screen x="0" y="25" width="1680" height="962" />
     </state>
-    <state x="440" y="243" key="Vcs.Push.Dialog.v2/0.25.1680.962@0.25.1680.962" timestamp="1654770456529" />
+    <state x="578" y="257" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.25.1680.962@0.25.1680.962" timestamp="1654775589148" />
+    <state x="440" y="243" key="Vcs.Push.Dialog.v2" timestamp="1654772399800">
+      <screen x="0" y="25" width="1680" height="962" />
+    </state>
+    <state x="440" y="243" key="Vcs.Push.Dialog.v2/0.25.1680.962@0.25.1680.962" timestamp="1654772399800" />
     <state x="641" y="424" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1654761057817">
       <screen x="0" y="25" width="1680" height="962" />
     </state>
