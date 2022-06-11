@@ -2,7 +2,6 @@ import board
 import busio
 import adafruit_rfm9x
 from digitalio import DigitalInOut
-from src.Utilities import write_or_append_to_file
 from src.Message import *
 from time import sleep
 from src.Exceptions import MalformedContentException
@@ -55,7 +54,7 @@ class RFMWrapper:
                     sleep(.3)
                     continue
                 # Otherwise combine prepared messages to packages.
-                if not success:             # TODO watch out for this
+                if not success:
                     logging.debug("Could not send. wrapping up")
                     package: bytearray = id_to.to_bytes(length=1, byteorder='big') + \
                         id_from.to_bytes(length=1, byteorder='big') + \
@@ -86,8 +85,6 @@ class RFMWrapper:
 
         if d is None:
             return None
-
-        write_or_append_to_file("1;")
 
         message: Message = to_message(d)
         if message is None:

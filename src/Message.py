@@ -1,9 +1,9 @@
 from __future__ import annotations
 import time
 from typing import Union
-from datetime import datetime
+
 import math
-from src.Utilities import read_config_file, write_or_append_to_file
+from src.Utilities import read_config_file
 import logging
 from src.ErrorDetection import add_check, remove_and_check
 """
@@ -46,11 +46,9 @@ def to_message(package: bytes) -> Union[Message, None]:
         # Check data before converting
         valid, bytes_to_convert = remove_and_check(bytes_to_convert)
         if not valid:
-            write_or_append_to_file("invalid;" + str(datetime.now()) + "\n")
             logging.info("Received invalid package, discarding")
             logging.debug(bytes_to_convert)
             return None
-        write_or_append_to_file("valid;")
 
         # To
         m.recipient = bytes_to_convert[:next_part_index].hex()
@@ -86,7 +84,6 @@ def to_message(package: bytes) -> Union[Message, None]:
 
         # Time
         m.time = time.time()
-        write_or_append_to_file(m.data[:26] + ";")  # received
 
         logging.debug("Created message from bytes")
         return m

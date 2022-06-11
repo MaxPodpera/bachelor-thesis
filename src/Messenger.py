@@ -43,6 +43,12 @@ class Messenger:
             try:
                 received: Message = self._rfm95.receive()  # Receive new message
                 if received:                              # Check if something was received
+                    if self.node_id == "17109be4e4b711ec8fea0242ac120002": # ignore not forwarded packages
+                        if "A" in received.data:
+                            continue
+                    if self.node_id == "2b679c67277302db4ca0ae3fcbad51d3":
+                        received.data = received.data.replace("A", "B")
+
                     self._organiser.push_to_received(received)  # Add to relevant queues and lists
                     continue  # attempt receiving more messages before sending  PRIORITY ON FORWARDING / RECEIVING
 

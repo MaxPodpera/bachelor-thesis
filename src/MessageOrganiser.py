@@ -1,5 +1,5 @@
 from src.Message import *
-from src.Utilities import read_config_file, write_or_append_to_file
+from src.Utilities import read_config_file
 from typing import Union
 import time
 import threading
@@ -114,13 +114,11 @@ class MessageOrganiser:
         # Already received
         if self.was_received(package):
             logging.debug("Package already received")
-            write_or_append_to_file("multi_received;\n")
             return
 
         # Message was sent by this node. Forwarding of neighbour received.
         if package.sender == self._node_id:
             logging.debug("Package forwarding received")
-            write_or_append_to_file("bounce_back;\n")
             return
 
         logging.info("Received unknown Package")
@@ -131,7 +129,6 @@ class MessageOrganiser:
         # Message not meant for this node. Add to list to send later
         if not (package.recipient in self.list_addresses_self):
             logging.info("Forwarding message")
-            write_or_append_to_file("forwarding;\n")
             self.push_to_send(package)
             return
 
@@ -199,26 +196,22 @@ class MessageOrganiser:
         # Single message
         if message.related_packages == 0:
             logging.debug("Received single message")
-            write_or_append_to_file("full;" + str(datetime.now()) + ";\n")
             return message
 
         # First of multiple packages for this message
         if (message.message_id, message.sender) not in self.queue_to_be_completed:
             logging.debug("Received first of many packages")
             self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
-            write_or_append_to_file("first;" + str(datetime.now()) + ";\n")
             return None
 
         self.queue_to_be_completed[(message.message_id, message.sender)].append(message)
 
         # Check if all corresponding packages were received
         if len(self.queue_to_be_completed[(message.message_id, message.sender)]) != message.related_packages + 1:
-            write_or_append_to_file("other;" + str(datetime.now()) + ";\n")
             logging.debug("Received further package of large message")
             return None  # Not all received yet
 
         logging.debug("Received all packages for message")
-        write_or_append_to_file("last;" + str(datetime.now()) + ";\n")
         message: Message = self._build_message(self.queue_to_be_completed[(message.message_id, message.sender)])
         return message
 
