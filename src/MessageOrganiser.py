@@ -203,7 +203,6 @@ class MessageOrganiser:
             logging.debug("Received first of many packages")
             self.queue_to_be_completed[(message.message_id, message.sender)] = [message]
             return None
-
         self.queue_to_be_completed[(message.message_id, message.sender)].append(message)
 
         # Check if all corresponding packages were received

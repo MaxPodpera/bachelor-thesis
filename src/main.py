@@ -24,3 +24,4 @@ if __name__ == '__main__':
             msg.sender = "2b679c67277302db4ca0ae3fcbad51d3"
             msg.data = "A" * 20
             m.send(msg)
+            time.sleep(1)

@@ -10,12 +10,3 @@ message:
     length_message_id: "1"
     length_sequence_number: "4"  # expected to be even length
     length_error_detection: "2"
-rfm:
-  timeout_receive: 20
-  node: 255
-  receive_timeout: 20
-  receive_keep_listening: True
-  send_keep_listening: True
-  send_destination: 255
-  send_node: 255
-  identifier: 255

@@ -1,4 +1,4 @@
-#Mesh-Lora
+# Mesh-Lora
 
 This repository was developed for my bachelor-thesis at the technical University of Vienna as part of a project for the 
 firebrigard in lower austria.
@@ -40,8 +40,6 @@ according to the naming convention will be read and sent.
         * length_frame: total length of message in bytes.
         * length_message_id: length of the message id in bytes.
         * length_sequence_number: length of the sequence number for messages in bytes.
-* rfm:
-    * 
 ```
 uuid_file: 
 message_folder: "./storage/" # "~/tmp/lora"
@@ -54,22 +52,26 @@ message:
     length_frame: "124"  # "100" # 252
     length_message_id: "1"
     length_sequence_number: "4"  # expected to be even length
-rfm:
-  node: 255
-  receive_timeout: 20
-  receive_keep_listening: True
-  send_keep_listening: True
-  send_destination: 255
-  send_node: 255
 ```
 ### Running
+To run the project it first has to be downloaded from github using git clone.
 
-After installing the requirements (`pip3 install requirements.txt`), the program can be run using
+After installing the requirements (`pip3 install requirements.txt`), the program can then be run using
 `python3 ./src/main.py ./src/config.yaml`
 
 To send messages a file has to be created in the folder specified by the `message_folder` option.
-The name of the file should be of the form: ``
-* HERE LIST THAT EXPLAINS THE VARIABLES.
+The name of the file should be of the form: `OUT_[SENDER-PID]_[RECIPIENT]_[RECIPIENT-PID]`.
+ * `OUT`: Marks files that should be transmitted
+ * ``[SENDER-PID]``: The process id of the process sending the message.
+ * ``[RECIPIENT]``: The address of the recipient.
+ * ``[RECIPIENT-PID]``: The pid of the process that should be addressed.
 
-####Common Problems
-On first installation the error ```ModuleNotFoundError: No module named 'board' often appears``` This can be solved by running:
+The file content then corresponds with the messages content.
+
+Upon receiving a message, a file is created following the pattern ```IN_[PID]_[SENDER]_[SENDER-PID]_[Message-id]```.
+* `IN`: marks the message as received. A process utilizing this project can scan the folder for messages starting with `IN` to check for incoming messages.
+* ``[PID]``: The process id of the recipient process.
+* ``[SENDER]``: The adress of the sender. Can be used to send responses.
+* ``[SENDER-PID``: The pid of the sender. Also to be used for responses
+* ``[Message-id]``: To guarantee uniqueness of filenames.
+
